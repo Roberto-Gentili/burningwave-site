@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-GB">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-GB">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8) ]><!-->
+<html lang="en-GB">
+<!--<![endif]-->
+
+<!-- Mirrored from www.burningwave.org/performing-different-tasks-in-parallel-and-with-different-priorities/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Dec 2022 08:39:45 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="profile" href="https://gmpg.org/xfn/11">
+    <link rel="pingback" href="xmlrpc.php">
+	
+	<!-- This site is optimized with the Yoast SEO plugin v14.0.4 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Performing tasks in parallel with different priorities in Java</title>
+	<meta name="description" content="Here you can find how performing parallel tasks with different priorities in Java" />
+	<meta name="robots" content="index, follow" />
+	<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<link rel="canonical" href="index.html" />
+	<meta property="og:locale" content="en_GB" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Performing tasks in parallel with different priorities in Java" />
+	<meta property="og:description" content="Here you can find how performing parallel tasks with different priorities in Java" />
+	<meta property="og:url" content="https://www.burningwave.org/performing-different-tasks-in-parallel-and-with-different-priorities/" />
+	<meta property="og:site_name" content="Burningwave" />
+	<meta property="article:modified_time" content="2021-12-09T11:10:23+00:00" />
+	<meta property="og:image" content="https://www.burningwave.org/wp-content/uploads/2020/07/logo.png" />
+	<meta property="og:image:width" content="894" />
+	<meta property="og:image:height" content="707" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:creator" content="@Burningwave1" />
+	<meta name="twitter:site" content="@Burningwave1" />
+	<meta name="google-site-verification"content="cvTpSopFqSo051h6ha4K9W9gNYNa-Tb7KWay5MRE3rA" />
+	<!-- / Yoast SEO plugin. -->
+	
+	<script type='text/javascript'
+		src='wp-includes/js/jquery/jquery4a5f.js?ver=1.12.4-wp'></script>
+	<script type='text/javascript'
+		src='wp-includes/js/jquery/jquery-migrate.min330a.js?ver=1.4.1'></script>
+	<script type='text/javascript'
+		src='wp-includes/js/jquery/jquery4a5f.js?ver=1.12.4-wp'></script>
+	<script type='text/javascript'
+		src='wp-includes/js/jquery/jquery-migrate.min330a.js?ver=1.4.1'></script>
+	<script type='text/javascript'
+		src='wp-content/plugins/counter-number-showcase/assets/js/bootstrap8217.js?ver=5.3.14'></script>
+	<script type='text/javascript'
+		src='wp-content/plugins/counter-number-showcase/assets/js/counter_nscript8217.js?ver=5.3.14'></script>
+	<script type='text/javascript'
+		src='wp-content/plugins/counter-number-showcase/assets/js/waypoints.min8217.js?ver=5.3.14'></script>
+	<script type='text/javascript'
+		src='wp-content/plugins/counter-number-showcase/assets/js/jquery.counterup.min8217.js?ver=5.3.14'></script>
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<meta name="google-site-verification"
+		content="cvTpSopFqSo051h6ha4K9W9gNYNa-Tb7KWay5MRE3rA" />
+	<script async
+		src="https://www.googletagmanager.com/gtag/js?id=UA-154852845-2"></script>
+	<script type='text/javascript'
+		src='wp-includes/js/autoexecute.js'></script>
+	
+	<meta replace="header-styles.html" />
+	
+</head>
+
+<body data-rsssl=1 class="page-template-default page page-id-1765 user-registration-page">
+    
+        <nav class="navbar navbar-default navbar-fixed-top" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+
+            <div class="container-fluid">
+
+                <div class="container">
+
+                    <div class="navbar-header">
+
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+
+                        </button>
+
+                        <h1 class="site-title"><a href="index.html" class="navbar-brand"><img class="img-responsive" src="wp-content/uploads/2020/04/logo_miglior.jpg" alt="Burningwave"></a></h1>
+                    </div>
+                    
+                        <div replace="nav-bar.html"/>
+                    
+               </div>
+
+            </div>
+
+        </nav>
+<div class="spacer"></div>
+
+<div class="container">
+
+	<div class="row">
+
+		<div class="col-md-12">
+
+			<div class="content">
+			
+						
+			<div id="post-1765" class="post-1765 page type-page status-publish has-post-thumbnail hentry">
+			
+			     <h1 class="entry-title">Performing tasks in parallel with different priorities in Java</h1>
+			    
+			     <div class="entry">
+
+			       
+<div class="wp-block-columns has-2-columns w-two-one-use-case">
+<div class="wp-block-column">
+<p>Used by the <strong>IterableObjectHelper</strong> to  <a href="iterating-collections-and-arrays-in-parallel/index.html">iterate collections or arrays in parallel</a>, the <strong>BackgroundExecutor</strong> component is able to run different functional interfaces in parallel <strong>by setting the priority of the thread they will be assigned to</strong>. There is also the option to wait for them start or finish. To use this component we must add to our <em>pom.xml</em> the following dependency:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="xml" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;dependency>
+    &lt;groupId&gt;org.burningwave&lt;&sol;groupId&gt;
+    &lt;artifactId&gt;core&lt;&sol;artifactId&gt;
+    &lt;version&gt;burningwave.core.version&lt;&sol;version&gt;
+&lt;&sol;dependency&gt;</pre>
+
+<p>&#8230; And to use Burningwave Core as a Java module, add the following to your&nbsp;<code>module-info.java</code>:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="java" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">requires org.burningwave.core;</pre>
+
+
+
+<p>For obtaining threads this component uses the <a name="ThreadSupplier"><strong>ThreadSupplier</strong></a> that can be customized in the <a href="overview-and-configuration/index.html#configuration-1">burningwave.static.properties</a> file  through the following properties:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="ini" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">thread-supplier.default-daemon-flag-value=true
+thread-supplier.default-thread-priority=5
+thread-supplier.max-detached-thread-count=${thread-supplier.max-poolable-thread-count}
+thread-supplier.max-detached-thread-count.elapsed-time-threshold-from-last-increase-for-gradual-decreasing-to-initial-value=30000
+thread-supplier.max-detached-thread-count.increasing-step=autodetect
+thread-supplier.max-poolable-thread-count=autodetect
+thread-supplier.poolable-thread-request-timeout=6000</pre>
+
+
+
+<p>The ThreadSupplier provides a fixed number of reusable threads indicated by the&nbsp;<strong><code>thread-supplier.max-poolable-thread-count</code></strong>&nbsp;property and, if these threads have already been assigned, new non-reusable threads will be created whose quantity maximum is indicated by the&nbsp;<strong><code>thread-supplier.max-detached-thread-count</code></strong>&nbsp;property. Once this limit is reached if the request for a new thread exceeds the waiting time indicated by the&nbsp;<strong><code>thread-supplier.poolable-thread-request-timeout</code></strong>&nbsp;property, the ThreadSupplier will proceed to increase the limit indicated by the &#8216;thread-supplier.max-detached-thread-count&#8217; property for the quantity indicated by the&nbsp;<strong><code>thread-supplier.max-detached-thread-count.increasing-step</code></strong>&nbsp;property. Resetting the &#8216;thread-supplier.max-detached-thread-count&#8217; property to its initial value, will occur gradually only when there have been no more waits on thread requests for an amount of time indicated by the&nbsp;<strong><code>thread-supplier.max-detached-thread-count.elapsed-time-threshold-from-last-increase-for-gradual-decreasing-to-initial-value</code></strong>&nbsp;property. </p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="java" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">import static org.burningwave.core.assembler.StaticComponentContainer.BackgroundExecutor;
+
+import org.burningwave.core.ManagedLogger;
+import org.burningwave.core.concurrent.QueuedTasksExecutor.ProducerTask;
+import org.burningwave.core.concurrent.QueuedTasksExecutor.Task;
+
+
+public class TaskLauncher implements ManagedLogger {
+    
+    public void launch() {
+        ProducerTask&lt;Long> taskOne = BackgroundExecutor.createProducerTask(task -> {
+            Long startTime = System.currentTimeMillis();
+            logInfo("task one started");
+            synchronized (this) {                
+                wait(5000);
+            }
+            Task internalTask = BackgroundExecutor.createTask(tsk -> {
+                logInfo("internal task started");    
+                synchronized (this) {                
+                    wait(5000);
+                }
+                logInfo("internal task finished");    
+            }, Thread.MAX_PRIORITY).submit();
+            internalTask.waitForFinish();
+            logInfo("task one finished");
+            return startTime;
+        }, Thread.MAX_PRIORITY);
+        taskOne.submit();
+        Task taskTwo = BackgroundExecutor.createTask(task -> {
+            logInfo("task two started and wait for task one finishing");
+            taskOne.waitForFinish();
+            logInfo("task two finished");    
+        }, Thread.NORM_PRIORITY);
+        taskTwo.submit();
+        ProducerTask&lt;Long> taskThree = BackgroundExecutor.createProducerTask(task -> {
+            logInfo("task three started and wait for task two finishing");
+            taskTwo.waitForFinish();
+            logInfo("task two finished");
+            return System.currentTimeMillis();
+        }, Thread.MIN_PRIORITY);
+        taskThree.submit();
+        taskThree.waitForFinish();
+        logInfo("Elapsed time: {}ms", taskThree.join() - taskOne.join());
+    }
+    
+    public static void main(String[] args) {
+        new TaskLauncher().launch();
+    }
+    
+}</pre>
+</div>
+
+
+
+<div class="wp-block-column">
+
+<div replace="right-menu.html" />
+
+
+<p></p>
+</div>
+</div>
+			     </div>
+
+			     
+			 </div>
+			
+			 
+			 			
+
+			</div>
+
+		</div>
+
+		
+
+	</div>
+
+</div>
+
+
+        <section id="features" class="features lite ">
+			<div class="container">
+				<div class="row multi-columns-row">
+											<div class="col-sm-4 col-md-4 col-lg-4"><div class="feature"><i class="fa fa-lightbulb-o pull-left featureicon"></i><h4>Flexible</h4><p>It’s possible to search classes by every criteria that your imagination can make by using lambda expressions</p>
+</div></div><div class="col-sm-4 col-md-4 col-lg-4"><div class="feature"><i class="fa fa-database pull-left featureicon"></i><h4>Optimized</h4><p>Scan engine is highly optimized using direct allocated ByteBuffers to avoid heap saturation</p>
+</div></div><div class="col-sm-4 col-md-4 col-lg-4"><div class="feature"><i class="fa fa-unlock pull-left featureicon"></i><h4>Open</h4><p>Burningwave core is an advanced free and open source Java library</p>
+</div></div>									</div>
+			</div>
+		</section>
+
+        <section class="copyright">
+
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="copyrightinfo">
+
+                            <p>
+                                
+                                &copy;2020 Burningwave - All Rights Reserved
+                                                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <script type="text/javascript">
+jQuery(document).ready(function($){
+
+		 $('#testimonials').parallax("50%", 0.4); 	 $('#calltoaction').parallax("50%", 0.4); 	 $('#newsletter').parallax("50%", 0.4); 
+		$('.flexslider').flexslider({
+		animation: "slide",
+		slideshow: true,
+		slideshowSpeed: parseInt(7)*1000,
+		});
+
+		$('.testislider').flexslider({
+		controlNav: true, 
+		animation: "slide",
+		slideshow: true,
+		slideshowSpeed: parseInt(7)*1000,
+		});
+})	
+</script>
+        
+<div id="fb-root"></div>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wpcf7 = {"apiSettings":{"root":"https:\/\/www.burningwave.org\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"cached":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='wp-content/plugins/contact-form-7/includes/js/scriptsb62d.js?ver=5.1.6'></script>
+<script type='text/javascript' src='wp-content/plugins/counter-number-showcase/assets/js/bootstrap8217.js?ver=5.3.14'></script>
+<script type='text/javascript' src='wp-content/plugins/counter-number-showcase/assets/js/counter_nscript8217.js?ver=5.3.14'></script>
+<script type='text/javascript' src='wp-content/plugins/counter-number-showcase/assets/js/waypoints.min8217.js?ver=5.3.14'></script>
+<script type='text/javascript' src='wp-content/plugins/counter-number-showcase/assets/js/jquery.counterup.min8217.js?ver=5.3.14'></script>
+<script type='text/javascript' src='wp-content/plugins/ultimate-blocks/src/blocks/content-toggle/front.build3601.js?ver=2.2.0'></script>
+<script type='text/javascript' src='wp-includes/js/jquery/ui/effect.mine899.js?ver=1.11.4'></script>
+<script type='text/javascript' src='wp-content/themes/integral/js/parallaxc358.js?ver=1.1.3'></script>
+<script type='text/javascript' src='wp-content/themes/integral/js/bootstrap.min7984.js?ver=3.3.4'></script>
+<script type='text/javascript' src='wp-content/themes/integral/js/jquery.prettyPhoto005e.js?ver=3.1.6'></script>
+<script type='text/javascript' src='wp-content/themes/integral/js/jquery.flexslider-min72e6.js?ver=2.6.4'></script>
+<script type='text/javascript' src='wp-content/plugins/enlighter/resources/enlighterjs/enlighterjs.min2f54.js?ver=4.1'></script>
+<script type='text/javascript'>
+!function(n,o){"undefined"!=typeof EnlighterJS?(n.EnlighterJSINIT=function(){EnlighterJS.init("pre.EnlighterJSRAW", "code.EnlighterJSRAW", {"indent":4,"ampersandCleanup":true,"linehover":true,"rawcodeDbclick":true,"textOverflow":"scroll","linenumbers":true,"theme":"classic","language":"generic","retainCssClasses":false,"collapse":false,"toolbarOuter":"","toolbarTop":"{BTN_RAW}{BTN_COPY}{BTN_WINDOW}{BTN_WEBSITE}","toolbarBottom":""})})():(o&&(o.error||o.log)||function(){})("Error: EnlighterJS resources not loaded yet!")}(window,console);
+</script>
+<script type='text/javascript' src='wp-includes/js/wp-embed.min8217.js?ver=5.3.14'></script>
+    
+    </body>
+
+
+</html>
+<script type='text/javascript' src='/js/includeOrReplace.js'></script>

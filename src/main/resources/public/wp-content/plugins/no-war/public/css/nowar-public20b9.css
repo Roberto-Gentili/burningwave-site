@@ -1,0 +1,56 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+ @charset "UTF-8";
+.nowar-flagHolder {
+	height: 75px;
+	width: 125px;
+	z-index: 10000;
+	position: fixed;
+}
+/*position bottom right 1*/
+.flagholder-position-1  {
+	bottom: 5%;
+	right: 0px;
+}
+/*position middle right 2*/
+.flagholder-position-2  {
+	bottom: 50%;
+	right: 0px;
+}
+/*position bottom left 3*/
+.flagholder-position-3  {
+	bottom: 5%;
+	left: 0px;
+}
+/*position middle right 4*/
+.flagholder-position-4  {
+	bottom: 50%;
+	left: 0px;
+}
+
+.nowar-closer {
+	float: right;
+	color: black;
+	z-index: 10001;
+	font-weight: 900;
+	cursor: pointer;
+	text-shadow: 1px 1px #ffffff;
+}
+
+.nowar-closerholder {
+	height: 24px;
+	width: 24px;
+	float: right;
+	margin-top: -99px;
+	margin-right: -1px;
+	cursor: pointer;
+}
+.nowar-redirect {
+	height: 75px;
+}
+.nowar-redirect a {
+	cursor: pointer;
+	height: 75px;
+}
