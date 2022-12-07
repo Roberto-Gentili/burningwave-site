@@ -11,12 +11,12 @@ rm apache-maven-3.6.3-bin.tar.gz
 sudo chmod +x /etc/profile.d/maven.sh
 source /etc/profile.d/maven.sh
 sudo yum install git-all
-git clone https://github.com/burningwave/miscellaneous-services.git
+git clone https://github.com/Roberto-Gentili/burningwave-site.git
 cd miscellaneous-services
 mvn clean dependency:list install
 screen -d -m sudo java \
 -Dspring.profiles.active=burningwave,ssl \
--jar ./target/miscellaneous-services-10.0.0.jar \
+-jar ./target/site.jar \
 -cp=./ \
 --APPLICATION_AUTHORIZATION_TOKEN=yourToken \
 --GITHUB_CONNECTOR_AUTHORIZATION_TOKEN=yourToken \
