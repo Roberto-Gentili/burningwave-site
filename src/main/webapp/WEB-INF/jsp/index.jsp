@@ -1,4 +1,4 @@
-
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <!--[if IE 7]>
 <html class="ie ie7" lang="en-GB">
@@ -20,63 +20,10 @@
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 	<link rel="pingback" href="xmlrpc.php">
 	
+	<jsp:include page="${contentPath}.header.jsp" />
 	
-	<title>Burningwave&#039;s software</title>
-	<meta name="description"
-		content="A set consisting of a Java frameworks building library and other applications and frameworks based on it." />
-	<meta name="robots" content="index, follow" />
-	<meta name="googlebot"
-		content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-	<meta name="bingbot"
-		content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-	<link rel="canonical" href="index.html" />
-	<meta property="og:locale" content="en_GB" />
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content="Burningwave&#039;s software" />
-	<meta property="og:description"
-		content="A set consisting of a Java frameworks building library and other applications and frameworks based on it." />
-	<meta property="og:url" content="https://www.burningwave.org/" />
-	<meta property="og:site_name" content="Burningwave" />
-	<meta property="article:modified_time"
-		content="2021-09-13T12:02:52+00:00" />
-	<meta property="og:image"
-		content="https://www.burningwave.org/wp-content/uploads/2020/07/logo.png" />
-	<meta property="og:image:width" content="894" />
-	<meta property="og:image:height" content="707" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:creator" content="@Burningwave1" />
-	<meta name="twitter:site" content="@Burningwave1" />
-	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.burningwave.org/#organization","name":"Burningwave","url":"https://www.burningwave.org/","sameAs":["https://en.wikipedia.org/wiki/Burningwave_Core","https://twitter.com/Burningwave1"],"logo":{"@type":"ImageObject","@id":"https://www.burningwave.org/#logo","inLanguage":"en-GB","url":"https://www.burningwave.org/wp-content/uploads/2019/12/logo-roberto-2.jpg","width":587,"height":398,"caption":"Burningwave"},"image":{"@id":"https://www.burningwave.org/#logo"}},{"@type":"WebSite","@id":"https://www.burningwave.org/#website","url":"https://www.burningwave.org/","name":"Burningwave","description":"A set consisting of a Java frameworks building library and other applications and frameworks based on it","publisher":{"@id":"https://www.burningwave.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":"https://www.burningwave.org/?s={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"en-GB"},{"@type":"ImageObject","@id":"https://www.burningwave.org/#primaryimage","inLanguage":"en-GB","url":"https://www.burningwave.org/wp-content/uploads/2020/07/logo.png","width":894,"height":707},{"@type":"WebPage","@id":"https://www.burningwave.org/#webpage","url":"https://www.burningwave.org/","name":"Burningwave's software","isPartOf":{"@id":"https://www.burningwave.org/#website"},"about":{"@id":"https://www.burningwave.org/#organization"},"primaryImageOfPage":{"@id":"https://www.burningwave.org/#primaryimage"},"datePublished":"2016-02-16T16:21:24+00:00","dateModified":"2021-09-13T12:02:52+00:00","description":"A set consisting of a Java frameworks building library and other applications and frameworks based on it.","inLanguage":"en-GB","potentialAction":[{"@type":"ReadAction","target":["https://www.burningwave.org/"]}]}]}</script>
-	<meta name="google-site-verification"
-		content="cvTpSopFqSo051h6ha4K9W9gNYNa-Tb7KWay5MRE3rA" />
-	<!-- / Yoast SEO plugin. -->
+	<%@include file="common-header.jsp"%>
 	
-	<script type='text/javascript'
-		src='wp-includes/js/jquery/jquery4a5f.js?ver=1.12.4-wp'></script>
-	<script type='text/javascript'
-		src='wp-includes/js/jquery/jquery-migrate.min330a.js?ver=1.4.1'></script>
-	<script type='text/javascript'
-		src='wp-includes/js/jquery/jquery4a5f.js?ver=1.12.4-wp'></script>
-	<script type='text/javascript'
-		src='wp-includes/js/jquery/jquery-migrate.min330a.js?ver=1.4.1'></script>
-	<script type='text/javascript'
-		src='wp-content/plugins/counter-number-showcase/assets/js/bootstrap8217.js?ver=5.3.14'></script>
-	<script type='text/javascript'
-		src='wp-content/plugins/counter-number-showcase/assets/js/counter_nscript8217.js?ver=5.3.14'></script>
-	<script type='text/javascript'
-		src='wp-content/plugins/counter-number-showcase/assets/js/waypoints.min8217.js?ver=5.3.14'></script>
-	<script type='text/javascript'
-		src='wp-content/plugins/counter-number-showcase/assets/js/jquery.counterup.min8217.js?ver=5.3.14'></script>
-	
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<meta name="google-site-verification"
-		content="cvTpSopFqSo051h6ha4K9W9gNYNa-Tb7KWay5MRE3rA" />
-	<script async
-		src="https://www.googletagmanager.com/gtag/js?id=UA-154852845-2"></script>
-	<script type='text/javascript'
-		src='wp-includes/js/autoexecute.js'></script>
-	
-	<meta replace="header-styles.html" />
 </head>
 
 <body data-rsssl=1
@@ -101,7 +48,7 @@
 					</button>
 
 					<h1 class="site-title">
-						<a href="index.html" class="navbar-brand"><img
+						<a href="/index" class="navbar-brand"><img
 							class="img-responsive"
 							src="wp-content/uploads/2020/04/logo_miglior.jpg"
 							alt="Burningwave"></a>
@@ -130,25 +77,25 @@
 								target="_blank">Burningwave Core</a></b><i>, an advanced, free
 								and open source Java frameworks building library useful for <a
 								style="color: white;"
-								href="how-to-find-all-classes-in-a-package.html"
+								href="/how-to-find-all-classes-in-a-package/"
 								target="_blank">scanning class paths</a>, <a
 								style="color: white;"
-								href="generating-classes-at-runtime-and-invoking-their-methods-with-and-without-the-use-of-reflection.html"
+								href="/generating-classes-at-runtime-and-invoking-their-methods-with-and-without-the-use-of-reflection/"
 								target="_blank">generating classes at runtime</a>, <a
 								style="color: white;"
 								href="https://burningwave.github.io/core/#Handling-privates-and-all-other-members-of-an-object"
 								target="_blank">facilitating the use of reflection</a>, <a
 								style="color: white;"
-								href="reaching-a-resource-of-the-file-system.html"
+								href="/reaching-a-resource-of-the-file-system/"
 								target="_blank">scanning the filesystem</a>, <a
 								style="color: white;"
-								href="executing-stringified-source-code.html"
+								href="/executing-stringified-source-code/"
 								target="_blank">executing stringified source code</a>, <a
 								style="color: white;"
-								href="iterating-collections-and-arrays-in-parallel.html"
+								href="/iterating-collections-and-arrays-in-parallel/"
 								target="_blank">iterating collections or arrays in parallel</a>,
 								<a style="color: white;"
-								href="performing-different-tasks-in-parallel-and-with-different-priorities.html"
+								href="/performing-different-tasks-in-parallel-and-with-different-priorities/"
 								target="_blank">executing tasks in parallel</a> and much more,
 								Burningwave Core contains <b>AN EXTREMELY POWERFUL CLASSPATH
 									SCANNER</b>: it’s possible to search classes by every criteria that

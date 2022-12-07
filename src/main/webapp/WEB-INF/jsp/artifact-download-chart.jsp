@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:if test="${empty message}">
     <c:set var = "message" scope = "page" value = "null"/>
@@ -206,7 +206,7 @@
 	var monthsQueryParam = getQueryParam("months");
 	
 	//var pathname = window.location.pathname;
-	if (messagesContains('<%= org.burningwave.services.Controller.SWITCH_TO_REMOTE_APP_SUCCESSFUL_MESSAGE %>')) {
+	if (messagesContains('<%= org.burningwave.services.MiscController.SWITCH_TO_REMOTE_APP_SUCCESSFUL_MESSAGE %>')) {
 		showMessages();
 		sleep(60000);
 		goToUrl('/miscellaneous-services/stats/artifact-download-chart', 7500);
