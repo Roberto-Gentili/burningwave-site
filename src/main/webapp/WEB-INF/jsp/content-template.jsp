@@ -43,7 +43,7 @@
 
                         </button>
 
-                        <h1 class="site-title"><a href="/index" class="navbar-brand"><img class="img-responsive" src="/wp-content/uploads/2020/04/logo_miglior.jpg" alt="Burningwave"></a></h1>
+                        <h1 class="site-title"><a href="/" class="navbar-brand"><img class="img-responsive" src="/wp-content/uploads/2020/04/logo_miglior.jpg" alt="Burningwave"></a></h1>
                     </div>
                     
                         <div replace="/nav-bar.html"/>

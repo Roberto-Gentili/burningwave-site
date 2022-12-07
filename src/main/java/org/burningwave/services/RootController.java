@@ -34,19 +34,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @org.springframework.stereotype.Controller
+@RequestMapping("/")
 @CrossOrigin
-public class Controller {
+public class RootController {
 	private static final org.slf4j.Logger logger;
 
     static {
-    	logger = org.slf4j.LoggerFactory.getLogger(Controller.class);
+    	logger = org.slf4j.LoggerFactory.getLogger(RootController.class);
     }
 
-
-    @GetMapping("/index")
+    @GetMapping
     public String loadIndex(HttpServletRequest request, Model model) {
     	return view(request, model, "index", "index");
     }
@@ -58,7 +59,9 @@ public class Controller {
 
 	private String view(HttpServletRequest request, Model model, String mainLayout, String contentPath) {
 		String url = request.getRequestURL().toString();
-    	String basePath = url.substring(0, url.lastIndexOf("/" + contentPath));
+    	String basePath = url.contains(contentPath) ?
+			url.substring(0, url.lastIndexOf("/" + contentPath)) :
+			url.substring(0, url.lastIndexOf("/"));
     	model.addAttribute("basePath", basePath);
     	model.addAttribute("contentPath", contentPath);
         return mainLayout;

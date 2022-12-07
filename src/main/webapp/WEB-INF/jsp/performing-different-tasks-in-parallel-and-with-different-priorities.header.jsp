@@ -4,7 +4,7 @@
 <meta name="robots" content="index, follow" />
 <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-<link rel="canonical" href="index.html" />
+<link rel="canonical" href="/performing-different-tasks-in-parallel-and-with-different-priorities.header/" />
 <meta property="og:locale" content="en_GB" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Performing tasks in parallel with different priorities in Java" />

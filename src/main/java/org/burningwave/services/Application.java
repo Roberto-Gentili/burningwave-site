@@ -316,7 +316,7 @@ public class Application extends SpringBootServletInitializer {
 		@Bean("containerCustomizer")
 		public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
 			return container -> {
-				container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/index"));
+				container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/"));
 			};
 		}
 

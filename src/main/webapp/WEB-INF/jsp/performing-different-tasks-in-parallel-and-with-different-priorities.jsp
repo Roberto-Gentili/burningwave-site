@@ -17,11 +17,11 @@
 			       
 <div class="wp-block-columns has-2-columns w-two-one-use-case">
 <div class="wp-block-column">
-<p>Used by the <strong>IterableObjectHelper</strong> to  <a href="iterating-collections-and-arrays-in-parallel/index.html">iterate collections or arrays in parallel</a>, the <strong>BackgroundExecutor</strong> component is able to run different functional interfaces in parallel <strong>by setting the priority of the thread they will be assigned to</strong>. There is also the option to wait for them start or finish. To use this component we must add to our <em>pom.xml</em> the following dependency:</p>
+<p>Used by the <strong>IterableObjectHelper</strong> to  <a href="/iterating-collections-and-arrays-in-parallel/">iterate collections or arrays in parallel</a>, the <strong>BackgroundExecutor</strong> component is able to run different functional interfaces in parallel <strong>by setting the priority of the thread they will be assigned to</strong>. There is also the option to wait for them start or finish. To use this component we must add to our <em>pom.xml</em> the following dependency:</p>
 
 <%@include file="burningwave-core-import.jsp"%>
 
-<p>For obtaining threads this component uses the <a name="ThreadSupplier"><strong>ThreadSupplier</strong></a> that can be customized in the <a href="overview-and-configuration/index.html#configuration-1">burningwave.static.properties</a> file  through the following properties:</p>
+<p>For obtaining threads this component uses the <a name="ThreadSupplier"><strong>ThreadSupplier</strong></a> that can be customized in the <a href="/overview-and-configuration/#configuration-1">burningwave.static.properties</a> file  through the following properties:</p>
 
 
 <pre class="EnlighterJSRAW" data-enlighter-language="ini" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">thread-supplier.default-daemon-flag-value=true

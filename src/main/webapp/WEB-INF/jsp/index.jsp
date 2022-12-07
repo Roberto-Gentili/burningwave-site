@@ -48,7 +48,7 @@
 					</button>
 
 					<h1 class="site-title">
-						<a href="/index" class="navbar-brand"><img
+						<a href="/" class="navbar-brand"><img
 							class="img-responsive"
 							src="wp-content/uploads/2020/04/logo_miglior.jpg"
 							alt="Burningwave"></a>
@@ -110,7 +110,7 @@
 						</p>
 					</div>
 					<div class="col-md-6 text-right">
-						<a href="getstarted/index.html" class="btn btn-lg btn-secondary">Get
+						<a href="/getstarted/" class="btn btn-lg btn-secondary">Get
 							Started</a>
 					</div>
 					<div class="col-md-6 text-left">

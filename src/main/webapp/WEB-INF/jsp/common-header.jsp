@@ -1,11 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <link rel='dns-prefetch' href='http://fonts.googleapis.com/' />
 <link rel='dns-prefetch' href='http://s.w.org/' />
-<link rel="alternate" type="application/rss+xml"
-	title="Burningwave &raquo; Feed" href="feed/index.html" />
-<link rel="alternate" type="application/rss+xml"
-	title="Burningwave &raquo; Comments Feed"
-	href="comments/feed/index.html" />
 <style type="text/css">
 img.wp-smiley, img.emoji {
 	display: inline !important;
@@ -76,7 +71,6 @@ img.wp-smiley, img.emoji {
 <link rel='stylesheet' id='enlighterjs-css'
 	href='/wp-content/plugins/enlighter/cache/enlighterjs.min22d0.css?ver=NUwAyFlhl0o/Za9'
 	type='text/css' media='all' />
-<link rel='https://api.w.org/' href='wp-json/index.html' />
 <link rel="EditURI" type="application/rsd+xml" title="RSD"
 	href="xmlrpc0db0.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml"
