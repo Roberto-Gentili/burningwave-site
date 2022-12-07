@@ -149,7 +149,7 @@ public class Application extends SpringBootServletInitializer {
 	@ConditionalOnExpression(value = "'${cache.type}'.trim().equalsIgnoreCase('File system based')")
 	public SimpleCache cache(
 		@Qualifier("cacheConfig") Map<String, String> configMap
-	) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
+	) throws IllegalArgumentException, SecurityException{
 		Map<String, Object> configuration = new HashMap<>();
 		configuration.putAll(configMap);
 		return new FSBasedCache(configuration);
@@ -316,7 +316,7 @@ public class Application extends SpringBootServletInitializer {
 		@Bean("containerCustomizer")
 		public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
 			return container -> {
-				container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/miscellaneous-services/stats/artifact-download-chart"));
+				container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/index.html"));
 			};
 		}
 
