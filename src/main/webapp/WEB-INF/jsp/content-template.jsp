@@ -61,7 +61,9 @@
 		<div class="col-md-12">
 			<div class="content">
 				<div class="page type-page status-publish has-post-thumbnail hentry">
-					<h1 class="entry-title">${sectionTitle}</h1>
+					<c:if test="${empty sectionTitle">
+					    <h1 class="entry-title">${sectionTitle}</h1>
+					</c:if>
 					<div class="entry">
 						<c:choose>
   							<c:when test="${empty rightMenuDisabled}">
