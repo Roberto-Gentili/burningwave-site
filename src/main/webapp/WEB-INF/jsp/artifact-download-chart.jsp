@@ -9,7 +9,7 @@
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
 		<meta property="og:title" content="Artifact downloads from Maven Central" />
 		<meta property="og:description" content="A dashboard with download statistics" />
-		<meta property="og:image" content="<c:out value="${basePath}"/>/image/logo.png">
+		<meta property="og:image" content="${basePath}/image/logo.png">
 		<meta property="og:image:width" content="572" />
 		<meta property="og:image:height" content="546" />		
 		<meta property="twitter:title" content="Artifact downloads from Maven Central" />		
