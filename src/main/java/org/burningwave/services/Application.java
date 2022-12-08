@@ -108,7 +108,7 @@ public class Application extends SpringBootServletInitializer {
     	logger = org.slf4j.LoggerFactory.getLogger(Application.class);
     }
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
 

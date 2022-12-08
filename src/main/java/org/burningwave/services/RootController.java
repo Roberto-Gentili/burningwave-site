@@ -49,7 +49,7 @@ public class RootController {
 
     @GetMapping("/{path}/")
     public String loadContent(HttpServletRequest request, Model model, @PathVariable String path) {
-    	return view(request, model, "common/content-template", path);
+    	return view(request, model, !path.equals("index") ? "common/content-template" : path, path);
     }
 
 	private String view(HttpServletRequest request, Model model, String mainLayout, String contentPath) {
