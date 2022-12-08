@@ -1,21 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="container">
 
-	<div class="row">
-
-		<div class="col-md-12">
-
-			<div class="content">
-			
-						
-			<div id="post-1765" class="post-1765 page type-page status-publish has-post-thumbnail hentry">
-			
-			     <h1 class="entry-title">Performing tasks in parallel with different priorities in Java</h1>
-			    
-			     <div class="entry">
-
-			       
-<div class="wp-block-columns has-2-columns w-two-one-use-case">
 <div class="wp-block-column">
 <p>Used by the <strong>IterableObjectHelper</strong> to  <a href="/iterating-collections-and-arrays-in-parallel/">iterate collections or arrays in parallel</a>, the <strong>BackgroundExecutor</strong> component is able to run different functional interfaces in parallel <strong>by setting the priority of the thread they will be assigned to</strong>. There is also the option to wait for them start or finish. To use this component we must add to our <em>pom.xml</em> the following dependency:</p>
 
@@ -88,32 +72,4 @@ public class TaskLauncher implements ManagedLogger {
     }
     
 }</pre>
-</div>
-
-
-
-<div class="wp-block-column">
-
-<div replace="/right-menu.html" />
-
-
-<p></p>
-</div>
-</div>
-			     </div>
-
-			     
-			 </div>
-			
-			 
-			 			
-
-			</div>
-
-		</div>
-
-		
-
-	</div>
-
 </div>

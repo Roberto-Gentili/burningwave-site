@@ -1,4 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--[if IE 7]>
 <html class="ie ie7" lang="en-GB">
@@ -55,12 +56,30 @@
         </nav>
 <div class="spacer"></div>
 
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="content">
+				<div id="post-1765"
+					class="post-1765 page type-page status-publish has-post-thumbnail hentry">
+					<h1 class="entry-title">${sectionTitle}</h1>
+					<div class="entry">
+						<div class="wp-block-columns has-2-columns w-two-one-use-case">
+							<jsp:include page="${contentPath}.jsp" />
+							<div class="wp-block-column">
+								<div replace="/right-menu.html" />
+								<p></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-<jsp:include page="${contentPath}.jsp" />
 
-
-
-        <section id="features" class="features lite ">
+	<section id="features" class="features lite ">
 			<div class="container">
 				<div class="row multi-columns-row">
 											<div class="col-sm-4 col-md-4 col-lg-4"><div class="feature"><i class="fa fa-lightbulb-o pull-left featureicon"></i><h4>Flexible</h4><p>It’s possible to search classes by every criteria that your imagination can make by using lambda expressions</p>

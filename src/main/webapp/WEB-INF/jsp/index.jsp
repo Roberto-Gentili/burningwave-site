@@ -110,7 +110,7 @@
 						</p>
 					</div>
 					<div class="col-md-6 text-right">
-						<a href="/getstarted/" class="btn btn-lg btn-secondary">Get
+						<a href="/get-started/" class="btn btn-lg btn-secondary">Get
 							Started</a>
 					</div>
 					<div class="col-md-6 text-left">

@@ -23,15 +23,6 @@ img.wp-smiley, img.emoji {
 <link rel='stylesheet' id='ultimate_blocks-cgb-style-css-css'
 	href='/wp-content/uploads/ultimate-blocks/blocks.style.build3601.css?ver=2.2.0'
 	type='text/css' media='all' />
-<link rel='stylesheet' id='af-fontawesome-css'
-	href='/wp-content/plugins/asgaros-forum/libs/fontawesome/css/all.minedf9.css?ver=1.15.4'
-	type='text/css' media='all' />
-<link rel='stylesheet' id='af-fontawesome-compat-v4-css'
-	href='/wp-content/plugins/asgaros-forum/libs/fontawesome/css/v4-shims.minedf9.css?ver=1.15.4'
-	type='text/css' media='all' />
-<link rel='stylesheet' id='af-widgets-css'
-	href='/wp-content/plugins/asgaros-forum/skin/widgetsedf9.css?ver=1.15.4'
-	type='text/css' media='all' />
 <link rel='stylesheet' id='contact-form-7-css'
 	href='/wp-content/plugins/contact-form-7/includes/css/stylesb62d.css?ver=5.1.6'
 	type='text/css' media='all' />
