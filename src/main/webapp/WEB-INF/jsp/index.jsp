@@ -9,9 +9,6 @@
 <!--[if !(IE 7) | !(IE 8) ]><!-->
 <html lang="en-GB">
 <!--<![endif]-->
-
-<!-- Mirrored from www.burningwave.org/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Dec 2022 08:34:15 GMT -->
-<!-- Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <!-- /Added by HTTrack -->
 <head>
@@ -20,7 +17,7 @@
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 	<link rel="pingback" href="xmlrpc.php">
 	
-	<jsp:include page="${contentPath}.header.jsp" />
+	<jsp:include page="header/${contentPath}.jsp" />
 	
 	<%@include file="common/header.jsp"%>
 	
