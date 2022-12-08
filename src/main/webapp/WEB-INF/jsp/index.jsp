@@ -211,8 +211,7 @@
 								<div class="wpsm_number" style="">
 									<a style="color: unset;"
 										href="/miscellaneous-services/stats/artifact-download-chart?groupId=org.burningwave&groupId=com.github.burningwave">
-										<span class="counter" id="counterId0">&nbsp;</span>
-									</a>*
+										<span class="counter" id="counterId0">&nbsp;</span></a>*
 									<script type="text/javascript"
 										src="/wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
 									<script>
@@ -239,8 +238,7 @@
 								</div>
 								<div class="wpsm_number" style="">
 									<a style="color: unset;" href="https://github.com/burningwave">
-										<span class="counter" id="counterId1">&nbsp;</span>
-									</a>*
+										<span class="counter" id="counterId1">&nbsp;</span></a>*
 									<script type="text/javascript"
 										src="/wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
 									<script>
