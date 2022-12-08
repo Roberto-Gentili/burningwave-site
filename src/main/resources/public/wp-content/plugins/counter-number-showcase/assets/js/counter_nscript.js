@@ -36,7 +36,7 @@ function setupCounter(counterId, dataURL, refreshTime, delayTime, counterUpTime)
         return;
     }
 
-    var backgroundSound = new Audio(window.location.origin + "/wp-content/uploads/2022/12/sound-switch.wav");
+    var backgroundSound = new Audio(window.location.origin + "/wp-content/uploads/2022/12/switch.wav");
 
     var incrementCounter = function (counterBox, counterNewValue) {
         if (backgroundSound == null) {
