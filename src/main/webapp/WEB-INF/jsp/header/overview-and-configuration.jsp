@@ -19,5 +19,5 @@
 <meta property="og:image:width" content="894" />
 <meta property="og:image:height" content="707" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:creator" content="@Burningwave1" />
-<meta name="twitter:site" content="@Burningwave1" />
+<meta name="twitter:creator" content="@burningwave_sw" />
+<meta name="twitter:site" content="@burningwave_sw" />

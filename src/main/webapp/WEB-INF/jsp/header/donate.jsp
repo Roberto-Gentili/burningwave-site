@@ -16,5 +16,5 @@
 <meta property="article:modified_time" content="2022-01-05T10:46:01+00:00" />
 <meta property="og:image" content="${basePath}/wp-content/uploads/2022/01/donate-2.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:creator" content="@Burningwave1" />
-<meta name="twitter:site" content="@Burningwave1" />
+<meta name="twitter:creator" content="@burningwave_sw" />
+<meta name="twitter:site" content="@burningwave_sw" />
