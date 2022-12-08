@@ -13,10 +13,10 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="How to find all classes that implement one or more interfaces in Java" />
 <meta property="og:description" content="Here how to scan classpath to find all classes that implement one or more interface in Java by using a Burningwave Core scanner: the ClassHunter" />
-<meta property="og:url" content="https://www.burningwave.org/how-to-find-all-classes-that-implement-one-or-more-interfaces/" />
+<meta property="og:url" content="${basePath}/how-to-find-all-classes-that-implement-one-or-more-interfaces/" />
 <meta property="og:site_name" content="Burningwave" />
 <meta property="article:modified_time" content="2021-10-13T08:01:58+00:00" />
-<meta property="og:image" content="https://www.burningwave.org/wp-content/uploads/2020/07/logo.png" />
+<meta property="og:image" content="${basePath}/wp-content/uploads/2020/07/logo.png" />
 <meta property="og:image:width" content="894" />
 <meta property="og:image:height" content="707" />
 <meta name="twitter:card" content="summary_large_image" />

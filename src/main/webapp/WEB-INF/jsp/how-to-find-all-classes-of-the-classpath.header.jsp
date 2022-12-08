@@ -12,10 +12,10 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Scan the classpath: how to find all classes of the classpath in Java" />
 <meta property="og:description" content="Here you can find how to search for all classes of the classpath in Java by using a Burningwave Core scanner: the ClassHunter" />
-<meta property="og:url" content="https://www.burningwave.org/scan-classpath-with-scanner-in-java-001/" />
+<meta property="og:url" content="${basePath}/scan-classpath-with-scanner-in-java-001/" />
 <meta property="og:site_name" content="Burningwave" />
 <meta property="article:modified_time" content="2021-10-13T07:58:07+00:00" />
-<meta property="og:image" content="https://www.burningwave.org/wp-content/uploads/2020/07/logo.png" />
+<meta property="og:image" content="${basePath}/wp-content/uploads/2020/07/logo.png" />
 <meta property="og:image:width" content="894" />
 <meta property="og:image:height" content="707" />
 <meta name="twitter:card" content="summary_large_image" />

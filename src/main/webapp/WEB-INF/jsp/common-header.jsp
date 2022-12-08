@@ -238,7 +238,7 @@ img.wp-smiley, img.emoji {
 <link rel="apple-touch-icon-precomposed"
 	href="/wp-content/uploads/2021/12/favicon-1-300x300.png" />
 <meta name="msapplication-TileImage"
-	content="https://www.burningwave.org//wp-content/uploads/2021/12/favicon-1-300x300.png" />
+	content="${basePath}//wp-content/uploads/2021/12/favicon-1-300x300.png" />
 <style type="text/css" title="dynamic-css" class="options-output">
 	.btn-primary, .btn-inverse:hover, #mc-embedded-subscribe-form input[type="submit"],
 		.ctct-embed-signup .ctct-button {

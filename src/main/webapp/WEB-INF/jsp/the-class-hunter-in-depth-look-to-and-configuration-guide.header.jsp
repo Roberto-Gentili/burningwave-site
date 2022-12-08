@@ -12,10 +12,10 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="The ClassHunter: in depth look to and configuration guide of ClassHunter" />
 <meta property="og:description" content="Here you can find an overview and an in depth look to ClassHunter component (that is a classpath scanner) and how to configure it" />
-<meta property="og:url" content="https://www.burningwave.org/the-class-hunter-in-depth-look-to-and-configuration-guide/" />
+<meta property="og:url" content="${basePath}/the-class-hunter-in-depth-look-to-and-configuration-guide/" />
 <meta property="og:site_name" content="Burningwave" />
 <meta property="article:modified_time" content="2021-10-13T08:53:42+00:00" />
-<meta property="og:image" content="https://www.burningwave.org/wp-content/uploads/2020/07/logo.png" />
+<meta property="og:image" content="${basePath}/wp-content/uploads/2020/07/logo.png" />
 <meta property="og:image:width" content="894" />
 <meta property="og:image:height" content="707" />
 <meta name="twitter:card" content="summary_large_image" />

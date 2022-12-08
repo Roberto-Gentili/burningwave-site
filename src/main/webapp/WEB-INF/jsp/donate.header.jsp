@@ -11,10 +11,10 @@
 <meta property="og:locale" content="en_GB" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Donate to Burningwave... - Burningwave" />
-<meta property="og:url" content="https://www.burningwave.org/donate-to-burningwave/" />
+<meta property="og:url" content="${basePath}/donate-to-burningwave/" />
 <meta property="og:site_name" content="Burningwave" />
 <meta property="article:modified_time" content="2022-01-05T10:46:01+00:00" />
-<meta property="og:image" content="https://www.burningwave.org/wp-content/uploads/2022/01/donate-2.jpg" />
+<meta property="og:image" content="${basePath}/wp-content/uploads/2022/01/donate-2.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@Burningwave1" />
 <meta name="twitter:site" content="@Burningwave1" />
