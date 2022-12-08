@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
 <p style="color:grey;text-align:justify;"><strong>Burningwave Core is an advanced and highly optimized Java library to build frameworks and it is useful for scanning class paths, generating classes at runtime, facilitating the use of reflection, scanning the filesystem, executing stringified source code, iterating collections or arrays in parallel, executing tasks in parallel and much more&#8230;</strong></p>
 
