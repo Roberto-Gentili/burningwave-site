@@ -50,11 +50,11 @@
 					<h1 class="site-title">
 						<a href="/" class="navbar-brand"><img
 							class="img-responsive"
-							src="wp-content/uploads/2020/04/logo_miglior.jpg"
+							src="/wp-content/uploads/2020/04/logo_miglior.jpg"
 							alt="Burningwave"></a>
 					</h1>
 				</div>
-				<div replace="nav-bar.html" />
+				<div replace="/nav-bar.html" />
 
 			</div>
 
@@ -214,7 +214,7 @@
 										<span class="counter" id="counterId0">&nbsp;</span>
 									</a>*
 									<script type="text/javascript"
-										src="wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
+										src="/wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
 									<script>
 										setupCounter(
 			                                'counterId0',
@@ -242,7 +242,7 @@
 										<span class="counter" id="counterId1">&nbsp;</span>
 									</a>*
 									<script type="text/javascript"
-										src="wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
+										src="/wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
 									<script>
 			                			setupCounter(
 			                                'counterId1',
@@ -270,7 +270,7 @@
 								<div class="wpsm_number" style="">
 									<span class="counter" id="counterId2">&nbsp;</span>
 									<script type="text/javascript"
-										src="wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
+										src="/wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
 									<script>
 										setupCounter(
 			                                'counterId2',
