@@ -60,17 +60,23 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="content">
-				<div id="post-1765"
-					class="post-1765 page type-page status-publish has-post-thumbnail hentry">
+				<div class="page type-page status-publish has-post-thumbnail hentry">
 					<h1 class="entry-title">${sectionTitle}</h1>
 					<div class="entry">
-						<div class="wp-block-columns has-2-columns w-two-one-use-case">
-							<jsp:include page="${contentPath}.jsp" />
-							<div class="wp-block-column">
-								<div replace="/right-menu.html" />
-								<p></p>
-							</div>
-						</div>
+						<c:choose>
+  							<c:when test="${empty rightMenuDisabled}">
+	  							<div class="wp-block-columns has-2-columns w-two-one-use-case">
+									<jsp:include page="${contentPath}.jsp" />
+									<div class="wp-block-column">
+										<div replace="/right-menu.html" />
+										<p></p>
+									</div>
+								</div>
+  							</c:when>
+  							<c:otherwise>
+  								<jsp:include page="${contentPath}.jsp" />
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
