@@ -2,21 +2,7 @@
 <p>In order to find all classes in a package in Java we need to use the <strong><a href="/the-class-hunter-in-depth-look-to-and-configuration-guide/">ClassHunter</a></strong>. So let&#8217;s start by adding the following dependency to our <em>pom.xml</em>:</p>
 
 
-
-<pre class="EnlighterJSRAW" data-enlighter-language="xml" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;dependency>
-    &lt;groupId>org.burningwave&lt;/groupId>
-    &lt;artifactId>core&lt;/artifactId>
-    &lt;version>12.62.5&lt;/version>
-&lt;/dependency></pre>
-
-
-
-<p>&#8230; And to use Burningwave Core as a Java module, add the following to your&nbsp;<code>module-info.java</code>:</p>
-
-
-
-<pre class="EnlighterJSRAW" data-enlighter-language="java" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">requires org.burningwave.core;</pre>
-
+<%@include file="burningwave-core-import.jsp"%>
 
 
 <p>Then next steps are the following:</p>

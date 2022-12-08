@@ -217,7 +217,7 @@
 									<script>
 										setupCounter(
 			                                'counterId0',
-			                                window.location.origin + '/miscellaneous-services/stats/total-downloads?groupId=org.burningwave&groupId=com.github.burningwave',
+			                                '${basePath}/miscellaneous-services/stats/total-downloads?groupId=org.burningwave&groupId=com.github.burningwave',
 			                                900000,
 			                                0,
 			                                2000
@@ -244,7 +244,7 @@
 									<script>
 			                			setupCounter(
 			                                'counterId1',
-			                                window.location.origin + '/miscellaneous-services/stats/star-count?' + 
+			                                '${basePath}/miscellaneous-services/stats/star-count?' + 
 	                                			'repository=burningwave:core&' +
 	                                			'repository=burningwave:jvm-driver&' +
 	                                			'repository=burningwave:tools&' +
