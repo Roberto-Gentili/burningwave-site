@@ -11,7 +11,7 @@
 
 
 
-<p>The <strong>ClassHunter</strong> is a component that queries the classes present in the paths received in input and returns only the classes that match a chosen criterion. The searches performed by it are executed in a multithreaded context and recursively through folders and supported compressed files (zip, jar, jmod, war and ear) and even in nested compressed files and folders. This component can cache the classes found in the class paths in order to perform the next searches faster and uses a <strong>PathScannerClassLoader</strong> which is configurable through the Java coded property &#8216;<strong>class-hunter.default-path-scanner-class-loader</strong>&#8216; of the <a href="../overview-and-configuration/index.html#configuration-2">burningwave.properties</a> file. A <a href="../executing-stringified-source-code/index.html"><strong>Java coded</strong> <strong>property</strong></a><strong> </strong>is a property made of Java code that will be resolved after its compilation at runtime. The default value of the &#8216;class-hunter.default-path-scanner-class-loader&#8217; property, as you can see in the default <a href="../overview-and-configuration/index.html#configuration-2">burningwave.properties</a> file, is the following:</p>
+<p>The <strong>ClassHunter</strong> is a component that queries the classes present in the paths received in input and returns only the classes that match a chosen criterion. The searches performed by it are executed in a multithreaded context and recursively through folders and supported compressed files (zip, jar, jmod, war and ear) and even in nested compressed files and folders. This component can cache the classes found in the class paths in order to perform the next searches faster and uses a <strong>PathScannerClassLoader</strong> which is configurable through the Java coded property &#8216;<strong>class-hunter.default-path-scanner-class-loader</strong>&#8216; of the <a href="/overview-and-configuration/#configuration-2">burningwave.properties</a> file. A <a href="/executing-stringified-source-code/"><strong>Java coded</strong> <strong>property</strong></a><strong> </strong>is a property made of Java code that will be resolved after its compilation at runtime. The default value of the &#8216;class-hunter.default-path-scanner-class-loader&#8217; property, as you can see in the default <a href="/overview-and-configuration/#configuration-2">burningwave.properties</a> file, is the following:</p>
 
 
 
@@ -20,7 +20,7 @@
 
 
 
-<p>&#8230; Which means that the default class loader used by the ClassHunter is the class loader supplied by the method &#8216;<strong>getPathScannerClassLoader</strong>&#8216; of <a href="../overview-and-configuration/index.html#dynamic-component-container"><strong>ComponentContainer</strong></a>. The parent class loader of this class loader can be indicated through the Java coded property &#8216;<strong>path-scanner-class-loader.parent</strong>&#8216; that has the following default value:</p>
+<p>&#8230; Which means that the default class loader used by the ClassHunter is the class loader supplied by the method &#8216;<strong>getPathScannerClassLoader</strong>&#8216; of <a href="/overview-and-configuration/#dynamic-component-container"><strong>ComponentContainer</strong></a>. The parent class loader of this class loader can be indicated through the Java coded property &#8216;<strong>path-scanner-class-loader.parent</strong>&#8216; that has the following default value:</p>
 
 
 
@@ -44,7 +44,7 @@
 
 
 
-<p>The main search configuration object is represented by the <strong>SearchConfig</strong> class to which must be (optionally) passed the paths to be scanned and (optionally too) the query criteria represented by the <strong>ClassCriteria</strong>. If no path will be passed to SearchConfig, the scan will be executed on the paths indicated by the &#8216;<strong>paths.hunters.default-search-config.paths&#8217;</strong> property of the <a href="../overview-and-configuration/index.html#configuration-2">burningwave.properties</a> file that has the following default value:</p>
+<p>The main search configuration object is represented by the <strong>SearchConfig</strong> class to which must be (optionally) passed the paths to be scanned and (optionally too) the query criteria represented by the <strong>ClassCriteria</strong>. If no path will be passed to SearchConfig, the scan will be executed on the paths indicated by the &#8216;<strong>paths.hunters.default-search-config.paths&#8217;</strong> property of the <a href="/overview-and-configuration/#configuration-2">burningwave.properties</a> file that has the following default value:</p>
 
 
 

@@ -1,5 +1,5 @@
 <div class="wp-block-column">
-<p>In order to find all classes of the classpath  by using the&nbsp;<strong><a href="../in-depth-look-to-and-configuration-guide/index.html">ClassHunter</a></strong>, we must add the following dependency to our <em>pom.xml</em>: </p>
+<p>In order to find all classes of the classpath  by using the&nbsp;<strong><a href="/in-depth-look-to-and-configuration-guide/">ClassHunter</a></strong>, we must add the following dependency to our <em>pom.xml</em>: </p>
 
 <%@include file="burningwave-core-import.jsp"%>
 
