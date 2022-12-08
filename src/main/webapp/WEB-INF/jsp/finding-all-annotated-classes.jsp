@@ -1,5 +1,5 @@
 <div class="wp-block-column">
-<p>In order to find all annotated classes by using the&nbsp;<strong><a href="../in-depth-look-to-and-configuration-guide/index.html">ClassHunter</a></strong>,  we must add the following dependency to our <em>pom.xml</em>:</p>
+<p>In order to find all annotated classes by using the&nbsp;<strong><a href="/the-class-hunter-in-depth-look-to-and-configuration-guide/">ClassHunter</a></strong>,  we must add the following dependency to our <em>pom.xml</em>:</p>
 
 
 <%@include file="common/burningwave-core-import.jsp"%>
