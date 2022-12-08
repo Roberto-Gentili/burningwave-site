@@ -41,11 +41,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 @CrossOrigin
 public class RootController {
-	private static final org.slf4j.Logger logger;
-
-    static {
-    	logger = org.slf4j.LoggerFactory.getLogger(RootController.class);
-    }
 
     @GetMapping
     public String loadIndex(HttpServletRequest request, Model model) {

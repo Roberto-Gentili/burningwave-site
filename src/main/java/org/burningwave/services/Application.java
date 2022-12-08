@@ -224,12 +224,11 @@ public class Application extends SpringBootServletInitializer {
 	@Bean("applicationSelfConnector")
 	public SelfConnector applicationSelfConnector(
 		Application application,
-		@Qualifier("cache") SimpleCache cache,
 		@Qualifier("applicationSelfConnector.config") Map<String, String> configMap
 	) {
 		Map<String, Object> configuration = new HashMap<>();
 		configuration.putAll(configMap);
-		return new SelfConnector(application, cache, configuration);
+		return new SelfConnector(application, configuration);
 	}
 
 
@@ -317,6 +316,7 @@ public class Application extends SpringBootServletInitializer {
 		public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
 			return container -> {
 				container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/"));
+				container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/"));
 			};
 		}
 
@@ -328,9 +328,9 @@ public class Application extends SpringBootServletInitializer {
 	    final HttpEntity<String> entity;
 	    final Supplier<String> getStatsTotalDownloadsUriComponentsBuilder;
 
-	    public SelfConnector(Application application, SimpleCache cache, Map<String, Object> configMap) {
+	    public SelfConnector(Application application, Map<String, Object> configMap) {
 	    	restTemplate = new RestTemplate();
-	        entity = new HttpEntity<String>(new HttpHeaders());
+	        entity = new HttpEntity<>(new HttpHeaders());
 	        getStatsTotalDownloadsUriComponentsBuilder = () -> {
 	        	return application.getURL("/miscellaneous-services/stats/total-downloads?groupId=org.burningwave&artifactId=core");
 	        };
@@ -363,7 +363,7 @@ public class Application extends SpringBootServletInitializer {
 		@Bean("cache")
 		public SimpleCache cache(
 			@Qualifier("cacheConfig") Map<String, String> configMap
-		) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
+		) throws IllegalArgumentException, SecurityException {
 			Map<String, Object> configuration = new HashMap<>();
 			configuration.putAll(configMap);
 			return new DBBasedCache(configuration);
