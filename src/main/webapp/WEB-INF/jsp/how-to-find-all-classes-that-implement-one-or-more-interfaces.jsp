@@ -2,7 +2,7 @@
 <p>In order to find all classes that implement one or more interfaces by using the&nbsp;<strong><a href="/the-class-hunter-in-depth-look-to-and-configuration-guide/">ClassHunter</a></strong>, we must add the following dependency to our <em>pom.xml</em>:</p>
 
 
-<%@include file="burningwave-core-import.jsp"%>
+<%@include file="common/burningwave-core-import.jsp"%>
 
 
 <p>Then let&#8217;s look for all classes that implement java.io.Closeable or java.io.Serializable interface:</p>

@@ -2,7 +2,7 @@
 <p>For this purpose is necessary the use of <strong>ClassFactory</strong> component and of the <strong>sources generating components</strong> but, first of all, we must add to our pom.xml the following dependency:</p>
 
 
-<%@include file="burningwave-core-import.jsp"%>
+<%@include file="common/burningwave-core-import.jsp"%>
 
 
 <p>Once the sources have been set in <strong>UnitSourceGenerator</strong> objects, they must be passed to  <strong>loadOrBuildAndDefine </strong>method of ClassFactory with the ClassLoader where you want to define new generated classes. This method performs the following operations: tries to load all the classes present in the UnitSourceGenerator through the class loader, if at least one of these is not found it proceeds to compiling all the UnitSourceGenerators and uploading their classes on class loader: <strong>in this case, keep in mind that if a class with the same name was previously loaded by the class loader, the compiled class will not be uploaded</strong>.  <strong>If you need more information you can</strong>:</p>

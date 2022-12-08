@@ -2,7 +2,7 @@
 <p>In order to find all classes in a package in Java we need to use the <strong><a href="/the-class-hunter-in-depth-look-to-and-configuration-guide/">ClassHunter</a></strong>. So let&#8217;s start by adding the following dependency to our <em>pom.xml</em>:</p>
 
 
-<%@include file="burningwave-core-import.jsp"%>
+<%@include file="common/burningwave-core-import.jsp"%>
 
 
 <p>Then next steps are the following:</p>

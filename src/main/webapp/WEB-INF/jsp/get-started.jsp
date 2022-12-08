@@ -19,7 +19,7 @@
 <p class="has-text-color has-text-align-left has-vivid-red-color"><strong>with Apache Maven</strong>:  <br></p>
 
 
-<%@include file="burningwave-core-import.jsp"%>
+<%@include file="common/burningwave-core-import.jsp"%>
 
 
 <p>&#8230; And now, the code: let&#8217;s retrieve all classes whose package name contains &#8220;springframework&#8221; string in the runtime class paths!</p>

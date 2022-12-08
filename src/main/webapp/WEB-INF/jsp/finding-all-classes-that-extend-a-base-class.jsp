@@ -2,7 +2,7 @@
 <p>In order to find all classes that extend a base class  by using the&nbsp;<strong><a href="/the-class-hunter-in-depth-look-to-and-configuration-guide/">ClassHunter</a></strong>,  we must add to our <em>pom.xml</em> the following dependency:</p>
 
 
-<%@include file="burningwave-core-import.jsp"%>
+<%@include file="common/burningwave-core-import.jsp"%>
 
 
 <p>So let&#8217;s look for all classes that extend java.util.AbstractList: </p>

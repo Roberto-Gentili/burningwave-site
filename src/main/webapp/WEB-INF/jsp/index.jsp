@@ -22,7 +22,7 @@
 	
 	<jsp:include page="${contentPath}.header.jsp" />
 	
-	<%@include file="common-header.jsp"%>
+	<%@include file="common/header.jsp"%>
 	
 </head>
 

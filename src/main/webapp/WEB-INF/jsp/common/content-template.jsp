@@ -19,9 +19,9 @@
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <link rel="pingback" href="xmlrpc.php">
 	
-	<jsp:include page="${contentPath}.header.jsp" />
+	<jsp:include page="../${contentPath}.header.jsp" />
 	
-	<%@include file="common-header.jsp"%>
+	<%@include file="header.jsp"%>
 	
 </head>
 
@@ -68,7 +68,7 @@
 						<c:choose>
   							<c:when test="${empty rightMenuDisabled}">
 	  							<div class="wp-block-columns has-2-columns w-two-one-use-case">
-									<jsp:include page="${contentPath}.jsp" />
+									<jsp:include page="../${contentPath}.jsp" />
 									<div class="wp-block-column">
 										<div replace="/right-menu.html" />
 										<p></p>
@@ -76,7 +76,7 @@
 								</div>
   							</c:when>
   							<c:otherwise>
-  								<jsp:include page="${contentPath}.jsp" />
+  								<jsp:include page="../${contentPath}.jsp" />
 							</c:otherwise>
 						</c:choose>
 					</div>
