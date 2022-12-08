@@ -59,6 +59,7 @@ public class RootController {
 			url.substring(0, url.lastIndexOf("/"));
     	model.addAttribute("basePath", basePath);
     	model.addAttribute("contentPath", contentPath);
+    	model.addAttribute("currentPath", basePath + "/" + contentPath + "/");
         return mainLayout;
 	}
 
