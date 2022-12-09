@@ -6,12 +6,12 @@
 <%@include file="common/burningwave-core-import.jsp"%>
 
 
-<p>In the following example we are going to show how to retrieve strings or objects from&nbsp;<strong><a href="../overview-and-configuration/index.html#configuration-2">burningwave.properties</a></strong>&nbsp;file and from maps. <strong><a href="../overview-and-configuration/index.html#configuration-2">burningwave.properties</a></strong>&nbsp;file:</p>
+<p>In the following example we are going to show how to retrieve strings or objects from&nbsp;<strong><a href="/overview-and-configuration/#configuration-2">burningwave.properties</a></strong>&nbsp;file and from maps. <strong><a href="/overview-and-configuration/#configuration-2">burningwave.properties</a></strong>&nbsp;file:</p>
 
 
 
 <pre class="EnlighterJSRAW" data-enlighter-language="ini" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">code-block-1=\
-    ${code-block-2}\
+    $&#123;code-block-2&#125;\
     return (T)Date.from(zonedDateTime.toInstant());
 code-block-2=\
     LocalDateTime localDateTime = (LocalDateTime)parameter[0];\
@@ -37,9 +37,9 @@ import org.burningwave.core.io.PathHelper;
 import org.burningwave.core.iterable.IterableObjectHelper.ResolveConfig;
 
 @SuppressWarnings("unused")
-public class ItemFromMapRetriever {
+public class ItemFromMapRetriever &#123;
     
-    public void execute() throws IOException {
+    public void execute() throws IOException &#123;
         ComponentSupplier componentSupplier = ComponentContainer.getInstance();
         PathHelper pathHelper = componentSupplier.getPathHelper();
         Properties properties = new Properties();
@@ -50,8 +50,8 @@ public class ItemFromMapRetriever {
         );
 
         Map&lt;Object, Object> map = new HashMap&lt;>();
-        map.put("class-loader-01", "${class-loader-02}");
-        map.put("class-loader-02", "${class-loader-03}");
+        map.put("class-loader-01", "$&#123;class-loader-02&#125;");
+        map.put("class-loader-02", "$&#123;class-loader-03&#125;");
         map.put("class-loader-03", Thread.currentThread().getContextClassLoader().getParent());
         ClassLoader parentClassLoader = IterableObjectHelper.resolveValue(
             ResolveConfig.forNamedKey("class-loader-01")
@@ -59,7 +59,7 @@ public class ItemFromMapRetriever {
         );
         
         map.clear();
-        map.put("class-loaders", "${class-loader-02};${class-loader-03};");
+        map.put("class-loaders", "$&#123;class-loader-02&#125;;$&#123;class-loader-03&#125;;");
         map.put("class-loader-02", Thread.currentThread().getContextClassLoader());
         map.put("class-loader-03", Thread.currentThread().getContextClassLoader().getParent());
         Collection&lt;ClassLoader> classLoaders = IterableObjectHelper.resolveValues(
@@ -67,10 +67,10 @@ public class ItemFromMapRetriever {
             .on(map)
             .withValuesSeparator(";")
         );
-    }
+    &#125;
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException &#123;
         new ItemFromMapRetriever().execute();
-    }
-}</pre>
+    &#125;
+&#125;</pre>
 </div>
