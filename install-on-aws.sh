@@ -1,5 +1,5 @@
 sudo yum update
-sudo yum install java-1.8.0-openjdk-devel
+sudo yum install -y java-1.8.0-openjdk-devel
 wget https://dlcdn.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
 sudo tar xf ./apache-maven-*.tar.gz -C /opt
 sudo ln -s /opt/apache-maven-3.6.3 /opt/maven
@@ -11,7 +11,7 @@ sudo mv maven.sh /etc/profile.d/
 rm apache-maven-3.6.3-bin.tar.gz
 sudo chmod +x /etc/profile.d/maven.sh
 source /etc/profile.d/maven.sh
-sudo yum install git-all
+sudo yum install -y git-all
 git clone https://github.com/Roberto-Gentili/burningwave-site.git
 cd burningwave-site
 mvn clean dependency:list install
@@ -30,7 +30,7 @@ screen -d -m sudo java \
 #For certificate:
 wget -O epel.rpm –nv https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum install -y ./epel.rpm
-sudo yum install python2-certbot
+sudo yum install -y python2-certbot
 sudo certbot-2 certonly --manual
 sudo chmod 755 /etc/letsencrypt/archive
 sudo chmod 755 /etc/letsencrypt/archive/www.burningwave.org/*
