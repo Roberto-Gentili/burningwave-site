@@ -1,3 +1,4 @@
+sudo yum update
 sudo yum install java-1.8.0-openjdk-devel
 wget https://dlcdn.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
 sudo tar xf ./apache-maven-*.tar.gz -C /opt
@@ -12,7 +13,7 @@ sudo chmod +x /etc/profile.d/maven.sh
 source /etc/profile.d/maven.sh
 sudo yum install git-all
 git clone https://github.com/Roberto-Gentili/burningwave-site.git
-cd miscellaneous-services
+cd burningwave-site
 mvn clean dependency:list install
 screen -d -m sudo java \
 -Dspring.profiles.active=burningwave,ssl \
