@@ -25,6 +25,7 @@ screen -d -m sudo java \
 --ORG_BURNINGWAVE_NEXUS_AUTHORIZATION_TOKEN=yourToken \
 --SCHEDULED_OPERATIONS_PING_CRON=- \
 --SERVER_SSL_KEY_STORE=config/keystore.p12
+--SERVER_SSL_KEY_PASSWORD=changeit
 
 #For certificate:
 wget -O epel.rpm –nv https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -32,6 +33,8 @@ sudo yum install -y ./epel.rpm
 sudo yum install python2-certbot
 sudo certbot-2 certonly --manual
 sudo chmod 755 /etc/letsencrypt/archive
+sudo chmod 755 /etc/letsencrypt/archive/www.burningwave.org/*
 sudo chmod 755 /etc/letsencrypt/live
-cd /etc/letsencrypt/archive/www.burningwave.org
-sudo openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out /home/ec2-user/burningwave-site/config/keystore.p12 -name burningwave.site -CAfile chain.pem -caname root
+rm ./config/keystore.p12
+sudo openssl pkcs12 -export -in /etc/letsencrypt/live/www.burningwave.org/fullchain.pem -inkey /etc/letsencrypt/live/www.burningwave.org/privkey.pem \
+-out /home/ec2-user/burningwave-site/config/keystore.p12 -name burningwave.site -CAfile chain.pem -caname root
