@@ -58,7 +58,7 @@ import io.swagger.v3.oas.annotations.info.Info;
     )
 )
 public class RestController {
-	private final static org.slf4j.Logger logger;
+	private static final org.slf4j.Logger logger;
 
 	private NexusConnector.Group nexusConnectorGroup;
 	private GitHubConnector gitHubConnector;
