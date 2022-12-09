@@ -52,11 +52,6 @@ public class RootController {
     	return view(request, model, !path.equals("index") ? "common/content-template" : path, path);
     }
 
-    @GetMapping("/.well-known/acme-challenge/t5fJBDW2HFfstOhdF1_l1mkvJ1nv6j8iuvhsLkj25i8")
-    public String response() {
-    	return "t5fJBDW2HFfstOhdF1_l1mkvJ1nv6j8iuvhsLkj25i8.H7cZvzPuO9HazrVQAY6fJp54Kv3CJoBhxZnpci7Ui48";
-	}
-
 	private String view(HttpServletRequest request, Model model, String mainLayout, String contentPath) {
 		String url = request.getRequestURL().toString();
     	String basePath = url.contains(contentPath) ?
