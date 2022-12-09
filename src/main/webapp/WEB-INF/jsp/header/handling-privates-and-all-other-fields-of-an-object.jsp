@@ -4,7 +4,6 @@
 
 <title>Handling privates and all other fields of an object in Java</title>
 <meta name="description" content="Handling privates and all other fields of an object" />
-<meta property="og:locale" content="en_GB" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Handling privates and all other fields of an object in Java" />
 <meta property="og:description" content="Handling privates and all other fields of an object" />

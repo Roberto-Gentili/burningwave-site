@@ -7,3 +7,4 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="How to compile sources at runtime in Java" />
 <meta property="og:description" content="Here you can find how to compile generated sources at runtime" />
+<meta property="article:modified_time" content="2023-01-01T00:00:00+00:00" />

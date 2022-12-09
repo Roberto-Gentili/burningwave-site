@@ -7,3 +7,4 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Iterating collections and arrays in parallel by setting thread priority - Burningwave" />
 <meta property="og:description" content="Iterating collections and arrays in parallel" />
+<meta property="article:modified_time" content="2023-01-01T00:00:00+00:00" />

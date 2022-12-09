@@ -7,3 +7,4 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Retrieving placeholdered items from map and properties file in Java" />
 <meta property="og:description" content="Retrieving placeholdered items from map and properties file" />
+<meta property="article:modified_time" content="2023-01-01T00:00:00+00:00" />

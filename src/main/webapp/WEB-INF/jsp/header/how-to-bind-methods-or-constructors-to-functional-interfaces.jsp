@@ -7,3 +7,4 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="How to bind methods or constructors to functional interfaces" />
 <meta property="og:description" content="Here you can find how to bind methods or constructors to functional interfaces in Java by using the FunctionalInterfaceFactory" />
+<meta property="article:modified_time" content="2023-01-01T00:00:00+00:00" />
