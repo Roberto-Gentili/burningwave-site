@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
 <p>With&nbsp;<strong>UnitSourceGenerator</strong>&nbsp;you can generate source code and store it on the drive.  first of all, we must add to our pom.xml the following dependency:</p>
 
