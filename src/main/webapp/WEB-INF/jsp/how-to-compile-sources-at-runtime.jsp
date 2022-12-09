@@ -1,6 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
-<p class="has-2-columns w-two-one-use-case">Before compiling sources at runtime you must create them: to do this follow <strong><a href="../how-to-generate-sources-at-runtime/index.html">this guide</a></strong>. If you need to compile the sources and load the generated classes at runtime it is suggested to use the <strong><a href="../generating-classes-at-runtime-and-invoking-their-methods-with-and-without-the-use-of-reflection/index.html">ClassFactory</a></strong>, otherwise if you just need to compile the sources you can use the <strong>JavaMemoryCompiler</strong> as follow:</p>
+<p class="has-2-columns w-two-one-use-case">Before compiling sources at runtime you must create them: to do this follow <strong><a href="/how-to-generate-sources-at-runtime/">this guide</a></strong>. If you need to compile the sources and load the generated classes at runtime it is suggested to use the <strong><a href="/generating-classes-at-runtime-and-invoking-their-methods-with-and-without-the-use-of-reflection/">ClassFactory</a></strong>, otherwise if you just need to compile the sources you can use the <strong>JavaMemoryCompiler</strong> as follow:</p>
 
 
 
