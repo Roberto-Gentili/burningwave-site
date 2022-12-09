@@ -1937,7 +1937,7 @@ body, .container-fluid {
 
 @media (min-width: 768px) {
 	.navbar-fixed-top .navbar-collapse {
-		padding-left: 10%;
+		padding-left: 21%;
 		min-width:108%;
 	}
 	.container>.navbar-header {
