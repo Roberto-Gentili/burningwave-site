@@ -77,6 +77,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpEntity;
@@ -250,9 +251,9 @@ public class Application extends SpringBootServletInitializer {
 
     @Bean
     @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
-    public ServletWebServerFactory servletContainer() {
+    public ServletWebServerFactory servletContainer(Environment environment) {
         Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-        connector.setPort(80);
+        connector.setPort(Integer.valueOf(environment.getProperty("server.ssl.http.port")));
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
         tomcat.addAdditionalTomcatConnectors(connector);
         return tomcat;
