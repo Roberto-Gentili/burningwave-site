@@ -46,7 +46,7 @@ paths.my-jar=$&#123;paths.my-collection-3&#125;/../some.jar;</pre>
 
 
 
-<p>We can also use a&nbsp;<a href="../reaching-a-resource-of-the-file-system/index.html"><strong>FileSystemItem</strong></a>&nbsp;listing (<strong>FSIL</strong>) expression and, for example, create a path collection of all absolute path of all classes of the runtime class paths: </p>
+<p>We can also use a&nbsp;<a href="/reaching-a-resource-of-the-file-system/"><strong>FileSystemItem</strong></a>&nbsp;listing (<strong>FSIL</strong>) expression and, for example, create a path collection of all absolute path of all classes of the runtime class paths: </p>
 
 
 
