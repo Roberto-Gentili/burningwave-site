@@ -58,6 +58,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBContext;
@@ -90,6 +92,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SuppressWarnings("unchecked")
 public class NexusConnector {
 	private final static org.slf4j.Logger logger;
+	private static Pattern latestReleasePattern;
 
 	private RestTemplate restTemplate;
 	private HttpEntity<String> entity;
@@ -103,18 +106,24 @@ public class NexusConnector {
     private Utility utility;
 
 
+
     static {
     	logger = org.slf4j.LoggerFactory.getLogger(NexusConnector.class);
+    	latestReleasePattern = Pattern.compile("<latestRelease>(.*?)<\\/latestRelease>");
     }
 
-    public NexusConnector(RestTemplate restTemplate, SimpleCache cache, Utility utility, Configuration nexusConfiguration) throws JAXBException, ParseException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, JsonMappingException, JsonProcessingException {
+    public NexusConnector(RestTemplate restTemplate, SimpleCache cache, Utility utility, Configuration nexusConfiguration) throws JAXBException, ParseException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, JsonProcessingException {
     	this.restTemplate = restTemplate;
     	this.cache = cache;
     	this.utility = utility;
     	HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", nexusConfiguration.getAuthorization().getToken().getType() + " " + nexusConfiguration.getAuthorization().getToken().getValue());
         entity = new HttpEntity<String>(headers);
-        jaxbContext = JAXBContext.newInstance(GetGroupListOutput.class, GetArtifactListOutput.class, GetStatsOutput.class);
+        jaxbContext = JAXBContext.newInstance(
+    		GetGroupListOutput.class,
+    		GetArtifactListOutput.class,
+    		GetStatsOutput.class
+    	);
 		String username = new String(
 			Base64.getDecoder().decode(
 				entity.getHeaders().get("Authorization").iterator().next().split("\\s")[1]
@@ -357,6 +366,30 @@ public class NexusConnector {
 			(isMonthsEqualsToDefaultValue(input) ?
 				"diffFromToday":
 				input.getMonths());
+	}
+
+	public String callGetLatestRelease(String groupId, String artifactId) {
+		UriComponents uriComponents =
+			getStatsUriComponentsBuilder.get()
+			.path("/service/local/lucene/search")
+			.queryParam("g", groupId)
+			.queryParam("a", artifactId)
+			.queryParam("collapseresults", "true")
+			.build();
+		ResponseEntity<String> response = restTemplate.exchange(
+			uriComponents.toString(),
+			HttpMethod.GET,
+			entity,
+			String.class
+		);
+		String responseBody = response.getBody();
+		if (responseBody != null) {
+			Matcher latestReleaseFinder = latestReleasePattern.matcher(responseBody);
+			if (latestReleaseFinder.find()) {
+				return latestReleaseFinder.group(1);
+			}
+		}
+		return null;
 	}
 
 	private GetArtifactListOutput callGetArtifactListRemote(GetStatsInput input) throws JAXBException {
@@ -693,8 +726,26 @@ public class NexusConnector {
 			}
 		}
 
+		public String getLatestRelease(String artifactId) {
+			for (NexusConnector nexusConnector : nexusConnectors) {
+				for (Project project : nexusConnector.allProjects) {
+					String[] artifactIdAsSplittedString = artifactId.split(":");
+					if (project.getName().equals(artifactIdAsSplittedString[0]) &&
+						nexusConnector.containsArtifactNames(project, artifactIdAsSplittedString[1])
+					) {
+						return nexusConnector.callGetLatestRelease(
+							project.getName(),
+							artifactIdAsSplittedString[1]
+						);
+					}
+				}
+			}
+			return null;
+		}
+
 		public GetAllStatsOutput getAllStats(Set<String> groupIds, Set<String> aliases, Set<String> artifactIds, Date startDate, Integer months)
-				throws ParseException, JAXBException, InterruptedException, ExecutionException {
+			throws ParseException, JAXBException, InterruptedException, ExecutionException
+		{
 			Collection<CompletableFuture<GetStatsOutput>> outputSuppliers = new ArrayList<>();
 			for (NexusConnector nexusConnector : nexusConnectors) {
 				Set<String> artifactsToBeLoaded = new LinkedHashSet<>();
@@ -827,6 +878,7 @@ public class NexusConnector {
 			private Collection<NexusConnector.Configuration> connector;
 
 		}
+
 	}
 
 	@lombok.NoArgsConstructor
