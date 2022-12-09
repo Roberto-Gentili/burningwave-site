@@ -106,7 +106,7 @@ public class RestController {
 			try {
 				return nexusConnectorGroup.getLatestRelease(
 					artifactId
-				);
+				).getValue();
 			} catch (NullPointerException exc){
 				if (nexusConnectorGroup == null) {
 					logger.warn("The Nexus connector group is disabled");

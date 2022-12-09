@@ -99,7 +99,7 @@ public class NexusConnector {
 	private JAXBContext jaxbContext;
 	private Supplier<UriComponentsBuilder> getStatsUriComponentsBuilder;
 	private Collection<Project> allProjects;
-	private Map<String, GetStatsOutput> inMemoryCache;
+	private Map<String, Object> inMemoryCache;
 	private long timeToLiveForInMemoryCache;
 	private int dayOfTheMonthFromWhichToLeave;
     private SimpleCache cache;
@@ -249,7 +249,7 @@ public class NexusConnector {
 
     public GetStatsOutput getStats(GetStatsInput input) {
 		String key = getKey(input);
-		GetStatsOutput output = inMemoryCache.get(key);
+		GetStatsOutput output = (GetStatsOutput)inMemoryCache.get(key);
 		if (output == null) {
 			output = cache.load(key);
 			if (output != null) {
@@ -368,7 +368,39 @@ public class NexusConnector {
 				input.getMonths());
 	}
 
-	public String callGetLatestRelease(String groupId, String artifactId) {
+	public GetLatestVersionOutput getLatestRelease(String groupId, String artifactId) {
+		String key = groupId + ":" + artifactId + ".latestRelease";
+		GetLatestVersionOutput output = (GetLatestVersionOutput)inMemoryCache.get(key);
+		if (output == null) {
+			output = cache.load(key);
+			if (output != null) {
+				inMemoryCache.put(key, output);
+			}
+		}
+		if (output != null) {
+			if ((new Date().getTime() - output.getTime().getTime()) <= 600000) {
+    			return output;
+    		}
+		}
+		GetLatestVersionOutput oldOutput = output;
+		return Synchronizer.execute(Objects.getId(this) + key, () -> {
+			GetLatestVersionOutput newOutput;
+			try {
+				newOutput = callGetLatestRelease(groupId, artifactId);
+			} catch (Throwable exc) {
+				if (oldOutput != null) {
+					return oldOutput;
+				}
+				return Throwables.rethrow(exc);
+			}
+    		newOutput.setTime(new Date());
+    		cache.store(key, newOutput);
+			inMemoryCache.put(key, newOutput);
+			return newOutput;
+		});
+	}
+
+	public GetLatestVersionOutput callGetLatestRelease(String groupId, String artifactId) {
 		UriComponents uriComponents =
 			getStatsUriComponentsBuilder.get()
 			.path("/service/local/lucene/search")
@@ -386,10 +418,12 @@ public class NexusConnector {
 		if (responseBody != null) {
 			Matcher latestReleaseFinder = latestReleasePattern.matcher(responseBody);
 			if (latestReleaseFinder.find()) {
-				return latestReleaseFinder.group(1);
+				GetLatestVersionOutput output = new GetLatestVersionOutput();
+				output.setValue(latestReleaseFinder.group(1));
+				return output;
 			}
 		}
-		return null;
+		return new GetLatestVersionOutput();
 	}
 
 	private GetArtifactListOutput callGetArtifactListRemote(GetStatsInput input) throws JAXBException {
@@ -666,6 +700,19 @@ public class NexusConnector {
 
 	}
 
+	@lombok.NoArgsConstructor
+	@lombok.Getter
+	@lombok.Setter
+	@lombok.ToString
+	public static class GetLatestVersionOutput implements Serializable {
+
+		private static final long serialVersionUID = 6761217401866880541L;
+
+		private Date time;
+		private String value;
+
+	}
+
 	public static class Group {
 		private Collection<NexusConnector> nexusConnectors;
 		private Configuration configuration;
@@ -726,14 +773,14 @@ public class NexusConnector {
 			}
 		}
 
-		public String getLatestRelease(String artifactId) {
+		public GetLatestVersionOutput getLatestRelease(String artifactId) {
 			for (NexusConnector nexusConnector : nexusConnectors) {
 				for (Project project : nexusConnector.allProjects) {
 					String[] artifactIdAsSplittedString = artifactId.split(":");
 					if (project.getName().equals(artifactIdAsSplittedString[0]) &&
 						nexusConnector.containsArtifactNames(project, artifactIdAsSplittedString[1])
 					) {
-						return nexusConnector.callGetLatestRelease(
+						return nexusConnector.getLatestRelease(
 							project.getName(),
 							artifactIdAsSplittedString[1]
 						);
