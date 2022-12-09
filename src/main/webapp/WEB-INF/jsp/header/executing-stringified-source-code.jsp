@@ -7,4 +7,4 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Executing stringified source code in Java" />
 <meta property="og:description" content="Here you can find how executing stringified source code in Java" />
-<meta property="article:modified_time" content="2021-11-20T13:59:07+00:00" />
+<meta property="article:modified_time" content="2023-01-01T00:00:00+00:00" />

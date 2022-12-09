@@ -7,4 +7,4 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="How to find all classes that implement one or more interfaces in Java" />
 <meta property="og:description" content="Here how to scan classpath to find all classes that implement one or more interface in Java by using a Burningwave Core scanner: the ClassHunter" />
-<meta property="article:modified_time" content="2021-10-13T08:01:58+00:00" />
+<meta property="article:modified_time" content="2023-01-01T00:00:00+00:00" />

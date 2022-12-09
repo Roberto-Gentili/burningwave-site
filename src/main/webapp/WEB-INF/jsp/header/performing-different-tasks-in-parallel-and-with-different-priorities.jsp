@@ -7,4 +7,4 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Performing tasks in parallel with different priorities in Java" />
 <meta property="og:description" content="Here you can find how performing parallel tasks with different priorities in Java" />
-<meta property="article:modified_time" content="2021-12-09T11:10:23+00:00" />
+<meta property="article:modified_time" content="2023-01-01T00:00:00+00:00" />

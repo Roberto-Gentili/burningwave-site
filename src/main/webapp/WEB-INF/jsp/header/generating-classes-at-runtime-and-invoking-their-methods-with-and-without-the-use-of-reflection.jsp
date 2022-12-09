@@ -7,4 +7,4 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Generating classes at runtime in Java" />
 <meta property="og:description" content="Here you can find how generating multiple classes at runtime in Java and how invoking their methods with and without the use of Reflection" />
-<meta property="article:modified_time" content="2021-09-21T05:19:02+00:00" />
+<meta property="article:modified_time" content="2023-01-01T00:00:00+00:00" />

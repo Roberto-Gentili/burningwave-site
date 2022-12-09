@@ -7,4 +7,4 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Scan the classpath: how to find all classes of the classpath in Java" />
 <meta property="og:description" content="Here you can find how to search for all classes of the classpath in Java by using a Burningwave Core scanner: the ClassHunter" />
-<meta property="article:modified_time" content="2021-10-13T07:58:07+00:00" />
+<meta property="article:modified_time" content="2023-01-01T00:00:00+00:00" />

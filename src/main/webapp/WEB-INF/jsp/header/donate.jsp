@@ -6,4 +6,4 @@
 <title>Donate to Burningwave... - Burningwave</title>
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Donate to Burningwave... - Burningwave" />
-<meta property="article:modified_time" content="2022-01-05T10:46:01+00:00" />
+<meta property="article:modified_time" content="2023-01-01T00:00:00+00:00" />

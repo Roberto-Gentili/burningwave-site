@@ -7,4 +7,4 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Burningwave Core - Architectural overview and configuration" />
 <meta property="og:description" content="Here you can find informations about Burningwave Core architecture and configuration" />
-<meta property="article:modified_time" content="2022-11-17T11:45:42+00:00" />
+<meta property="article:modified_time" content="2023-01-01T00:00:00+00:00" />
