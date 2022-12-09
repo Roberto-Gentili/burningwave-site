@@ -1,5 +1,6 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
-<p>Through the underlying configurable <strong><a href="../performing-different-tasks-in-parallel-and-with-different-priorities/index.html">BackgroundExecutor</a></strong> the <strong>IterableObjectHelper</strong> component is able to iterate a collection or an array in parallel and execute an action on each iterated item giving also the ability to set the threads priority. Before starting to use this component  we need to add the following dependency to our <em>pom.xml</em>:</p>
+<p>Through the underlying configurable <strong><a href="/performing-different-tasks-in-parallel-and-with-different-priorities/">BackgroundExecutor</a></strong> the <strong>IterableObjectHelper</strong> component is able to iterate a collection or an array in parallel and execute an action on each iterated item giving also the ability to set the threads priority. Before starting to use this component  we need to add the following dependency to our <em>pom.xml</em>:</p>
 
 
 <%@include file="common/burningwave-core-import.jsp"%>

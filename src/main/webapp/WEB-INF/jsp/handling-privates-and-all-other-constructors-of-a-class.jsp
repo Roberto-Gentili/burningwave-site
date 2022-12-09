@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
 <p>For constructors handling we are going to use&nbsp;<strong>Constructors</strong>&nbsp;component. Constructors component uses to cache all constructors and all method handles for faster access. To start we need to add the following dependency to our&nbsp;<em>pom.xml</em>:</p>
 

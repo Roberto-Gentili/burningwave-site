@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
 <p>It is possible to execute stringified source code by using the&nbsp;<strong>CodeExecutor</strong>&nbsp;in three three different ways:</p>
 

@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
 <p>In order to find all classes in a package in Java we need to use the <strong><a href="/the-class-hunter-in-depth-look-to-and-configuration-guide/">ClassHunter</a></strong>. So let&#8217;s start by adding the following dependency to our <em>pom.xml</em>:</p>
 

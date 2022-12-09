@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
 <a id="in-deep-look" class="anchor" href="#in-deep-look" aria-hidden="true"></a>
 

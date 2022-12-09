@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
 <p>Through&nbsp;<strong>FileSystemItem</strong>&nbsp;you can reach a resource of the file system even if it is contained in a nested supported (<strong>zip, jar, war, ear, jmod</strong>) compressed archive and obtain the content of it or other informations such as if it is a folder or a file or a compressed archive or if it is a compressed entry or obtain, if it is a folder or a compressed archive, the direct children or all nested children or a filtered collection of them. To start we need to add the following dependency to our&nbsp;<em>pom.xml</em>:</p>
 

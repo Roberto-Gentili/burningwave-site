@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
 <p>In order to find where a class is loaded from by using the&nbsp;<strong>ClassPathHunter</strong>,&nbsp;we need to initially add the following dependency to our <em>pom.xm</em>l:</p>
 

@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
 <p>For fields handling we are going to use&nbsp;<strong>Fields</strong>&nbsp;component; Fields component uses to cache all fields for faster access. To start we need to add the following dependency to our&nbsp;<em>pom.xml</em>:</p>
 

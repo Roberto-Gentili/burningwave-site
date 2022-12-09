@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
 <p>To bind methods or constructors to functional interfaces we are going to use the&nbsp;<strong>FunctionalInterfaceFactory</strong>. FunctionalInterfaceFactory component uses to cache all generated functional interfaces for faster access. The complete source code of the following examples is available&nbsp;<a href="https://github.com/burningwave/core/tree/master/src/test/java/org/burningwave/core/examples/functionalinterfacefactory"><strong>here</strong></a>. </p>
 

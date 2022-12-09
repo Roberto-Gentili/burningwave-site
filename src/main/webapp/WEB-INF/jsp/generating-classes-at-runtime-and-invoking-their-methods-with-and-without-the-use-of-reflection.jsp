@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="wp-block-column">
 <p>For this purpose is necessary the use of <strong>ClassFactory</strong> component and of the <strong>sources generating components</strong> but, first of all, we must add to our pom.xml the following dependency:</p>
 
