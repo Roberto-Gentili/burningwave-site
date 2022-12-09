@@ -252,7 +252,7 @@ public class Application extends SpringBootServletInitializer {
     @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
     public ServletWebServerFactory servletContainer() {
         Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-        connector.setPort(8080);
+        connector.setPort(80);
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
         tomcat.addAdditionalTomcatConnectors(connector);
         return tomcat;
