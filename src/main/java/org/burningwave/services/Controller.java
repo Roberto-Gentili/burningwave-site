@@ -183,7 +183,7 @@ public class Controller {
 		try {
 			if ((environment.getProperty("application.authorization.token.type") + " " + environment.getProperty("application.authorization.token")).equals(authorizationToken)) {
 				restController.setVisitedPages(newCounterValue);
-				messages.add("Visited pages counter successfully set");
+				messages.add("Visited pages counter successfully set to " + newCounterValue);
 			} else {
 				messages.add("Cannot set visited pages counter: unauthorized");
 			}
