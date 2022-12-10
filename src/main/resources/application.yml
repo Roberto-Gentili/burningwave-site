@@ -86,7 +86,7 @@ scheduled-operations:
      executable: herokuConnector.switchToRemoteApp
    - cron: ${SCHEDULED_OPERATIONS_STORE_VISITED_PAGES_COUNTER_CRON:30 * * * * *}
      zone: ${SCHEDULED_OPERATIONS_STORE_VISITED_PAGES_COUNTER_ZONE:UTC}
-     executable: restController.storeVisitedPageCounter
+     executable: restController.storeVisitedPagesCounter
 
 burningwave:
   core:
