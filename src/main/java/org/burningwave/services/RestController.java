@@ -83,7 +83,7 @@ public class RestController {
 	private GitHubConnector gitHubConnector;
 	private Badge badge;
 	private SimpleCache cache;
-	private Map<String, Object> inMemoryCache;
+	Map<String, Object> inMemoryCache;
 
     static {
     	logger = org.slf4j.LoggerFactory.getLogger(RestController.class);

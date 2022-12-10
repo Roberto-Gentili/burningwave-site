@@ -162,6 +162,7 @@ public class Controller {
 						throw exc;
 					}
 				}
+				restController.inMemoryCache.clear();
 				cache.clear();
 				if (messages.isEmpty()) {
 					messages.add("Cache successfully cleaned");
