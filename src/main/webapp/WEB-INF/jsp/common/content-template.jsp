@@ -84,66 +84,24 @@
 	</div>
 </div>
 
+<%@include file="footer.jsp"%>
 
-	<section id="features" class="features lite ">
-			<div class="container">
-				<div class="row multi-columns-row">
-											<div class="col-sm-4 col-md-4 col-lg-4"><div class="feature"><i class="fa fa-lightbulb-o pull-left featureicon"></i><h4>Flexible</h4><p>It’s possible to search classes by every criteria that your imagination can make by using lambda expressions</p>
-</div></div><div class="col-sm-4 col-md-4 col-lg-4"><div class="feature"><i class="fa fa-database pull-left featureicon"></i><h4>Optimized</h4><p>Scan engine is highly optimized using direct allocated ByteBuffers to avoid heap saturation</p>
-</div></div><div class="col-sm-4 col-md-4 col-lg-4"><div class="feature"><i class="fa fa-unlock pull-left featureicon"></i><h4>Open</h4><p>Burningwave core is an advanced free and open source Java library</p>
-</div></div>									</div>
-			</div>
-		</section>
-
-        <section class="copyright">
-
-            <div class="container">
-
-                <div class="row">
-
-                    <div class="col-md-12">
-
-                        <div class="copyrightinfo">
-
-                            <p>
-                                
-                                &copy;2020 Burningwave - All Rights Reserved
-                                                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <script type="text/javascript">
+<script type="text/javascript">
 jQuery(document).ready(function($){
+	$('#testimonials').parallax("50%", 0.4); 	 $('#calltoaction').parallax("50%", 0.4); 	 $('#newsletter').parallax("50%", 0.4); 
+	$('.flexslider').flexslider({
+	animation: "slide",
+	slideshow: true,
+	slideshowSpeed: parseInt(7)*1000,
+	});
 
-		 $('#testimonials').parallax("50%", 0.4); 	 $('#calltoaction').parallax("50%", 0.4); 	 $('#newsletter').parallax("50%", 0.4); 
-		$('.flexslider').flexslider({
-		animation: "slide",
-		slideshow: true,
-		slideshowSpeed: parseInt(7)*1000,
-		});
-
-		$('.testislider').flexslider({
-		controlNav: true, 
-		animation: "slide",
-		slideshow: true,
-		slideshowSpeed: parseInt(7)*1000,
-		});
+	$('.testislider').flexslider({
+	controlNav: true, 
+	animation: "slide",
+	slideshow: true,
+	slideshowSpeed: parseInt(7)*1000,
+	});
 })	
-</script>
-        
-<div id="fb-root"></div>
-<script type='text/javascript'>
-/* <![CDATA[ */
-var wpcf7 = {"apiSettings":{"root":"https:\/\/www.burningwave.org\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"cached":"1"};
-/* ]]> */
 </script>
 <script type='text/javascript' src='/wp-content/plugins/contact-form-7/includes/js/scriptsb62d.js?ver=5.1.6'></script>
 <script type='text/javascript' src='/wp-content/plugins/counter-number-showcase/assets/js/bootstrap8217.js?ver=5.3.14'></script>
@@ -167,3 +125,6 @@ var wpcf7 = {"apiSettings":{"root":"https:\/\/www.burningwave.org\/wp-json\/cont
 
 </html>
 <script type='text/javascript' src='/js/includeOrReplace.js'></script>
+<script type="text/javascript">
+	showMessages();
+</script>

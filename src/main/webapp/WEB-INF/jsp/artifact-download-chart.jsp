@@ -206,10 +206,10 @@
 	var monthsQueryParam = getQueryParam("months");
 	
 	//var pathname = window.location.pathname;
-	if (messagesContains('<%= org.burningwave.services.MiscController.SWITCH_TO_REMOTE_APP_SUCCESSFUL_MESSAGE %>')) {
+	if (messagesContains('<%= org.burningwave.services.Controller.SWITCH_TO_REMOTE_APP_SUCCESSFUL_MESSAGE %>')) {
 		showMessages();
 		sleep(60000);
-		goToUrl('/miscellaneous-services/stats/artifact-download-chart', 7500);
+		goToUrl('/stats/artifact-download-chart', 7500);
 	} else {
 		loadPageContent();
 		showMessages();

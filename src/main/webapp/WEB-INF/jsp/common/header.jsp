@@ -1,5 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="canonical" href="/index" />
 <meta name="robots" content="index, follow" />
 <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -352,6 +352,20 @@ img.wp-smiley, img.emoji {
 	window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
 	gtag('js', new Date());
-	
 	gtag('config', 'UA-154852845-2');
+</script>
+
+<c:if test="${empty message}">
+    <c:set var="message" scope="page" value="null"/>
+</c:if>
+<script type="text/javascript">
+	var messages = <c:out value="${message}" escapeXml="false" />;
+	function showMessages() {
+		if (messages != null) {
+			for (i = 0; i < messages.length; i++) {
+	            alert(decodeURIComponent(messages[i]));
+	        }
+			messages = null;
+		}
+	}
 </script>

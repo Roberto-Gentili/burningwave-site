@@ -118,291 +118,233 @@
 			</div>
 		</div>
 	</section>
-	<section id="work" class="work lite ">
-		<div class="container">
-			<style>
-#wpsm_counter_b_row_2137 .wpsm_counterbox {
-	text-align: center;
-	margin-top: 40px;
-	margin-bottom: 10px;
-}
+		<section id="work" class="work lite ">
+			<div class="container">
+				<style>
+					#wpsm_counter_b_row_2137 .wpsm_counterbox {
+						text-align: center;
+						margin-top: 40px;
+						margin-bottom: 10px;
+					}
+					
+					#wpsm_counter_b_row_2137 .wpsm_counterbox .wpsm_count-icon {
+						display: block;
+						margin-top: 20px;
+						padding-top: 0px;
+						padding-bottom: 0px;
+						margin-bottom: 0px;
+						margin: 0 auto;
+					}
+					
+					#wpsm_counter_b_row_2137 .wpsm_counterbox .wpsm_count-icon i {
+						font-size: 15px;
+						color: #ff531d;
+					}
+					
+					#wpsm_counter_b_row_2137 .wpsm_counterbox .wpsm_number {
+						font-size: 18px;
+						font-weight: 500;
+						color: #f7bc12;
+						font-family: 'Open Sans';
+						letter-spacing: 2px;
+						margin-top: 20px;
+						line-height: 1.3em;
+						padding-top: 0px;
+						padding-bottom: 0px;
+						margin-bottom: 0px;
+					}
+					
+					#wpsm_counter_b_row_2137 .wpsm_counterbox .wpsm_count-title {
+						font-size: 15px;
+						font-weight: bolder;
+						font-family: 'Open Sans';
+						letter-spacing: 2px;
+						color: ff531d;
+						font-weight: 500;
+						margin-top: 20px;
+						padding-top: 0px;
+						padding-bottom: 0px;
+						margin-bottom: 0px;
+						line-height: 1.3em;
+					}
+				</style>
+				<style>
+					#wpsm_counter_b_row_2137 {
+						position: relative;
+						width: 100%;
+						overflow: hidden;
+						text-align: center;
+					}
+					
+					#wpsm_counter_b_row_2137 .wpsm_row {
+						overflow: hidden;
+						display: block;
+						width: 100%;
+					}
+					
+					#wpsm_counter_b_row_2137 .wpsm_row {
+						overflow: visible;
+					}
+					
+					#wpsm_counter_b_row_2137 .wpsm_counterbox .wpsm_count-title {
+						min-height: 56px;
+					}
+				</style>
 
-#wpsm_counter_b_row_2137 .wpsm_counterbox .wpsm_count-icon {
-	display: block;
-	margin-top: 20px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	margin-bottom: 0px;
-	margin: 0 auto;
-}
-
-#wpsm_counter_b_row_2137 .wpsm_counterbox .wpsm_count-icon i {
-	font-size: 15px;
-	color: #ff531d;
-}
-
-#wpsm_counter_b_row_2137 .wpsm_counterbox .wpsm_number {
-	font-size: 18px;
-	font-weight: 500;
-	color: #f7bc12;
-	font-family: 'Open Sans';
-	letter-spacing: 2px;
-	margin-top: 20px;
-	line-height: 1.3em;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	margin-bottom: 0px;
-}
-
-#wpsm_counter_b_row_2137 .wpsm_counterbox .wpsm_count-title {
-	font-size: 15px;
-	font-weight: bolder;
-	font-family: 'Open Sans';
-	letter-spacing: 2px;
-	color: ff531d;
-	font-weight: 500;
-	margin-top: 20px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	margin-bottom: 0px;
-	line-height: 1.3em;
-}
-</style>
-
-
-			<style>
-#wpsm_counter_b_row_2137 {
-	position: relative;
-	width: 100%;
-	overflow: hidden;
-	text-align: center;
-}
-
-#wpsm_counter_b_row_2137 .wpsm_row {
-	overflow: hidden;
-	display: block;
-	width: 100%;
-}
-
-#wpsm_counter_b_row_2137 .wpsm_row {
-	overflow: visible;
-}
-
-#wpsm_counter_b_row_2137 .wpsm_counterbox .wpsm_count-title {
-	min-height: 56px;
-}
-</style>
-
-			<div class="wpsm_counter_b_row" id="wpsm_counter_b_row_2137">
-				<div>
-					<a id="bw-counters" href="#bw-counters">&nbsp;</a>
-
-					<div class="wpsm_row">
-
-						<div class="wpsm_col-md-4 wpsm_col-sm-6">
-							<div class="wpsm_counterbox">
-
-								<div class="wpsm_count-icon">
-									<i #ff531d class="fa fa-arrow-down"></i>
+				<div class="wpsm_counter_b_row" id="wpsm_counter_b_row_2137">
+					<div>
+						<a id="bw-counters" href="#bw-counters">&nbsp;</a>
+			
+						<div class="wpsm_row">
+			
+							<div class="wpsm_col-md-4 wpsm_col-sm-6">
+								<div class="wpsm_counterbox">
+			
+									<div class="wpsm_count-icon">
+										<i #ff531d class="fa fa-arrow-down"></i>
+									</div>
+									<div class="wpsm_number" style="">
+										<a style="color: unset;"
+											href="/stats/artifact-download-chart?groupId=org.burningwave&groupId=com.github.burningwave">
+											<span class="counter" id="counterId0">&nbsp;</span></a>*
+										<script type="text/javascript"
+											src="/wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
+										<script>
+											setupCounter(
+				                                'counterId0',
+				                                '${basePath}/miscellaneous-services/stats/total-downloads?groupId=org.burningwave&groupId=com.github.burningwave',
+				                                900000,
+				                                0,
+				                                2000
+			                                );
+				                        </script>
+									</div>
+									<h3 class="wpsm_count-title" ff531d>Artifact downloads from
+										Maven Central (monthly update)</h3>
 								</div>
-								<div class="wpsm_number" style="">
-									<a style="color: unset;"
-										href="/miscellaneous-services/stats/artifact-download-chart?groupId=org.burningwave&groupId=com.github.burningwave">
-										<span class="counter" id="counterId0">&nbsp;</span></a>*
-									<script type="text/javascript"
-										src="/wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
-									<script>
-										setupCounter(
-			                                'counterId0',
-			                                '${basePath}/miscellaneous-services/stats/total-downloads?groupId=org.burningwave&groupId=com.github.burningwave',
-			                                900000,
-			                                0,
-			                                2000
-		                                );
-			                        </script>
-								</div>
-								<h3 class="wpsm_count-title" ff531d>Artifact downloads from
-									Maven Central (monthly update)</h3>
 							</div>
 						</div>
-					</div>
-					<div class="wpsm_row">
-						<div class="wpsm_col-md-4 wpsm_col-sm-6">
-							<div class="wpsm_counterbox">
-
-								<div class="wpsm_count-icon">
-									<i #ff531d class="fa fa-star-o"></i>
+						<div class="wpsm_row">
+							<div class="wpsm_col-md-4 wpsm_col-sm-6">
+								<div class="wpsm_counterbox">
+			
+									<div class="wpsm_count-icon">
+										<i #ff531d class="fa fa-star-o"></i>
+									</div>
+									<div class="wpsm_number" style="">
+										<a style="color: unset;" href="https://github.com/burningwave">
+											<span class="counter" id="counterId1">&nbsp;</span></a>*
+										<script type="text/javascript"
+											src="/wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
+										<script>
+				                			setupCounter(
+				                                'counterId1',
+				                                '${basePath}/miscellaneous-services/stats/star-count?' + 
+			                               			'repository=burningwave:core&' +
+			                               			'repository=burningwave:jvm-driver&' +
+			                               			'repository=burningwave:tools&' +
+			                               			'repository=burningwave:reflection&' +
+			                               			'repository=burningwave:graph&',
+				                                900000,
+				                                0,
+				                                2000
+											);
+			                      			</script>
+									</div>
+									<h3 class="wpsm_count-title" ff531d>GitHub stars (daily update)</h3>
 								</div>
-								<div class="wpsm_number" style="">
-									<a style="color: unset;" href="https://github.com/burningwave">
-										<span class="counter" id="counterId1">&nbsp;</span></a>*
-									<script type="text/javascript"
-										src="/wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
-									<script>
-			                			setupCounter(
-			                                'counterId1',
-			                                '${basePath}/miscellaneous-services/stats/star-count?' + 
-	                                			'repository=burningwave:core&' +
-	                                			'repository=burningwave:jvm-driver&' +
-	                                			'repository=burningwave:tools&' +
-	                                			'repository=burningwave:reflection&' +
-	                                			'repository=burningwave:graph&',
-			                                900000,
-			                                0,
-			                                2000
-										);
-                        			</script>
-								</div>
-								<h3 class="wpsm_count-title" ff531d>GitHub stars (daily update)</h3>
 							</div>
-						</div>
-						<div class="wpsm_col-md-4 wpsm_col-sm-6">
-							<div class="wpsm_counterbox">
-
-								<div class="wpsm_count-icon">
-									<i #ff531d class="fa fa-laptop"></i>
+							<div class="wpsm_col-md-4 wpsm_col-sm-6">
+								<div class="wpsm_counterbox">
+			
+									<div class="wpsm_count-icon">
+										<i #ff531d class="fa fa-laptop"></i>
+									</div>
+									<div class="wpsm_number" style="">
+										<span class="counter" id="counterId2">&nbsp;</span>
+										<script type="text/javascript"
+											src="/wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
+										<script>
+											setupCounter(
+				                                'counterId2',
+				                                'rest/pages-visited-count5937.json?withoutIncrement=true',
+				                                30000,
+				                                0,
+				                                2000                            );
+				                        </script>
+									</div>
+									<h3 class="wpsm_count-title" ff531d>Pages visited</h3>
+			
 								</div>
-								<div class="wpsm_number" style="">
-									<span class="counter" id="counterId2">&nbsp;</span>
-									<script type="text/javascript"
-										src="/wp-content/plugins/counter-number-showcase/assets/js/counter_nscript.js"></script>
-									<script>
-										setupCounter(
-			                                'counterId2',
-			                                'rest/pages-visited-count5937.json?withoutIncrement=true',
-			                                30000,
-			                                0,
-			                                2000                            );
-			                        </script>
-								</div>
-								<h3 class="wpsm_count-title" ff531d>Pages visited</h3>
-
 							</div>
+			
 						</div>
-
 					</div>
 				</div>
-			</div>
 
-			<div style="background: #e54d1d;">
-				<hr>
-			</div>
-			<div class="row">
-				<div class="col-md-12 heading"></div>
-				<div class="col-md-12"></div>
-			</div>
-		</div>
-	</section>
-
-
-	<section id="features" class="features lite ">
-		<div class="container">
-			<div class="row multi-columns-row">
-				<div class="col-sm-4 col-md-4 col-lg-4">
-					<div class="feature">
-						<i class="fa fa-lightbulb-o pull-left featureicon"></i>
-						<h4>Flexible</h4>
-						<p>It’s possible to search classes by every criteria that your
-							imagination can make by using lambda expressions</p>
-					</div>
+				<div style="background: #e54d1d;">
+					<hr>
 				</div>
-				<div class="col-sm-4 col-md-4 col-lg-4">
-					<div class="feature">
-						<i class="fa fa-database pull-left featureicon"></i>
-						<h4>Optimized</h4>
-						<p>Scan engine is highly optimized using direct allocated
-							ByteBuffers to avoid heap saturation</p>
-					</div>
-				</div>
-				<div class="col-sm-4 col-md-4 col-lg-4">
-					<div class="feature">
-						<i class="fa fa-unlock pull-left featureicon"></i>
-						<h4>Open</h4>
-						<p>Burningwave core is an advanced free and open source Java
-							library</p>
-					</div>
+				<div class="row">
+					<div class="col-md-12 heading"></div>
+					<div class="col-md-12"></div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<section class="copyright">
 
-		<div class="container">
+		<%@include file="common/footer.jsp"%>
 
-			<div class="row">
+		<script type="text/javascript">
+			jQuery(document).ready(function($){
+			$('#testimonials').parallax("50%", 0.4); 	 $('#calltoaction').parallax("50%", 0.4); 	 $('#newsletter').parallax("50%", 0.4); 
+			$('.flexslider').flexslider({
+			animation: "slide",
+			slideshow: true,
+			slideshowSpeed: parseInt(7)*1000,
+			});
+		
+			$('.testislider').flexslider({
+			controlNav: true, 
+			animation: "slide",
+			slideshow: true,
+			slideshowSpeed: parseInt(7)*1000,
+			});
+		})	
+		</script>
+		<script type='text/javascript'
+			src='wp-content/plugins/contact-form-7/includes/js/scriptsb62d.js?ver=5.1.6'></script>
+		<script type='text/javascript'
+			src='wp-content/plugins/counter-number-showcase/assets/js/bootstrap8217.js?ver=5.3.14'></script>
+		<script type='text/javascript'
+			src='wp-content/plugins/counter-number-showcase/assets/js/counter_nscript8217.js?ver=5.3.14'></script>
+		<script type='text/javascript'
+			src='wp-content/plugins/counter-number-showcase/assets/js/waypoints.min8217.js?ver=5.3.14'></script>
+		<script type='text/javascript'
+			src='wp-content/plugins/counter-number-showcase/assets/js/jquery.counterup.min8217.js?ver=5.3.14'></script>
+		<script type='text/javascript'
+			src='wp-includes/js/jquery/ui/effect.mine899.js?ver=1.11.4'></script>
+		<script type='text/javascript'
+			src='wp-content/themes/integral/js/parallaxc358.js?ver=1.1.3'></script>
+		<script type='text/javascript'
+			src='wp-content/themes/integral/js/bootstrap.min7984.js?ver=3.3.4'></script>
+		<script type='text/javascript'
+			src='wp-content/themes/integral/js/jquery.prettyPhoto005e.js?ver=3.1.6'></script>
+		<script type='text/javascript'
+			src='wp-content/themes/integral/js/jquery.flexslider-min72e6.js?ver=2.6.4'></script>
+		<script type='text/javascript'
+			src='wp-content/themes/integral/js/smooth-scroll5152.js?ver=1.0'></script>
+		<script type='text/javascript'
+			src='wp-content/plugins/enlighter/resources/enlighterjs/enlighterjs.min2f54.js?ver=4.1'></script>
+		<script type='text/javascript'>
+		!function(n,o){"undefined"!=typeof EnlighterJS?(n.EnlighterJSINIT=function(){EnlighterJS.init("pre.EnlighterJSRAW", "code.EnlighterJSRAW", {"indent":4,"ampersandCleanup":true,"linehover":true,"rawcodeDbclick":true,"textOverflow":"scroll","linenumbers":true,"theme":"classic","language":"generic","retainCssClasses":false,"collapse":false,"toolbarOuter":"","toolbarTop":"{BTN_RAW}{BTN_COPY}{BTN_WINDOW}{BTN_WEBSITE}","toolbarBottom":""})})():(o&&(o.error||o.log)||function(){})("Error: EnlighterJS resources not loaded yet!")}(window,console);
+		</script>
+		<script type='text/javascript' src='wp-includes/js/wp-embed.min8217.js?ver=5.3.14'></script>
 
-				<div class="col-md-12">
-
-					<div class="copyrightinfo">
-
-						<p>&copy;2020 Burningwave - All Rights Reserved</p>
-
-					</div>
-
-				</div>
-
-			</div>
-
-		</div>
-
-	</section>
-
-	<script type="text/javascript">
-jQuery(document).ready(function($){
-
-		 $('#testimonials').parallax("50%", 0.4); 	 $('#calltoaction').parallax("50%", 0.4); 	 $('#newsletter').parallax("50%", 0.4); 
-		$('.flexslider').flexslider({
-		animation: "slide",
-		slideshow: true,
-		slideshowSpeed: parseInt(7)*1000,
-		});
-
-		$('.testislider').flexslider({
-		controlNav: true, 
-		animation: "slide",
-		slideshow: true,
-		slideshowSpeed: parseInt(7)*1000,
-		});
-})	
-</script>
-	<div id="fb-root"></div>
-	<script type='text/javascript'>
-/* <![CDATA[ */
-var wpcf7 = {"apiSettings":{"root":"https:\/\/www.burningwave.org\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"cached":"1"};
-/* ]]> */
-</script>
-	<script type='text/javascript'
-		src='wp-content/plugins/contact-form-7/includes/js/scriptsb62d.js?ver=5.1.6'></script>
-	<script type='text/javascript'
-		src='wp-content/plugins/counter-number-showcase/assets/js/bootstrap8217.js?ver=5.3.14'></script>
-	<script type='text/javascript'
-		src='wp-content/plugins/counter-number-showcase/assets/js/counter_nscript8217.js?ver=5.3.14'></script>
-	<script type='text/javascript'
-		src='wp-content/plugins/counter-number-showcase/assets/js/waypoints.min8217.js?ver=5.3.14'></script>
-	<script type='text/javascript'
-		src='wp-content/plugins/counter-number-showcase/assets/js/jquery.counterup.min8217.js?ver=5.3.14'></script>
-	<script type='text/javascript'
-		src='wp-includes/js/jquery/ui/effect.mine899.js?ver=1.11.4'></script>
-	<script type='text/javascript'
-		src='wp-content/themes/integral/js/parallaxc358.js?ver=1.1.3'></script>
-	<script type='text/javascript'
-		src='wp-content/themes/integral/js/bootstrap.min7984.js?ver=3.3.4'></script>
-	<script type='text/javascript'
-		src='wp-content/themes/integral/js/jquery.prettyPhoto005e.js?ver=3.1.6'></script>
-	<script type='text/javascript'
-		src='wp-content/themes/integral/js/jquery.flexslider-min72e6.js?ver=2.6.4'></script>
-	<script type='text/javascript'
-		src='wp-content/themes/integral/js/smooth-scroll5152.js?ver=1.0'></script>
-	<script type='text/javascript'
-		src='wp-content/plugins/enlighter/resources/enlighterjs/enlighterjs.min2f54.js?ver=4.1'></script>
-	<script type='text/javascript'>
-!function(n,o){"undefined"!=typeof EnlighterJS?(n.EnlighterJSINIT=function(){EnlighterJS.init("pre.EnlighterJSRAW", "code.EnlighterJSRAW", {"indent":4,"ampersandCleanup":true,"linehover":true,"rawcodeDbclick":true,"textOverflow":"scroll","linenumbers":true,"theme":"classic","language":"generic","retainCssClasses":false,"collapse":false,"toolbarOuter":"","toolbarTop":"{BTN_RAW}{BTN_COPY}{BTN_WINDOW}{BTN_WEBSITE}","toolbarBottom":""})})():(o&&(o.error||o.log)||function(){})("Error: EnlighterJS resources not loaded yet!")}(window,console);
-</script>
-	<script type='text/javascript'
-		src='wp-includes/js/wp-embed.min8217.js?ver=5.3.14'></script>
-
-</body>
+	</body>
 
 </html>
 <script type='text/javascript' src='/js/includeOrReplace.js'></script>
+<script type="text/javascript">
+	showMessages();
+</script>

@@ -46,6 +46,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,9 +55,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @org.springframework.stereotype.Controller
-@RequestMapping("/miscellaneous-services/")
+@RequestMapping("/")
 @CrossOrigin
-public class MiscController {
+public class Controller {
 	private static final org.slf4j.Logger logger;
 	public static final String SWITCH_TO_REMOTE_APP_SUCCESSFUL_MESSAGE;
 
@@ -70,10 +71,10 @@ public class MiscController {
 
     static {
     	SWITCH_TO_REMOTE_APP_SUCCESSFUL_MESSAGE = "App succesfully switched";
-    	logger = org.slf4j.LoggerFactory.getLogger(MiscController.class);
+    	logger = org.slf4j.LoggerFactory.getLogger(Controller.class);
     }
 
-	public MiscController (
+	public Controller (
 		@Nullable HerokuConnector herokuConnector,
 		@Nullable NexusConnector.Group nexusConnectorGroup,
 		@Nullable GitHubConnector gitHubConnector,
@@ -99,49 +100,29 @@ public class MiscController {
 		this.environment = environment;
 	}
 
-    @GetMapping("/stats/artifact-download-chart")
-    public String loadArtifactDownloadChart(HttpServletRequest request, Model model) {
-    	return view(request, model);
+	@GetMapping
+    public String loadIndex(HttpServletRequest request, Model model) {
+    	return view(request, model, "index", "index");
     }
 
-	@GetMapping(path = "/switch-to-remote-app")
-	public String switchToRemoteApp(
-		@RequestParam(value = "Authorization", required = false) String authorizationTokenAsQueryParam,
-		@RequestHeader(value = "Authorization", required = false) String authorizationTokenAsHeader,
-		HttpServletRequest request,
-		Model model
-	) {
-		String authorizationToken = authorizationTokenAsHeader != null ? authorizationTokenAsHeader : authorizationTokenAsQueryParam;
-		String message;
-		try {
-			if ((environment.getProperty("application.authorization.token.type") + " " + environment.getProperty("application.authorization.token")).equals(authorizationToken)) {
-				try {
-					herokuConnector.switchToRemoteApp();
-					message = SWITCH_TO_REMOTE_APP_SUCCESSFUL_MESSAGE;
-				} catch (NullPointerException exc) {
-					if (herokuConnector == null) {
-						logger.warn(message = "Cannot switch app: the Heroku connector is disabled");
-					} else {
-						throw exc;
-					}
-				}
-			} else {
-				message = "Cannot switch app: unauthorized";
-				logger.error(message);
-			}
-		} catch (Throwable exc) {
-			logger.error("Exception occurred", exc);
-			message = "Cannot switch app: " + exc.getMessage();
-		}
-		return view(request, model, message);
-	}
+    @GetMapping("/{path}/")
+    public String loadContent(HttpServletRequest request, Model model, @PathVariable String path) {
+    	return view(request, model, !path.equals("index") ? "common/content-template" : path, path);
+    }
+
+    @GetMapping("/stats/artifact-download-chart")
+    public String loadArtifactDownloadChart(HttpServletRequest request, Model model) {
+    	model.addAttribute("startDate", viewStartDateSupplier.get());
+    	model.addAttribute("daysOfTheMonthFromWhichToLeave", daysOfTheMonthFromWhichToLeaveSupplier.get());
+    	return view(request, model,"artifact-download-chart", null);
+    }
 
 	@GetMapping(path = "/clear-cache")
 	public String clearCache(
 		@RequestParam(value = "Authorization", required = false) String authorizationTokenAsQueryParam,
 		@RequestHeader(value = "Authorization", required = false) String authorizationTokenAsHeader,
 		HttpServletRequest request, Model model
-	) throws IOException {
+	) {
 		String authorizationToken = authorizationTokenAsHeader != null ? authorizationTokenAsHeader : authorizationTokenAsQueryParam;
 		Collection<String> messages = new ArrayList<>();
 		String message;
@@ -182,19 +163,53 @@ public class MiscController {
 			logger.error("Exception occurred", exc);
 			messages.add("Exception occurred while clearing the cache: " + exc.getMessage());
 		}
-		return view(request, model, messages.toArray(new String[messages.size()]));
+		return view(request, model, "index", "index", messages.toArray(new String[messages.size()]));
 	}
 
-	private String view(HttpServletRequest request, Model model, String... message) {
+	@GetMapping(path = "/switch-to-remote-app")
+	public String switchToRemoteApp(
+		@RequestParam(value = "Authorization", required = false) String authorizationTokenAsQueryParam,
+		@RequestHeader(value = "Authorization", required = false) String authorizationTokenAsHeader,
+		HttpServletRequest request,
+		Model model
+	) {
+		String authorizationToken = authorizationTokenAsHeader != null ? authorizationTokenAsHeader : authorizationTokenAsQueryParam;
+		String message;
+		try {
+			if ((environment.getProperty("application.authorization.token.type") + " " + environment.getProperty("application.authorization.token")).equals(authorizationToken)) {
+				try {
+					herokuConnector.switchToRemoteApp();
+					message = SWITCH_TO_REMOTE_APP_SUCCESSFUL_MESSAGE;
+				} catch (NullPointerException exc) {
+					if (herokuConnector == null) {
+						logger.warn(message = "Cannot switch app: the Heroku connector is disabled");
+					} else {
+						throw exc;
+					}
+				}
+			} else {
+				message = "Cannot switch app: unauthorized";
+				logger.error(message);
+			}
+		} catch (Throwable exc) {
+			logger.error("Exception occurred", exc);
+			message = "Cannot switch app: " + exc.getMessage();
+		}
+		return view(request, model, "index", "index", message);
+	}
+
+	private String view(HttpServletRequest request, Model model, String mainLayout, String contentPath, String... message) {
 		String url = request.getRequestURL().toString();
-    	String basePath = url.substring(0, url.indexOf("/miscellaneous-services"));
+		String basePath = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath();
     	model.addAttribute("basePath", basePath);
-    	model.addAttribute("startDate", viewStartDateSupplier.get());
-    	model.addAttribute("daysOfTheMonthFromWhichToLeave", daysOfTheMonthFromWhichToLeaveSupplier.get());
+    	if (contentPath != null) {
+    		model.addAttribute("contentPath", contentPath);
+    	}
+    	model.addAttribute("currentPath", url);
     	if (message != null && message.length > 0) {
     		model.addAttribute("message", "[\"" + String.join("\",\"", Arrays.asList(message))  + "\"]");
     	}
-        return "artifact-download-chart";
+        return mainLayout;
 	}
 
 }
