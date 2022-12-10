@@ -64,6 +64,7 @@ public class Controller {
 	private static final org.slf4j.Logger logger;
 	public static final String SWITCH_TO_REMOTE_APP_SUCCESSFUL_MESSAGE;
 
+	private RestController restController;
 	private GitHubConnector gitHubConnector;
 	private HerokuConnector herokuConnector;
 	private NexusConnector.Group nexusConnectorGroup;
@@ -81,6 +82,7 @@ public class Controller {
 		@Nullable HerokuConnector herokuConnector,
 		@Nullable NexusConnector.Group nexusConnectorGroup,
 		@Nullable GitHubConnector gitHubConnector,
+		RestController restController,
 		Environment environment,
 		SimpleCache cache
 	) throws IOException {
@@ -101,6 +103,7 @@ public class Controller {
 		this.gitHubConnector = gitHubConnector;
 		this.cache = cache;
 		this.environment = environment;
+		this.restController = restController;
 	}
 
 	@GetMapping
@@ -218,6 +221,7 @@ public class Controller {
     	if (message != null && message.length > 0) {
     		model.addAttribute("message", "[\"" + String.join("\",\"", Arrays.asList(message))  + "\"]");
     	}
+    	restController.getVisitedPages(true);
         return mainLayout;
 	}
 
