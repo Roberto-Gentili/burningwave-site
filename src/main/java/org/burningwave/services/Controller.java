@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -63,7 +64,6 @@ public class Controller {
 	private static final org.slf4j.Logger logger;
 	public static final String SWITCH_TO_REMOTE_APP_SUCCESSFUL_MESSAGE;
 
-	private RestController restController;
 	private GitHubConnector gitHubConnector;
 	private HerokuConnector herokuConnector;
 	private NexusConnector.Group nexusConnectorGroup;
@@ -78,14 +78,12 @@ public class Controller {
     }
 
 	public Controller (
-		RestController restController,
 		@Nullable HerokuConnector herokuConnector,
 		@Nullable NexusConnector.Group nexusConnectorGroup,
 		@Nullable GitHubConnector gitHubConnector,
 		Environment environment,
 		SimpleCache cache
 	) throws IOException {
-		this.restController = restController;
 		this.herokuConnector = herokuConnector;
 		this.nexusConnectorGroup = nexusConnectorGroup;
 		org.burningwave.services.NexusConnector.Group.Configuration configuration;
@@ -106,8 +104,14 @@ public class Controller {
 	}
 
 	@GetMapping
-    public String loadIndex(HttpServletRequest request, Model model) {
-    	return view(request, model, "index", "index");
+    public String loadIndex(
+		@RequestParam(value = "message", required = false) Set<String> messages,
+		HttpServletRequest request,
+		Model model
+	) {
+		return messages != null ?
+			view(request, model, "index", "index", messages.toArray(new String[messages.size()])):
+			view(request, model, "index", "index");
     }
 
     @GetMapping("/{path}/")
@@ -167,29 +171,6 @@ public class Controller {
 		} catch (Throwable exc) {
 			logger.error("Exception occurred", exc);
 			messages.add("Exception occurred while clearing the cache: " + exc.getMessage());
-		}
-		return view(request, model, "index", "index", messages.toArray(new String[messages.size()]));
-	}
-
-	@GetMapping(path = "/miscellaneous-services/stats/set-visited-pages-counter", produces = "application/json")
-	public String setVisitedPages(
-		@RequestParam(value = "Authorization", required = false) String authorizationTokenAsQueryParam,
-		@RequestHeader(value = "Authorization", required = false) String authorizationTokenAsHeader,
-		@RequestParam(value = "value", required = true) Long newCounterValue,
-		HttpServletRequest request, Model model
-	) {
-		String authorizationToken = authorizationTokenAsHeader != null ? authorizationTokenAsHeader : authorizationTokenAsQueryParam;
-		Collection<String> messages = new ArrayList<>();
-		try {
-			if ((environment.getProperty("application.authorization.token.type") + " " + environment.getProperty("application.authorization.token")).equals(authorizationToken)) {
-				restController.setVisitedPages(newCounterValue);
-				messages.add("Visited pages counter successfully set to " + newCounterValue);
-			} else {
-				messages.add("Cannot set visited pages counter: unauthorized");
-			}
-		} catch (Throwable exc) {
-			logger.error("Exception occurred", exc);
-			messages.add("Exception occurred while setting visited pages counter: " + exc.getMessage());
 		}
 		return view(request, model, "index", "index", messages.toArray(new String[messages.size()]));
 	}

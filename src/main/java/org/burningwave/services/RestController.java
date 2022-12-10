@@ -33,6 +33,7 @@ package org.burningwave.services;
 import static org.burningwave.core.assembler.StaticComponentContainer.Objects;
 import static org.burningwave.core.assembler.StaticComponentContainer.Synchronizer;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -45,14 +46,17 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
 
 import org.burningwave.Badge;
 import org.burningwave.SimpleCache;
+import org.springframework.core.env.Environment;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -75,6 +79,7 @@ public class RestController {
 	private static final org.slf4j.Logger logger;
 
 	private NexusConnector.Group nexusConnectorGroup;
+	private Environment environment;
 	private GitHubConnector gitHubConnector;
 	private Badge badge;
 	private SimpleCache cache;
@@ -87,11 +92,13 @@ public class RestController {
 	public RestController (
 		Badge badge,
 		SimpleCache cache,
+		Environment environment,
 		@Nullable HerokuConnector herokuConnector,
 		@Nullable NexusConnector.Group nexusConnectorGroup,
 		@Nullable GitHubConnector gitHubConnector
-	) throws InitializeException {
+	) {
 		this.cache = cache;
+		this.environment = environment;
 		this.inMemoryCache = new ConcurrentHashMap<>();
 		this.badge = badge;
 		this.nexusConnectorGroup = nexusConnectorGroup;
@@ -165,6 +172,30 @@ public class RestController {
 			"#78e",
 			93
 		);
+	}
+
+	@GetMapping(path = "/stats/set-visited-pages-counter", produces = "text/html")
+	public void setVisitedPages(
+		@RequestParam(value = "Authorization", required = false) String authorizationTokenAsQueryParam,
+		@RequestHeader(value = "Authorization", required = false) String authorizationTokenAsHeader,
+		@RequestParam(value = "value", required = true) Long newCounterValue,
+		HttpServletRequest request,
+		HttpServletResponse response
+	) throws IOException {
+		String authorizationToken = authorizationTokenAsHeader != null ? authorizationTokenAsHeader : authorizationTokenAsQueryParam;
+		String message;
+		try {
+			if ((environment.getProperty("application.authorization.token.type") + " " + environment.getProperty("application.authorization.token")).equals(authorizationToken)) {
+				setVisitedPages(newCounterValue);
+				message = "Visited pages counter successfully set to " + newCounterValue;
+			} else {
+				message = "Cannot set visited pages counter: unauthorized";
+			}
+		} catch (Throwable exc) {
+			logger.error("Exception occurred", exc);
+			message = "Exception occurred while setting visited pages counter: " + exc.getMessage();
+		}
+		response.sendRedirect("/index?message=" + message);
 	}
 
 	@GetMapping(path = "/stats/total-downloads", produces = "application/json")
