@@ -244,7 +244,8 @@
 			                               			'repository=burningwave:jvm-driver&' +
 			                               			'repository=burningwave:tools&' +
 			                               			'repository=burningwave:reflection&' +
-			                               			'repository=burningwave:graph&',
+			                               			'repository=burningwave:graph&' +
+			                               			'repository=burningwave:miscellaneous-services',
 				                                900000,
 				                                0,
 				                                2000
