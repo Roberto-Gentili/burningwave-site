@@ -70,6 +70,8 @@ import io.swagger.v3.oas.annotations.info.Info;
 )
 @SuppressWarnings("unchecked")
 public class RestController {
+	private static final String BURNINGWAVE_SITE_VISITED_PAGES_COUNTER_KEY = "burningwave.site.visitedPages.counter";
+
 	private static final org.slf4j.Logger logger;
 
 	private NexusConnector.Group nexusConnectorGroup;
@@ -142,16 +144,16 @@ public class RestController {
 		}
 	}
 
-	@GetMapping(path = "/stats/visited-pages", produces = "application/json")
+	@GetMapping(path = "/stats/visited-pages-counter", produces = "application/json")
 	public Long getVisitedPages(
-		@RequestParam(value = "increment", required = false) boolean increment
+		@RequestParam(value = "increment", required = false) Boolean increment
 	) {
 		return getVisitedPageCounter(increment);
 	}
 
-	@GetMapping(path = "/stats/visited-pages-badge", produces = "image/svg+xml")
+	@GetMapping(path = "/stats/visited-pages-counter-badge", produces = "image/svg+xml")
 	public String getTotalDownloadsBadge(
-		@RequestParam(value = "increment", required = false) boolean increment,
+		@RequestParam(value = "increment", required = false) Boolean increment,
 		HttpServletResponse response
 	) {
 		response.setHeader("Cache-Control", "no-store");
@@ -292,8 +294,8 @@ public class RestController {
 
 
 
-	private Long getVisitedPageCounter(boolean increment) {
-		if (increment) {
+	private Long getVisitedPageCounter(Boolean increment) {
+		if (increment != null && increment) {
 			return getAndIncrementVisitedPageCounter();
 		}
 		return getVisitedPageCounter();
@@ -308,7 +310,7 @@ public class RestController {
 	}
 
 	private SimpleCache.Item<AtomicLong> getVisitedPageCounterCachedItem() {
-		String key = "burningwave.site.visitedPages";
+		String key = BURNINGWAVE_SITE_VISITED_PAGES_COUNTER_KEY;
 		SimpleCache.Item<AtomicLong> output = (SimpleCache.Item<AtomicLong>)inMemoryCache.get(key);
 		if (output == null) {
 			output = cache.load(key);
@@ -324,21 +326,27 @@ public class RestController {
 			if (newOutput != null) {
 				return newOutput;
 			}
-			newOutput = new SimpleCache.Item<>();
-			newOutput.setValue(new AtomicLong(0L));
-    		newOutput.setTime(new Date());
-			inMemoryCache.put(key, newOutput);
-			return newOutput;
+			return setVisitedPages(0L);
 		});
 	}
 
-	boolean storeVisitedPageCounter() {
-		String key = "burningwave.site.visitedPages";
+	SimpleCache.Item<AtomicLong> setVisitedPages(Long counter) {
+		SimpleCache.Item<AtomicLong> newOutput;
+		newOutput = new SimpleCache.Item<>();
+		newOutput.setValue(new AtomicLong(counter));
+		newOutput.setTime(new Date());
+		inMemoryCache.put(BURNINGWAVE_SITE_VISITED_PAGES_COUNTER_KEY, newOutput);
+		return newOutput;
+	}
+
+	boolean storeVisitedPagesCounter() {
+		String key = BURNINGWAVE_SITE_VISITED_PAGES_COUNTER_KEY;
 		SimpleCache.Item<AtomicLong> output = (SimpleCache.Item<AtomicLong>)inMemoryCache.get(key);
 		if (output != null) {
 			cache.store(key, output);
 		}
 		return false;
 	}
+
 
 }
