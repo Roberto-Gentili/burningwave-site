@@ -1,9 +1,11 @@
 /*
- * This file is part of Burningwave Miscellaneous Services.
- *
- * Author: Roberto Gentili
+ * This file is derived from Burningwave Miscellaneous Services.
  *
  * Hosted at: https://github.com/burningwave/miscellaneous-services
+ *
+ * Modified by: Roberto Gentili
+ *
+ * Modifications hosted at: https://github.com/Roberto-Gentili/burningwave-site.git
  *
  * --
  *

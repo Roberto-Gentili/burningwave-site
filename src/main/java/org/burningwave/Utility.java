@@ -1,9 +1,11 @@
 /*
- * This file is part of Burningwave Miscellaneous Services.
- *
- * Author: Roberto Gentili
+ * This file is derived from Burningwave Miscellaneous Services.
  *
  * Hosted at: https://github.com/burningwave/miscellaneous-services
+ *
+ * Modified by: Roberto Gentili
+ *
+ * Modifications hosted at: https://github.com/Roberto-Gentili/burningwave-site.git
  *
  * --
  *
@@ -44,6 +46,11 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class Utility {
+	private final static Random randomizer;
+
+	static {
+		randomizer = new Random();
+	}
 
 	public byte[] serialize(Serializable object) throws IOException {
 		try (ByteArrayOutputStream bAOS = new ByteArrayOutputStream(); ObjectOutputStream oOS = new ObjectOutputStream(bAOS);) {
@@ -111,9 +118,7 @@ public class Utility {
 	}
 
 	public String randomHex() {
-		Random obj = new Random();
-		int rand_num = obj.nextInt(0xffffff + 1);
-		return String.format("%06x", rand_num);
+		return String.format("%06x", randomizer.nextInt(0xffffff + 1));
 	}
 
 	public <T> void setIfNotNull(Consumer<T> target, Supplier<T> source) {
