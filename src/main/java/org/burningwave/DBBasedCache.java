@@ -49,7 +49,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 public class DBBasedCache extends SimpleCache.Abst {
-	private final static org.slf4j.Logger logger;
+	private static final org.slf4j.Logger logger;
 
 	@Autowired
 	private Item.Repository repository;

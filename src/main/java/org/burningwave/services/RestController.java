@@ -30,18 +30,25 @@
  */
 package org.burningwave.services;
 
+import static org.burningwave.core.assembler.StaticComponentContainer.Objects;
+import static org.burningwave.core.assembler.StaticComponentContainer.Synchronizer;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
 
 import org.burningwave.Badge;
+import org.burningwave.SimpleCache;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,12 +67,15 @@ import io.swagger.v3.oas.annotations.info.Info;
         version = "10.0.0"
     )
 )
+@SuppressWarnings("unchecked")
 public class RestController {
 	private static final org.slf4j.Logger logger;
 
 	private NexusConnector.Group nexusConnectorGroup;
 	private GitHubConnector gitHubConnector;
 	private Badge badge;
+	private SimpleCache cache;
+	private Map<String, Object> inMemoryCache;
 
     static {
     	logger = org.slf4j.LoggerFactory.getLogger(RestController.class);
@@ -73,10 +83,13 @@ public class RestController {
 
 	public RestController (
 		Badge badge,
+		SimpleCache cache,
 		@Nullable HerokuConnector herokuConnector,
 		@Nullable NexusConnector.Group nexusConnectorGroup,
 		@Nullable GitHubConnector gitHubConnector
 	) throws InitializeException {
+		this.cache = cache;
+		this.inMemoryCache = new ConcurrentHashMap<>();
 		this.badge = badge;
 		this.nexusConnectorGroup = nexusConnectorGroup;
 		this.gitHubConnector = gitHubConnector;
@@ -252,5 +265,38 @@ public class RestController {
 			logger.error("Exception occurred", exc);
 			return null;
 		}
+	}
+
+	private Long getAndIncrementVisitedPageCounter() {
+		SimpleCache.Item<Long> visitedPagesCachedItem = getVisitedPageCounterCachedItem();
+		Long visitedPages = visitedPagesCachedItem.getValue();
+		visitedPagesCachedItem.setValue(++visitedPages);
+		return visitedPagesCachedItem.getValue();
+	}
+
+	private Long getVisitedPageCounter() {
+		return getVisitedPageCounterCachedItem().getValue();
+	}
+
+	private SimpleCache.Item<Long> getVisitedPageCounterCachedItem() {
+		String key = "burningwave.site.visitedPages";
+		SimpleCache.Item<Long> output = (SimpleCache.Item<Long>)inMemoryCache.get(key);
+		if (output == null) {
+			output = cache.load(key);
+			if (output != null) {
+				inMemoryCache.put(key, output);
+			}
+		}
+		if (output != null) {
+			return output;
+		}
+		return Synchronizer.execute(Objects.getId(this) + key, () -> {
+			SimpleCache.Item<Long> newOutput = new SimpleCache.Item<>();
+			newOutput.setValue(0L);
+    		newOutput.setTime(new Date());
+    		cache.store(key, newOutput);
+			inMemoryCache.put(key, newOutput);
+			return newOutput;
+		});
 	}
 }
