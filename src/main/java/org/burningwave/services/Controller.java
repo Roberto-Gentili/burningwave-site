@@ -180,10 +180,16 @@ public class Controller {
 	) {
 		String authorizationToken = authorizationTokenAsHeader != null ? authorizationTokenAsHeader : authorizationTokenAsQueryParam;
 		Collection<String> messages = new ArrayList<>();
-		if ((environment.getProperty("application.authorization.token.type") + " " + environment.getProperty("application.authorization.token")).equals(authorizationToken)) {
-			restController.setVisitedPages(newCounterValue);
-		} else {
-			messages.add("Cannot set visited pages counter: unauthorized");
+		try {
+			if ((environment.getProperty("application.authorization.token.type") + " " + environment.getProperty("application.authorization.token")).equals(authorizationToken)) {
+				restController.setVisitedPages(newCounterValue);
+				messages.add("Visited pages counter successfully set");
+			} else {
+				messages.add("Cannot set visited pages counter: unauthorized");
+			}
+		} catch (Throwable exc) {
+			logger.error("Exception occurred", exc);
+			messages.add("Exception occurred while setting visited pages counter: " + exc.getMessage());
 		}
 		return view(request, model, "index", "index", messages.toArray(new String[messages.size()]));
 	}
