@@ -283,7 +283,8 @@ public class Application extends SpringBootServletInitializer {
 					Object target = applicationContext.getBean(targetAndMethod[0]);
 					scheduledOperations.add(
 						taskScheduler.schedule(
-							() -> Methods.invokeDirect(target, targetAndMethod[1]),
+							() ->
+								Methods.invokeDirect(target, targetAndMethod[1]),
 							new CronTrigger(jobConfig.get("cron"), TimeZone.getTimeZone(jobConfig.get("zone")))
 						)
 					);

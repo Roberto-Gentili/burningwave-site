@@ -43,6 +43,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
@@ -141,6 +142,28 @@ public class RestController {
 		}
 	}
 
+	@GetMapping(path = "/stats/visited-pages", produces = "application/json")
+	public Long getVisitedPages(
+		@RequestParam(value = "increment", required = false) boolean increment
+	) {
+		return getVisitedPageCounter(increment);
+	}
+
+	@GetMapping(path = "/stats/visited-pages-badge", produces = "image/svg+xml")
+	public String getTotalDownloadsBadge(
+		@RequestParam(value = "increment", required = false) boolean increment,
+		HttpServletResponse response
+	) {
+		response.setHeader("Cache-Control", "no-store");
+		String label = "visited pages";
+		return badge.build(
+			getVisitedPageCounter(increment),
+			label,
+			label,
+			"#78e",
+			89
+		);
+	}
 
 	@GetMapping(path = "/stats/total-downloads", produces = "application/json")
 	public Long getTotalDownloads(
@@ -220,7 +243,7 @@ public class RestController {
 		return badge.build(
 			getStarCountOrNull(repositories),
 			label,
-			"GitHub stars", "#78e", 93
+			"GitHub stars", "#EEE600", 93
 		);
 	}
 
@@ -267,20 +290,26 @@ public class RestController {
 		}
 	}
 
+
+
+	private Long getVisitedPageCounter(boolean increment) {
+		if (increment) {
+			return getAndIncrementVisitedPageCounter();
+		}
+		return getVisitedPageCounter();
+	}
+
 	private Long getAndIncrementVisitedPageCounter() {
-		SimpleCache.Item<Long> visitedPagesCachedItem = getVisitedPageCounterCachedItem();
-		Long visitedPages = visitedPagesCachedItem.getValue();
-		visitedPagesCachedItem.setValue(++visitedPages);
-		return visitedPagesCachedItem.getValue();
+		return getVisitedPageCounterCachedItem().getValue().incrementAndGet();
 	}
 
 	private Long getVisitedPageCounter() {
-		return getVisitedPageCounterCachedItem().getValue();
+		return getVisitedPageCounterCachedItem().getValue().get();
 	}
 
-	private SimpleCache.Item<Long> getVisitedPageCounterCachedItem() {
+	private SimpleCache.Item<AtomicLong> getVisitedPageCounterCachedItem() {
 		String key = "burningwave.site.visitedPages";
-		SimpleCache.Item<Long> output = (SimpleCache.Item<Long>)inMemoryCache.get(key);
+		SimpleCache.Item<AtomicLong> output = (SimpleCache.Item<AtomicLong>)inMemoryCache.get(key);
 		if (output == null) {
 			output = cache.load(key);
 			if (output != null) {
@@ -291,12 +320,25 @@ public class RestController {
 			return output;
 		}
 		return Synchronizer.execute(Objects.getId(this) + key, () -> {
-			SimpleCache.Item<Long> newOutput = new SimpleCache.Item<>();
-			newOutput.setValue(0L);
+			SimpleCache.Item<AtomicLong> newOutput  = (SimpleCache.Item<AtomicLong>)inMemoryCache.get(key);
+			if (newOutput != null) {
+				return newOutput;
+			}
+			newOutput = new SimpleCache.Item<>();
+			newOutput.setValue(new AtomicLong(0L));
     		newOutput.setTime(new Date());
-    		cache.store(key, newOutput);
 			inMemoryCache.put(key, newOutput);
 			return newOutput;
 		});
 	}
+
+	boolean storeVisitedPageCounter() {
+		String key = "burningwave.site.visitedPages";
+		SimpleCache.Item<AtomicLong> output = (SimpleCache.Item<AtomicLong>)inMemoryCache.get(key);
+		if (output != null) {
+			cache.store(key, output);
+		}
+		return false;
+	}
+
 }
