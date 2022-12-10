@@ -171,7 +171,7 @@ public class Controller {
 		return view(request, model, "index", "index", messages.toArray(new String[messages.size()]));
 	}
 
-	@GetMapping(path = "/stats/set-visited-pages", produces = "application/json")
+	@GetMapping(path = "/miscellaneous-services/stats/set-visited-pages-counter", produces = "application/json")
 	public String setVisitedPages(
 		@RequestParam(value = "Authorization", required = false) String authorizationTokenAsQueryParam,
 		@RequestHeader(value = "Authorization", required = false) String authorizationTokenAsHeader,
