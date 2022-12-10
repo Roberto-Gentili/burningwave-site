@@ -267,10 +267,11 @@
 										<script>
 											setupCounter(
 				                                'counterId2',
-				                                'rest/pages-visited-count5937.json?withoutIncrement=true',
+				                                '${basePath}/miscellaneous-services/stats/visited-pages-counter',
 				                                30000,
 				                                0,
-				                                2000                            );
+				                                2000
+			                                );
 				                        </script>
 									</div>
 									<h3 class="wpsm_count-title" ff531d>Pages visited</h3>
