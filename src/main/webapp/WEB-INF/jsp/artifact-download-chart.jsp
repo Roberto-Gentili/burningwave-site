@@ -164,7 +164,8 @@
 				<div id="monthlyTrendChartDiv" style="max-width: 100%; margin: auto;">
 					<canvas id="monthlyTrendChart"></canvas>
 				</div>
-				<div id="separatorDivOne" style="height: 50px;"/>
+				<div id="separatorDivOne" style="height: 50px;">
+				</div>
 				<div id="overallTrendChartDiv" style="max-width: 100%; margin: auto;">
 					<canvas id="overallTrendChart"></canvas>
 				</div>
