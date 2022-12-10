@@ -161,7 +161,7 @@ public class RestController {
 			label,
 			label,
 			"#78e",
-			89
+			93
 		);
 	}
 
