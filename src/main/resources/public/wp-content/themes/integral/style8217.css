@@ -1924,8 +1924,16 @@ body, .container-fluid {
 		width: 90%;
 	}
 }
-
+.navbar-nav {
+	float: none;
+	display: flex;
+    justify-content: center;
+}
 @media (max-width: 767px) {
+	.navbar-nav {
+		float: left;
+		display: block;
+	}
 	/*Per eliminare questo decommentare la riga con il commento [.navbar-default .navbar-nav]*/
 	.navbar-default .navbar-nav > li {
 		margin-left: 0px;
@@ -1934,17 +1942,9 @@ body, .container-fluid {
 		width: 100%;
 	}
 }
-
 @media (min-width: 768px) {
-	.navbar-fixed-top .navbar-collapse {
-		padding-left: 21%;
-		min-width:108%;
-	}
 	.container>.navbar-header {
     	margin-left: -45px;
-	}
-	.navbar-right {
-		width: 100%;
 	}
 	/*Per eliminare questo decommentare la riga con il commento [.navbar-default .navbar-nav]*/
 	.navbar-default .navbar-nav > li:not(:first-child) {
