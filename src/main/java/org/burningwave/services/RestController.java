@@ -90,7 +90,6 @@ public class RestController {
 		Badge badge,
 		SimpleCache cache,
 		Environment environment,
-		@Nullable HerokuConnector herokuConnector,
 		@Nullable NexusConnector.Group nexusConnectorGroup,
 		@Nullable GitHubConnector gitHubConnector
 	) {
