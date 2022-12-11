@@ -87,6 +87,9 @@ scheduled-operations:
    - cron: ${SCHEDULED_OPERATIONS_STORE_VISITED_PAGES_COUNTER_CRON:0 * * * * *}
      zone: ${SCHEDULED_OPERATIONS_STORE_VISITED_PAGES_COUNTER_ZONE:UTC}
      executable: restController.storeVisitedPagesCounter
+   - cron: ${SCHEDULED_OPERATIONS_SSL_CONFIG_RELOAD_CRON:59 59 23 * * *}
+     zone: ${SCHEDULED_OPERATIONS_SSL_CONFIG_RELOAD_ZONE:UTC}
+     executable: sSLConfigReloader.execute
 
 burningwave:
   core:

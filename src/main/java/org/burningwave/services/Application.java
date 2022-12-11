@@ -49,12 +49,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
 
-import org.apache.catalina.connector.Connector;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.burningwave.Badge;
 import org.burningwave.DBBasedCache;
 import org.burningwave.FSBasedCache;
+import org.burningwave.SSL4Tomcat;
 import org.burningwave.SimpleCache;
 import org.burningwave.Utility;
 import org.burningwave.core.assembler.StaticComponentContainer;
@@ -62,6 +62,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -251,14 +252,18 @@ public class Application extends SpringBootServletInitializer {
 		return new WebMvcConfigurer(application);
 	}
 
-    @Bean
+    @Bean("servletContainer")
     @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
-    public ServletWebServerFactory servletContainer(Environment environment) {
-        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-        connector.setPort(Integer.valueOf(environment.getProperty("server.ssl.http.port")));
-        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
-        tomcat.addAdditionalTomcatConnectors(connector);
-        return tomcat;
+    @ConditionalOnClass(TomcatServletWebServerFactory.class)
+    public ServletWebServerFactory tomcatServletWebServerFactory(Environment environment, SSL4Tomcat.ConfigReloader sSL4TomcatConfigReloader) {
+        return SSL4Tomcat.Configuration.tomcatServletWebServerFactory(environment, sSL4TomcatConfigReloader);
+    }
+
+    @Bean("sSLConfigReloader")
+    @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
+    @ConditionalOnClass(TomcatServletWebServerFactory.class)
+    public SSL4Tomcat.ConfigReloader sSL4TomcatConfigReloader() {
+    	return new SSL4Tomcat.ConfigReloader();
     }
 
 
