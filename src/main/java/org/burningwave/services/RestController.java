@@ -165,12 +165,7 @@ public class RestController {
 			getVisitedPageCounter(increment);
 			return badge.hidden();
 		} else {
-			response.addHeader("Cache-Control", "no-store");
-			response.addHeader("Cache-Control", "no-cache");
-			response.addHeader("Cache-Control", "must-revalidate");
-			response.addHeader("Cache-Control", "max-age=0");
-			response.addHeader("Cache-Control", "post-check=0");
-			response.addHeader("Cache-Control", "pre-check=0");
+			setNoCachedResponse(response, 0);
 			String label = "visited pages";
 			return badge.build(
 				getVisitedPageCounter(increment),
@@ -256,12 +251,7 @@ public class RestController {
 		@RequestParam(value = "months", required = false) String months,
 		HttpServletResponse response
 	) {
-		response.addHeader("Cache-Control", "no-store");
-		response.addHeader("Cache-Control", "no-cache");
-		response.addHeader("Cache-Control", "must-revalidate");
-		response.addHeader("Cache-Control", "max-age=43200");
-		response.addHeader("Cache-Control", "post-check=0");
-		response.addHeader("Cache-Control", "pre-check=0");
+		setNoCachedResponse(response, 43200);
 		String label = "artifact downloads";
 		return badge.build(
 			getTotalDownloadsOrNull(groupIds, aliases, artifactIds, startDate, months),
@@ -284,12 +274,7 @@ public class RestController {
 		@RequestParam(value = "repository", required = true) String[] repositories,
 		HttpServletResponse response
 	) {
-		response.addHeader("Cache-Control", "no-store");
-		response.addHeader("Cache-Control", "no-cache");
-		response.addHeader("Cache-Control", "must-revalidate");
-		response.addHeader("Cache-Control", "max-age=3600");
-		response.addHeader("Cache-Control", "post-check=0");
-		response.addHeader("Cache-Control", "pre-check=0");
+		setNoCachedResponse(response, 3600);
 		String label = "GitHub stars";
 		return badge.build(
 			getStarCountOrNull(repositories),
@@ -397,5 +382,13 @@ public class RestController {
 		return false;
 	}
 
+	private void setNoCachedResponse(HttpServletResponse response, long maxAgeValue) {
+		response.addHeader("Cache-Control", "no-store");
+		response.addHeader("Cache-Control", "no-cache");
+		response.addHeader("Cache-Control", "must-revalidate");
+		response.addHeader("Cache-Control", "max-age=" + maxAgeValue);
+		response.addHeader("Cache-Control", "post-check=0");
+		response.addHeader("Cache-Control", "pre-check=0");
+	}
 
 }
