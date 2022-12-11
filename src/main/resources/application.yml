@@ -84,7 +84,7 @@ scheduled-operations:
    - cron: ${SCHEDULED_OPERATIONS_SWITCH_TO_REMOTE_APP_CRON:-}
      zone: ${SCHEDULED_OPERATIONS_SWITCH_TO_REMOTE_APP_ZONE:UTC}
      executable: herokuConnector.switchToRemoteApp
-   - cron: ${SCHEDULED_OPERATIONS_STORE_VISITED_PAGES_COUNTER_CRON:30 * * * * *}
+   - cron: ${SCHEDULED_OPERATIONS_STORE_VISITED_PAGES_COUNTER_CRON:0 * * * * *}
      zone: ${SCHEDULED_OPERATIONS_STORE_VISITED_PAGES_COUNTER_ZONE:UTC}
      executable: restController.storeVisitedPagesCounter
 
