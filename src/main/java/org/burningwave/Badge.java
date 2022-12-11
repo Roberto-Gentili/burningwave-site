@@ -35,14 +35,24 @@ import java.util.stream.Collectors;
 
 public class Badge {
 
-	private String badgeTemplate;
+	private String template;
+	private String hidden;
 	private Utility utility;
 
 	public Badge(Utility utility) {
-		badgeTemplate = new BufferedReader(
-        	new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("templates/badge.xml"), StandardCharsets.UTF_8)
-        ).lines().collect(Collectors.joining("\n"));
+		template = load("templates/badge.xml");
+		hidden = load("templates/hidden.svg");
 		this.utility = utility;
+	}
+
+	private String load(String fileName) {
+		return new BufferedReader(
+        	new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(fileName), StandardCharsets.UTF_8)
+        ).lines().collect(Collectors.joining("\n"));
+	}
+
+	public String hidden() {
+		return hidden;
 	}
 
 	public String build(
@@ -64,7 +74,7 @@ public class Badge {
 	    }
 	    int labelPosition = (width - rightBlockWidth) * 5;
 	    int valuePosition = (labelPosition * 2) + (rightBlockWidth * 5);
-	    return badgeTemplate
+	    return template
 	    	.replace(utility.toPlaceHolder("width"), Integer.toString(width))
 	    	.replace(utility.toPlaceHolder("rightBlockWidth"), Integer.toString(rightBlockWidth))
 	    	.replace(utility.toPlaceHolder("rightBlockPosition"), Integer.toString(width - rightBlockWidth))

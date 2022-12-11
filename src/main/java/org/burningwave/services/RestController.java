@@ -161,17 +161,23 @@ public class RestController {
 	@GetMapping(path = "/stats/visited-pages-counter-badge", produces = "image/svg+xml")
 	public String getTotalDownloadsBadge(
 		@RequestParam(value = "increment", required = false) Boolean increment,
+		@RequestParam(value = "hidden", required = false) Boolean hidden,
 		HttpServletResponse response
 	) {
 		response.setHeader("Cache-Control", "no-store");
-		String label = "visited pages";
-		return badge.build(
-			getVisitedPageCounter(increment),
-			label,
-			label,
-			"#78e",
-			93
-		);
+		if (Boolean.FALSE.equals(hidden)) {
+			String label = "visited pages";
+			return badge.build(
+				getVisitedPageCounter(increment),
+				label,
+				label,
+				"#78e",
+				93
+			);
+		} else {
+			getVisitedPageCounter(increment);
+			return badge.hidden();
+		}
 	}
 
 	@GetMapping(path = "/stats/set-visited-pages-counter", produces = "text/html")
