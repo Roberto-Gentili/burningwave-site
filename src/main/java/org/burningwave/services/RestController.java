@@ -161,11 +161,11 @@ public class RestController {
 		@RequestParam(value = "hidden", required = false) Boolean hidden,
 		HttpServletResponse response
 	) {
-		response.setHeader("Cache-Control", "no-store");
 		if (Boolean.TRUE.equals(hidden)) {
 			getVisitedPageCounter(increment);
 			return badge.hidden();
 		} else {
+			response.setHeader("Cache-Control", "no-store");
 			String label = "visited pages";
 			return badge.build(
 				getVisitedPageCounter(increment),
