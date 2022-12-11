@@ -117,12 +117,12 @@ public class Controller {
 			view(request, model, "index", "index");
     }
 
-    @GetMapping("/{path}/")
+    @GetMapping(path = "/{path}/")
     public String loadContent(HttpServletRequest request, Model model, @PathVariable String path) {
     	return view(request, model, !path.equals("index") ? "common/content-template" : path, path);
     }
 
-    @GetMapping("/stats/artifact-download-chart")
+    @GetMapping(path = "/stats/artifact-download-chart")
     public String loadArtifactDownloadChart(HttpServletRequest request, Model model) {
     	model.addAttribute("startDate", viewStartDateSupplier.get());
     	model.addAttribute("daysOfTheMonthFromWhichToLeave", daysOfTheMonthFromWhichToLeaveSupplier.get());
