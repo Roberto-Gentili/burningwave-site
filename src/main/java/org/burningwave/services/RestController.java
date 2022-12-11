@@ -34,7 +34,6 @@ import static org.burningwave.core.assembler.StaticComponentContainer.Objects;
 import static org.burningwave.core.assembler.StaticComponentContainer.Synchronizer;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -43,12 +42,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBException;
 
 import org.burningwave.Badge;
 import org.burningwave.SimpleCache;
@@ -159,13 +156,16 @@ public class RestController {
 	}
 
 	@GetMapping(path = "/stats/visited-pages-counter-badge", produces = "image/svg+xml")
-	public String getTotalDownloadsBadge(
+	public String getVisitedPagesBadge(
 		@RequestParam(value = "increment", required = false) Boolean increment,
 		@RequestParam(value = "hidden", required = false) Boolean hidden,
 		HttpServletResponse response
 	) {
 		response.setHeader("Cache-Control", "no-store");
-		if (Boolean.FALSE.equals(hidden)) {
+		if (Boolean.TRUE.equals(hidden)) {
+			getVisitedPageCounter(increment);
+			return badge.hidden();
+		} else {
 			String label = "visited pages";
 			return badge.build(
 				getVisitedPageCounter(increment),
@@ -174,9 +174,6 @@ public class RestController {
 				"#78e",
 				93
 			);
-		} else {
-			getVisitedPageCounter(increment);
-			return badge.hidden();
 		}
 	}
 
@@ -253,7 +250,7 @@ public class RestController {
 		@RequestParam(value = "startDate", required = false) String startDate,
 		@RequestParam(value = "months", required = false) String months,
 		HttpServletResponse response
-	) throws JAXBException, ParseException, InterruptedException, ExecutionException {
+	) {
 		response.setHeader("Cache-Control", "no-store");
 		String label = "artifact downloads";
 		return badge.build(
