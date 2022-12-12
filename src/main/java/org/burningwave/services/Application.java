@@ -63,6 +63,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -257,14 +258,17 @@ public class Application extends SpringBootServletInitializer {
     @Bean("servletContainer")
     @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
     @ConditionalOnClass(TomcatServletWebServerFactory.class)
-    public ServletWebServerFactory tomcatServletWebServerFactory(Environment environment, SSL4Tomcat.ConfigHandler sSL4TomcatConfigReloader) {
-        return SSL4Tomcat.Configuration.tomcatServletWebServerFactory(environment, sSL4TomcatConfigReloader);
+    public ServletWebServerFactory tomcatServletWebServerFactory(
+		Environment environment,
+		@Nullable SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler
+	) {
+        return SSL4Tomcat.Configuration.tomcatServletWebServerFactory(environment, sSL4TomcatConfigHandler);
     }
 
     @Bean("sSLConfigHandler")
     @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
-    @ConditionalOnClass(TomcatServletWebServerFactory.class)
-    public SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler(Environment environment, @Nullable ShellExecutor shellExecutor) {
+    @ConditionalOnBean(ShellExecutor.class)
+    public SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler(Environment environment, ShellExecutor shellExecutor) {
     	return new SSL4Tomcat.ConfigHandler(environment, shellExecutor);
     }
 

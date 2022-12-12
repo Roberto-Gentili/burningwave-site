@@ -113,13 +113,15 @@ public class SSL4Tomcat {
 	public static class Configuration {
 	    public static ServletWebServerFactory tomcatServletWebServerFactory(
     		Environment environment,
-    		ConfigHandler sSLconfigReloader
+    		ConfigHandler sSL4TomcatConfigHandler
 		) {
 	        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
 	        connector.setPort(Integer.valueOf(environment.getProperty("server.ssl.http.port")));
 	        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
 	        tomcat.addAdditionalTomcatConnectors(connector);
-	        tomcat.addConnectorCustomizers(sSLconfigReloader);
+	        if (sSL4TomcatConfigHandler != null) {
+	        	tomcat.addConnectorCustomizers(sSL4TomcatConfigHandler);
+	        }
 	        return tomcat;
 	    }
 
