@@ -88,8 +88,13 @@ scheduled-operations:
      zone: ${SCHEDULED_OPERATIONS_STORE_VISITED_PAGES_COUNTER_ZONE:UTC}
      executable: restController.storeVisitedPagesCounter
    - cron: ${SCHEDULED_OPERATIONS_SSL_CONFIG_RELOAD_CRON:59 59 23 * * *}
+     enabled: ${server.ssl.key-store.orig.certificate.renew.enabled:false}
      zone: ${SCHEDULED_OPERATIONS_SSL_CONFIG_RELOAD_ZONE:UTC}
-     executable: sSLConfigReloader.execute
+     executable: sSLConfigHandler.execute
+   - cron: ${SCHEDULED_OPERATIONS_SSL_CONFIG_RENEW_CRON:0 */5 * * * *}
+     enabled: ${server.ssl.key-store.orig.certificate.renew.enabled:false}
+     zone: ${SCHEDULED_OPERATIONS_SSL_CONFIG_RENEW_ZONE:UTC}
+     executable: sSLConfigHandler.renewCertificate
 
 burningwave:
   core:
@@ -106,6 +111,10 @@ server:
   ssl:
     enabled: true
     key-store: ${SERVER_SSL_KEY_STORE:classpath:config/keystore.p12}
+    key-store.orig:
+      certificate.renew.enabled: ${SERVER_SSL_KEY_STORE_ORIG_CERTIFICATE_RENEW_ENABLED:${server.ssl.enabled}}
+      certificate: ${SERVER_SSL_KEY_STORE_ORIG_CERTIFICATE:/etc/letsencrypt/live/www.burningwave.org/fullchain.pem}
+      certificate.key: ${SERVER_SSL_KEY_STORE_ORIG_CERTIFICATE_KEY:/etc/letsencrypt/live/www.burningwave.org/privkey.pem}
     key-store-password: ${SERVER_SSL_KEY_STORE_PASSWORD:changeit}
     key-store-type: ${SERVER_SSL_KEY_STORE_TYPE:pkcs12}
     key-alias: ${SERVER_SSL_KEY_ALIAS:burningwave.site}

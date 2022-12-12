@@ -28,8 +28,10 @@
  */
 package org.burningwave;
 
-public interface SSLConfigReloader {
+public interface SSLConfigHandler {
 
-	void execute();
+	void reload();
+
+	void renewCertificate();
 
 }

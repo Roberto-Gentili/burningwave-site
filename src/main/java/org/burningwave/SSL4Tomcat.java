@@ -39,18 +39,28 @@ public class SSL4Tomcat {
 
 	private SSL4Tomcat() {}
 
-	public static class ConfigReloader implements TomcatConnectorCustomizer, SSLConfigReloader {
+	public static class ConfigHandler implements TomcatConnectorCustomizer, SSLConfigHandler {
 		private static final org.slf4j.Logger logger;
 	    public static final String DEFAULT_SSL_HOSTNAME_CONFIG_NAME;
 
 	    static {
-	    	logger = org.slf4j.LoggerFactory.getLogger(ConfigReloader.class);
+	    	logger = org.slf4j.LoggerFactory.getLogger(ConfigHandler.class);
 	    	DEFAULT_SSL_HOSTNAME_CONFIG_NAME = "_default_";
 	    }
 
 	    private Http11NioProtocol protocol;
+	    private ShellExecutor shellExecutor;
+	    private Environment environment;
 
-	    @Override
+	    public ConfigHandler(
+	    	Environment environment,
+    		ShellExecutor shellExecutor
+		) {
+	    	this.environment = environment;
+	    	this.shellExecutor = shellExecutor;
+		}
+
+		@Override
 		public void customize(Connector connector) {
 		    Http11NioProtocol protocol = (Http11NioProtocol)connector.getProtocolHandler();
 		    if (connector.getSecure()) {
@@ -59,7 +69,7 @@ public class SSL4Tomcat {
 		}
 
 	    @Override
-	    public void execute() {
+	    public void reload() {
 	    	try {
 	            protocol.reloadSslHostConfig(DEFAULT_SSL_HOSTNAME_CONFIG_NAME);
 	            logger.info("SSL host configuration succesfully reloaded");
@@ -68,6 +78,28 @@ public class SSL4Tomcat {
 	        }
 	    }
 
+		@Override
+		public void renewCertificate() {
+			try {
+				logger.info("Trying to renew SSL certificate");
+				shellExecutor.renewSSLCertificate(
+					environment.getProperty("server.ssl.key-store.orig.certificate"),
+					environment.getProperty("server.ssl.key-store.orig.certificate.key"),
+					environment.getProperty("server.ssl.key-store"),
+					environment.getProperty("server.ssl.key-alias"),
+					environment.getProperty("server.ssl.key-store-password")
+				);
+				logger.info("SSL certificate succesfully renewed");
+			} catch (Throwable exc) {
+				if (shellExecutor != null) {
+					logger.warn("Cannot renew SSL certificate", exc);
+				} else {
+					logger.warn("Cannot renew SSL certificate: shellExecutor is unavailable");
+				}
+			}
+
+		}
+
 	}
 
 
@@ -75,7 +107,7 @@ public class SSL4Tomcat {
 	public static class Configuration {
 	    public static ServletWebServerFactory tomcatServletWebServerFactory(
     		Environment environment,
-    		ConfigReloader sSLconfigReloader
+    		ConfigHandler sSLconfigReloader
 		) {
 	        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
 	        connector.setPort(Integer.valueOf(environment.getProperty("server.ssl.http.port")));
@@ -85,8 +117,8 @@ public class SSL4Tomcat {
 	        return tomcat;
 	    }
 
-		public static SSLConfigReloader sSLConfigReloader() {
-			return new ConfigReloader();
+		public static SSLConfigHandler sSLConfigReloader(Environment environment, ShellExecutor shellExecutor) {
+			return new ConfigHandler(environment, shellExecutor);
 		}
 
 	}

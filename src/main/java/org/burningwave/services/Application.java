@@ -55,6 +55,7 @@ import org.burningwave.Badge;
 import org.burningwave.DBBasedCache;
 import org.burningwave.FSBasedCache;
 import org.burningwave.SSL4Tomcat;
+import org.burningwave.ShellExecutor;
 import org.burningwave.SimpleCache;
 import org.burningwave.Utility;
 import org.burningwave.core.assembler.StaticComponentContainer;
@@ -88,6 +89,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.lang.Nullable;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -255,17 +257,22 @@ public class Application extends SpringBootServletInitializer {
     @Bean("servletContainer")
     @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
     @ConditionalOnClass(TomcatServletWebServerFactory.class)
-    public ServletWebServerFactory tomcatServletWebServerFactory(Environment environment, SSL4Tomcat.ConfigReloader sSL4TomcatConfigReloader) {
+    public ServletWebServerFactory tomcatServletWebServerFactory(Environment environment, SSL4Tomcat.ConfigHandler sSL4TomcatConfigReloader) {
         return SSL4Tomcat.Configuration.tomcatServletWebServerFactory(environment, sSL4TomcatConfigReloader);
     }
 
-    @Bean("sSLConfigReloader")
+    @Bean("sSLConfigHandler")
     @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
     @ConditionalOnClass(TomcatServletWebServerFactory.class)
-    public SSL4Tomcat.ConfigReloader sSL4TomcatConfigReloader() {
-    	return new SSL4Tomcat.ConfigReloader();
+    public SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler(Environment environment, @Nullable ShellExecutor shellExecutor) {
+    	return new SSL4Tomcat.ConfigHandler(environment, shellExecutor);
     }
 
+    @Bean("shellExecutor")
+    @Conditional(ShellExecutor.ForLinux.EnvironmentCondition.class)
+    public ShellExecutor shellExecutorForLinux() {
+    	return new ShellExecutor.ForLinux();
+    }
 
 	@Bean("scheduledOperations.config")
 	@ConfigurationProperties("scheduled-operations")
@@ -282,7 +289,7 @@ public class Application extends SpringBootServletInitializer {
 	) {
 		Collection<ScheduledFuture<?>> scheduledOperations = new ArrayList<>();
 		for (Map<String, String> jobConfig : config.values()) {
-			if (!jobConfig.get("cron").trim().startsWith("-")) {
+			if (!jobConfig.get("cron").trim().startsWith("-") && jobConfig.get("enabled") == null || Boolean.parseBoolean(jobConfig.get("enabled"))) {
 				try {
 					String[] targetAndMethod = jobConfig.get("executable").split("\\.");
 					Object target = applicationContext.getBean(targetAndMethod[0]);
