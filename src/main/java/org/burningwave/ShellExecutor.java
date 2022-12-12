@@ -18,8 +18,12 @@ public interface ShellExecutor {
 
 	public <E extends Throwable> boolean rebuildSSLKeyStore(String... arguments) throws E;
 
-	public default Chain buildChain(Predicate<String[]> command, String... arguments) {
-		return new Chain(command, arguments);
+	public default Chain buildChain(Predicate<String[]> command, Supplier<String[]> argumentsSupplier) {
+		return new Chain(command, argumentsSupplier);
+	}
+
+	public static Supplier<String[]> toArguments(String... arguments) {
+		return () -> arguments;
 	}
 
 	public default String execute(String command) throws IOException {
@@ -44,26 +48,26 @@ public interface ShellExecutor {
 	public static class Chain {
 		Supplier<Boolean> command;
 
-		public Chain(Predicate<String[]> command, String... arguments) {
-			this.command = () -> command.test(arguments);
+		public Chain(Predicate<String[]> command, Supplier<String[]> argumentsSupplier) {
+			this.command = () -> command.test(argumentsSupplier.get());
 		}
 
-		public Chain ifSuccess(Predicate<String[]> command, String... arguments) {
+		public Chain ifSuccess(Predicate<String[]> command, Supplier<String[]> argumentsSupplier) {
 			Supplier<Boolean> previousCommand = this.command;
 			this.command = () -> {
 				if (previousCommand.get()) {
-					return command.test(arguments);
+					return command.test(argumentsSupplier.get());
 				}
 				return false;
 			};
 			return this;
 		}
 
-		public Chain ifFailed(Predicate<String[]> command, String... arguments) {
+		public Chain ifFailed(Predicate<String[]> command, Supplier<String[]> argumentsSupplier) {
 			Supplier<Boolean> previousCommand = this.command;
 			this.command = () -> {
 				if (!previousCommand.get()) {
-					return command.test(arguments);
+					return command.test(argumentsSupplier.get());
 				}
 				return false;
 			};

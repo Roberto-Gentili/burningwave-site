@@ -126,14 +126,16 @@ public class SSL4Tomcat {
 					tryToRenew &&
 					shellExecutor.buildChain(
 						shellExecutor::renewSSLCertificateWithCertBot,
-						domain
+						ShellExecutor.toArguments(domain)
 					).ifSuccess(
 						shellExecutor::rebuildSSLKeyStore,
-						environment.getProperty("server.ssl.key-store.orig.certificate").replace("_DOMAIN_PLACE_HOLDER_", domain),
-						environment.getProperty("server.ssl.key-store.orig.certificate.key").replace("_DOMAIN_PLACE_HOLDER_", domain),
-						environment.getProperty("server.ssl.key-store"),
-						environment.getProperty("server.ssl.key-alias"),
-						environment.getProperty("server.ssl.key-store-password")
+						ShellExecutor.toArguments(
+							environment.getProperty("server.ssl.key-store.orig.certificate").replace("_DOMAIN_PLACE_HOLDER_", domain),
+							environment.getProperty("server.ssl.key-store.orig.certificate.key").replace("_DOMAIN_PLACE_HOLDER_", domain),
+							environment.getProperty("server.ssl.key-store"),
+							environment.getProperty("server.ssl.key-alias"),
+							environment.getProperty("server.ssl.key-store-password")
+						)
 					).execute()
 				) {
 					logger.info("SSL certificate succesfully renewed");
