@@ -93,7 +93,6 @@ public class SSL4Tomcat {
 				) {
 					logger.info("SSL certificate succesfully renewed");
 					reload();
-					logger.info("SSL certificate succesfully reloaded");
 				} else {
 					logger.info("SSL certificate not renewed");
 				}
