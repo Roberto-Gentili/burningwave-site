@@ -87,7 +87,7 @@ scheduled-operations:
    - cron: ${SCHEDULED_OPERATIONS_STORE_VISITED_PAGES_COUNTER_CRON:0 * * * * *}
      zone: ${SCHEDULED_OPERATIONS_STORE_VISITED_PAGES_COUNTER_ZONE:UTC}
      executable: restController.storeVisitedPagesCounter
-   - cron: ${SCHEDULED_OPERATIONS_SSL_CONFIG_RENEW_CRON:0 */5 * * * *}
+   - cron: ${SCHEDULED_OPERATIONS_SSL_CONFIG_RENEW_CRON:59 59 23 * * *}
      enabled: ${server.ssl.key-store.orig.certificate.renew.enabled:false}
      zone: ${SCHEDULED_OPERATIONS_SSL_CONFIG_RENEW_ZONE:UTC}
      executable: sSLConfigHandler.renewCertificate
