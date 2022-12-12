@@ -34,22 +34,37 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
 public class Utility {
-	private final static Random randomizer;
+	private static final Random randomizer;
+	private static final org.slf4j.Logger logger;
 
 	static {
 		randomizer = new Random();
+		logger = org.slf4j.LoggerFactory.getLogger(Utility.class);
 	}
 
 	public byte[] serialize(Serializable object) throws IOException {
@@ -126,6 +141,44 @@ public class Utility {
 		if (value != null) {
 			target.accept(value);
 		}
+	}
+
+	public X509Certificate getX509Certificate(
+		InputStream certificateIS,
+		String aliasToFind,
+		String password
+	) throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException {
+		KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
+        keystore.load(certificateIS, password.toCharArray());
+        return (X509Certificate)keystore.getCertificate(aliasToFind);
+	}
+
+	public Resource[] getResources(Function<String, Resource> resourceSupplier, String... resourceRawPaths) throws IOException {
+		List<Resource> resourceList = new ArrayList<>();
+		PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = new PathMatchingResourcePatternResolver();
+		for (int i = 0; i < resourceRawPaths.length; i++) {
+			if (resourceRawPaths[i] == null) {
+				logger.warn("Resource at index {} is null", i);
+				continue;
+			}
+			for (String resourcePath : resourceRawPaths[i].split(",")) {
+				if (pathMatchingResourcePatternResolver.getPathMatcher().isPattern(resourcePath)) {
+					resourceList.addAll(
+						Arrays.asList(
+							pathMatchingResourcePatternResolver.getResources(resourcePath)
+						)
+					);
+				} else {
+					Resource resource = resourceSupplier.apply(resourcePath);
+					if (resource.exists()) {
+						resourceList.add(resource);
+					} else {
+						logger.warn("Resource {} not found", resourcePath);
+					}
+				}
+			}
+		}
+		return resourceList.toArray(new Resource[resourceList.size()]);
 	}
 
 }

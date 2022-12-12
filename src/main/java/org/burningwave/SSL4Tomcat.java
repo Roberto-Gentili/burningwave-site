@@ -28,12 +28,21 @@
  */
 package org.burningwave;
 
+import java.io.InputStream;
+import java.security.cert.X509Certificate;
+import java.util.Date;
+import java.util.function.Function;
+
+import javax.naming.ldap.LdapName;
+import javax.naming.ldap.Rdn;
+
 import org.apache.catalina.connector.Connector;
 import org.apache.coyote.http11.Http11NioProtocol;
 import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
 
 public class SSL4Tomcat {
 
@@ -50,15 +59,21 @@ public class SSL4Tomcat {
 	    }
 
 	    private Http11NioProtocol protocol;
+	    private Utility utility;
 	    private ShellExecutor shellExecutor;
 	    private Environment environment;
+	    private Function<String, Resource> resourceSupplier;
 
 	    public ConfigHandler(
 	    	Environment environment,
+	    	Function<String, Resource> resourceSupplier,
+	    	Utility utility,
     		ShellExecutor shellExecutor
 		) {
 	    	this.environment = environment;
+	    	this.utility = utility;
 	    	this.shellExecutor = shellExecutor;
+	    	this.resourceSupplier = resourceSupplier;
 		}
 
 		@Override
@@ -82,12 +97,35 @@ public class SSL4Tomcat {
 		@Override
 		public void renewCertificate() {
 			try {
-				logger.info("Trying to renew SSL certificate");
+				String domain = null;
+				Date certExpiryDate = null;
+				try (InputStream keyStoreIS = resourceSupplier.apply(environment.getProperty("server.ssl.key-store")).getInputStream()) {
+					X509Certificate x509cert = utility.getX509Certificate(
+						keyStoreIS,
+						environment.getProperty("server.ssl.key-alias"),
+						environment.getProperty("server.ssl.key-store-password")
+					);
+					String dn = x509cert.getSubjectX500Principal().getName();
+					LdapName ldapDN = new LdapName(dn);
+					for(Rdn rdn: ldapDN.getRdns()) {
+						if ("CN".equals(rdn.getType())) {
+							domain = rdn.getValue().toString();
+							break;
+						}
+					}
+					certExpiryDate = x509cert.getNotAfter();
+				}
+				logger.info("Current certificate's expiration date: {}", certExpiryDate);
+				boolean tryToRenew = certExpiryDate.getTime() - new Date().getTime() < 2_592_000_000L;
+				if (tryToRenew) {
+					logger.info("Trying to renew SSL certificate");
+				}
 				if (
+					tryToRenew &&
 					shellExecutor.renewSSLCertificate(
-						environment.getProperty("server.ssl.key-store.orig.certificate.domain"),
-						environment.getProperty("server.ssl.key-store.orig.certificate"),
-						environment.getProperty("server.ssl.key-store.orig.certificate.key"),
+						domain,
+						environment.getProperty("server.ssl.key-store.orig.certificate").replace("_DOMAIN_PLACE_HOLDER_", domain),
+						environment.getProperty("server.ssl.key-store.orig.certificate.key").replace("_DOMAIN_PLACE_HOLDER_", domain),
 						environment.getProperty("server.ssl.key-store"),
 						environment.getProperty("server.ssl.key-alias"),
 						environment.getProperty("server.ssl.key-store-password")
@@ -126,10 +164,6 @@ public class SSL4Tomcat {
 	        }
 	        return tomcat;
 	    }
-
-		public static SSLConfigHandler sSLConfigReloader(Environment environment, ShellExecutor shellExecutor) {
-			return new ConfigHandler(environment, shellExecutor);
-		}
 
 	}
 

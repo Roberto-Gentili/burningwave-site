@@ -264,8 +264,18 @@ public class Application extends SpringBootServletInitializer {
     @Bean("sSLConfigHandler")
     @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
     @ConditionalOnBean(name = "shellExecutor")
-    public SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler(Environment environment, ShellExecutor shellExecutor) {
-    	return new SSL4Tomcat.ConfigHandler(environment, shellExecutor);
+    public SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler(
+    	ApplicationContext appContext,
+		Environment environment,
+		Utility utility,
+		ShellExecutor shellExecutor
+	) {
+    	return new SSL4Tomcat.ConfigHandler(
+			appContext.getEnvironment(),
+			appContext::getResource,
+			utility,
+			shellExecutor
+		);
     }
 
     @Bean("servletContainer")
