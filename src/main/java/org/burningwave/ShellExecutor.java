@@ -64,8 +64,8 @@ public interface ShellExecutor {
 			public boolean matches(ConditionContext context,AnnotatedTypeMetadata metadata) {
 		    	String osName = context.getEnvironment().getProperty("os.name");
 		    	logger.info("OS name {}", osName);
-		    	return (osName.indexOf("nux") >= 0
-	    			|| osName.indexOf("aix") >= 0);
+		    	return osName.indexOf("nux") >= 0
+	    			|| osName.indexOf("aix") >= 0;
 		    }
 		}
 

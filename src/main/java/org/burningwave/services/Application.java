@@ -63,6 +63,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -254,6 +255,19 @@ public class Application extends SpringBootServletInitializer {
 		return new WebMvcConfigurer(application);
 	}
 
+    @Bean("shellExecutor")
+    @Conditional(ShellExecutor.ForLinux.InstantiateCondition.class)
+    public ShellExecutor shellExecutorForLinux() {
+    	return new ShellExecutor.ForLinux();
+    }
+
+    @Bean("sSLConfigHandler")
+    @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
+    @ConditionalOnBean(name = "shellExecutor")
+    public SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler(Environment environment, ShellExecutor shellExecutor) {
+    	return new SSL4Tomcat.ConfigHandler(environment, shellExecutor);
+    }
+
     @Bean("servletContainer")
     @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
     @ConditionalOnClass(TomcatServletWebServerFactory.class)
@@ -262,18 +276,6 @@ public class Application extends SpringBootServletInitializer {
 		@Nullable SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler
 	) {
         return SSL4Tomcat.Configuration.tomcatServletWebServerFactory(environment, sSL4TomcatConfigHandler);
-    }
-
-    @Bean("sSLConfigHandler")
-    @Conditional(SSL4Tomcat.ConfigHandler.InstantiateCondition.class)
-    public SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler(Environment environment, ShellExecutor shellExecutor) {
-    	return new SSL4Tomcat.ConfigHandler(environment, shellExecutor);
-    }
-
-    @Bean("shellExecutor")
-    @Conditional(ShellExecutor.ForLinux.InstantiateCondition.class)
-    public ShellExecutor shellExecutorForLinux() {
-    	return new ShellExecutor.ForLinux();
     }
 
 	@Bean("scheduledOperations.config")
