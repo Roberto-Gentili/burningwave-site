@@ -181,4 +181,14 @@ public class Utility {
 		return resourceList.toArray(new Resource[resourceList.size()]);
 	}
 
+	public String adjustPathForSpring(String path) {
+		if (path.startsWith("classpath:") || path.startsWith("file:")) {
+			return path;
+		} else if (path.startsWith("/")) {
+			return "file:" + path;
+		} else {
+			return "classpath:" + path;
+		}
+	}
+
 }

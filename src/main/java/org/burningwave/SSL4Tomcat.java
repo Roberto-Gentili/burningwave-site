@@ -99,7 +99,7 @@ public class SSL4Tomcat {
 			try {
 				String domain = null;
 				Date certExpiryDate = null;
-				try (InputStream keyStoreIS = resourceSupplier.apply(environment.getProperty("server.ssl.key-store")).getInputStream()) {
+				try (InputStream keyStoreIS = resourceSupplier.apply(utility.adjustPathForSpring(environment.getProperty("server.ssl.key-store"))).getInputStream()) {
 					X509Certificate x509cert = utility.getX509Certificate(
 						keyStoreIS,
 						environment.getProperty("server.ssl.key-alias"),
