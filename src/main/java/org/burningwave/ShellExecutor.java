@@ -58,7 +58,7 @@ public interface ShellExecutor {
 			return false;
 		}
 
-		public static class EnvironmentCondition implements Condition {
+		public static class InstantiateCondition implements Condition {
 
 		    @Override
 			public boolean matches(ConditionContext context,AnnotatedTypeMetadata metadata) {

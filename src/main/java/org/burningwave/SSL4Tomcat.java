@@ -30,16 +30,35 @@ package org.burningwave;
 
 import org.apache.catalina.connector.Connector;
 import org.apache.coyote.http11.Http11NioProtocol;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.springframework.context.annotation.Condition;
+import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.env.Environment;
+import org.springframework.core.type.AnnotatedTypeMetadata;
 
 public class SSL4Tomcat {
 
 	private SSL4Tomcat() {}
 
 	public static class ConfigHandler implements TomcatConnectorCustomizer, SSLConfigHandler {
+
+		public static class InstantiateCondition implements Condition {
+
+		    @Override
+			public boolean matches(ConditionContext context,AnnotatedTypeMetadata metadata) {
+		    	try {
+		    		context.getBeanFactory().getBean(ShellExecutor.class);
+		    	} catch (NoSuchBeanDefinitionException exc) {
+		    		return false;
+		    	}
+		    	return Boolean.parseBoolean(context.getEnvironment().getProperty("server.ssl.enabled", "false"));
+		    }
+
+		}
+
 		private static final org.slf4j.Logger logger;
 	    public static final String DEFAULT_SSL_HOSTNAME_CONFIG_NAME;
 
