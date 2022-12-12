@@ -106,7 +106,7 @@ server:
   port: ${SERVER_SSL_PORT:443}
   ssl:
     enabled: true
-    key-store: ${SERVER_SSL_KEY_STORE:classpath:config/keystore.p12}
+    key-store: ${SERVER_SSL_KEY_STORE:file:./config/keystore.p12}
     key-store.orig:
       certificate: ${SERVER_SSL_KEY_STORE_ORIG_CERTIFICATE:/etc/letsencrypt/live/_DOMAIN_PLACE_HOLDER_/fullchain.pem}
       certificate.key: ${SERVER_SSL_KEY_STORE_ORIG_CERTIFICATE_KEY:/etc/letsencrypt/live/_DOMAIN_PLACE_HOLDER_/privkey.pem}

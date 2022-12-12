@@ -17,14 +17,13 @@ cd burningwave-site
 mvn clean dependency:list install
 screen -d -m sudo java \
 -Dspring.profiles.active=burningwave,ssl \
+-cp . \
 -jar ./target/site-1.0.0.jar \
--cp=./ \
 --APPLICATION_AUTHORIZATION_TOKEN=yourToken \
 --GITHUB_CONNECTOR_AUTHORIZATION_TOKEN=yourToken \
 --IO_GITHUB_TOOL_FACTORY_NEXUS_AUTHORIZATION_TOKEN=yourToken \
 --ORG_BURNINGWAVE_NEXUS_AUTHORIZATION_TOKEN=yourToken \
 --SCHEDULED_OPERATIONS_PING_CRON=- \
---SERVER_SSL_KEY_STORE=config/keystore.p12 \
 --SERVER_SSL_KEY_STORE_PASSWORD=changeit \
 --SERVER_SSL_KEY_PASSWORD=changeit
 
