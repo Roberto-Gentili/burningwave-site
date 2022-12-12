@@ -21,7 +21,7 @@ public interface ShellExecutor {
 		}
 
 		protected String execute(String command) throws IOException {
-			logger.info("Trying to executo command {}", command);
+			logger.info("Trying to execute command {}", command);
 			try (
 				InputStream processInputStream = Runtime.getRuntime().exec(command).getInputStream();
 				InputStreamReader processInputStreamReader = new InputStreamReader(processInputStream);
@@ -39,17 +39,23 @@ public interface ShellExecutor {
 		}
 
 		@Override
-		public boolean renewSSLCertificate(String inputCert, String inputCertKey, String outputFile, String alias, String password) throws IOException {
+		public boolean renewSSLCertificate(
+			String inputCert,
+			String inputCertKey,
+			String outputFile,
+			String alias,
+			String password
+		) throws IOException {
 			String output = execute("sudo certbot-2 renew");
-			if (!output.contains("No renewals were attempted")) {
+			//if (!output.contains("No renewals were attempted")) {
 				execute(
 					"sudo openssl pkcs12 -export -in " + inputCert + " " +
 					"-inkey " + inputCertKey + " -out " + outputFile + " "+
 					"-name " + alias + " -CAfile chain.pem -caname root -password pass:" + password
 				);
 				return true;
-			}
-			return false;
+			//}
+			//return false;
 		}
 
 		public static class EnvironmentCondition implements Condition {
