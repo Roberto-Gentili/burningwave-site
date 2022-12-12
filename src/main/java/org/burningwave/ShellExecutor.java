@@ -13,30 +13,26 @@ public interface ShellExecutor {
 
 	public <E extends Throwable> boolean renewSSLCertificate(String domain, String inputCert, String inputCertKey, String outputFile, String alias, String password) throws E;
 
+	public default String execute(String command) throws IOException {
+		org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
+		logger.info("Trying to execute command {}", command);
+		try (
+			InputStream processInputStream = Runtime.getRuntime().exec(command).getInputStream();
+			InputStreamReader processInputStreamReader = new InputStreamReader(processInputStream);
+			BufferedReader processInputReader = new BufferedReader(processInputStreamReader);
+
+		) {
+		    StringBuilder output = new StringBuilder();
+		    String line;
+		    while ((line = processInputReader.readLine()) != null) {
+		    	logger.info(line);
+		    	output.append(line);
+		    }
+		    return output.toString();
+		}
+	}
+
 	public static class ForLinux implements ShellExecutor {
-		private static final org.slf4j.Logger logger;
-
-		static {
-			logger = org.slf4j.LoggerFactory.getLogger(ForLinux.class);
-		}
-
-		protected String execute(String command) throws IOException {
-			logger.info("Trying to execute command {}", command);
-			try (
-				InputStream processInputStream = Runtime.getRuntime().exec(command).getInputStream();
-				InputStreamReader processInputStreamReader = new InputStreamReader(processInputStream);
-				BufferedReader processInputReader = new BufferedReader(processInputStreamReader);
-
-			) {
-			    StringBuilder output = new StringBuilder();
-			    String line;
-			    while ((line = processInputReader.readLine()) != null) {
-			    	logger.info(line);
-			    	output.append(line);
-			    }
-			    return output.toString();
-			}
-		}
 
 		@Override
 		public boolean renewSSLCertificate(
@@ -64,7 +60,6 @@ public interface ShellExecutor {
 		    @Override
 			public boolean matches(ConditionContext context,AnnotatedTypeMetadata metadata) {
 		    	String osName = context.getEnvironment().getProperty("os.name");
-		    	logger.info("OS name {}", osName);
 		    	return osName.indexOf("nux") >= 0
 	    			|| osName.indexOf("aix") >= 0;
 		    }
