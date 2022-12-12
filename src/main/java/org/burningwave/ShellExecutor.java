@@ -45,7 +45,7 @@ public interface ShellExecutor {
 				execute(
 					"sudo openssl pkcs12 -export -in " + inputCert + " " +
 					"-inkey " + inputCertKey + " -out " + outputFile + " "+
-					"-name " + alias + " -CAfile chain.pem -caname root -password pass:" + password.replace("!", "\\!").replace("$", "\\$")
+					"-name " + alias + " -CAfile chain.pem -caname root -password pass:" + password
 				);
 				return true;
 			}
