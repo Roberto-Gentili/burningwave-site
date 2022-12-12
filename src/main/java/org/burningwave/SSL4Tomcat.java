@@ -82,14 +82,21 @@ public class SSL4Tomcat {
 		public void renewCertificate() {
 			try {
 				logger.info("Trying to renew SSL certificate");
-				shellExecutor.renewSSLCertificate(
-					environment.getProperty("server.ssl.key-store.orig.certificate"),
-					environment.getProperty("server.ssl.key-store.orig.certificate.key"),
-					environment.getProperty("server.ssl.key-store"),
-					environment.getProperty("server.ssl.key-alias"),
-					environment.getProperty("server.ssl.key-store-password")
-				);
-				logger.info("SSL certificate succesfully renewed");
+				if (
+					shellExecutor.renewSSLCertificate(
+						environment.getProperty("server.ssl.key-store.orig.certificate"),
+						environment.getProperty("server.ssl.key-store.orig.certificate.key"),
+						environment.getProperty("server.ssl.key-store"),
+						environment.getProperty("server.ssl.key-alias"),
+						environment.getProperty("server.ssl.key-store-password")
+					)
+				) {
+					logger.info("SSL certificate succesfully renewed");
+					reload();
+					logger.info("SSL certificate succesfully reloaded");
+				} else {
+					logger.info("SSL certificate not renewed");
+				}
 			} catch (Throwable exc) {
 				if (shellExecutor != null) {
 					logger.warn("Cannot renew SSL certificate", exc);
