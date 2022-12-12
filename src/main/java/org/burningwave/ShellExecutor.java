@@ -82,20 +82,28 @@ public interface ShellExecutor {
 		public boolean renewSSLCertificateWithCertBot(
 			String... arguments
 		) throws IOException {
-			String output = execute("sudo certbot-2 renew --cert-name " + arguments[0]);
-			return output.contains("No renewals were attempted");
+			try {
+				String output = execute("sudo certbot-2 renew --cert-name " + arguments[0]);
+				return output.contains("No renewals were attempted");
+			} catch (Throwable exc) {
+				return false;
+			}
 		}
 
 		@Override
 		public boolean rebuildSSLKeyStore(
 			String... arguments
 		) throws IOException {
-			execute(
-				"sudo openssl pkcs12 -export -in " + arguments[0] + " " +
-				"-inkey " + arguments[1] + " -out " + arguments[2] + " "+
-				"-name " + arguments[3] + " -CAfile chain.pem -caname root -password pass:" + arguments[4]
-			);
-			return true;
+			try {
+				execute(
+					"sudo openssl pkcs12 -export -in " + arguments[0] + " " +
+					"-inkey " + arguments[1] + " -out " + arguments[2] + " "+
+					"-name " + arguments[3] + " -CAfile chain.pem -caname root -password pass:" + arguments[4]
+				);
+				return true;
+			} catch (Throwable exc) {
+				return false;
+			}
 		}
 
 		public static class InstantiateCondition implements Condition {
