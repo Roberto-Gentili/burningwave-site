@@ -85,6 +85,7 @@ public class SSL4Tomcat {
 				logger.info("Trying to renew SSL certificate");
 				if (
 					shellExecutor.renewSSLCertificate(
+						environment.getProperty("server.ssl.key-store.orig.certificate.domain"),
 						environment.getProperty("server.ssl.key-store.orig.certificate"),
 						environment.getProperty("server.ssl.key-store.orig.certificate.key"),
 						environment.getProperty("server.ssl.key-store"),

@@ -11,7 +11,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 
 public interface ShellExecutor {
 
-	public <E extends Throwable> boolean renewSSLCertificate(String inputCert, String inputCertKey, String outputFile, String alias, String password) throws E;
+	public <E extends Throwable> boolean renewSSLCertificate(String domain, String inputCert, String inputCertKey, String outputFile, String alias, String password) throws E;
 
 	public static class ForLinux implements ShellExecutor {
 		private static final org.slf4j.Logger logger;
@@ -40,13 +40,14 @@ public interface ShellExecutor {
 
 		@Override
 		public boolean renewSSLCertificate(
+			String domain,
 			String inputCert,
 			String inputCertKey,
 			String outputFile,
 			String alias,
 			String password
 		) throws IOException {
-			String output = execute("sudo certbot-2 renew");
+			String output = execute("sudo certbot-2 renew --cert-name " + domain);
 			if (!output.contains("No renewals were attempted")) {
 				execute(
 					"sudo openssl pkcs12 -export -in " + inputCert + " " +
