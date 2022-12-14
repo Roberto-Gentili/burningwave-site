@@ -5,8 +5,8 @@
 <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:creator" content="@burningwave_sw" />
-<meta name="twitter:site" content="@burningwave_sw" />
+<meta name="twitter:creator" content="@burningwave_org" />
+<meta name="twitter:site" content="@burningwave_org" />
 <meta property="og:url" content="${currentPath}" />
 <meta property="og:locale" content="en_GB" />
 <meta property="og:site_name" content="Burningwave" />
