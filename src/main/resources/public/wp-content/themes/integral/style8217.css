@@ -1688,7 +1688,7 @@ body .elementor-section {padding: 0;}
         margin-bottom: 10px;
     }
 }
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .hero h1 {
         font-size: 6.200rem !important;
     }
@@ -1929,9 +1929,8 @@ body, .container-fluid {
 	display: flex;
     justify-content: center;
 }
-@media (max-width: 767px) {
+@media (max-width: 768px) {
 	.navbar-nav {
-		float: left;
 		display: block;
 	}
 	/*Per eliminare questo decommentare la riga con il commento [.navbar-default .navbar-nav]*/
@@ -1942,7 +1941,7 @@ body, .container-fluid {
 		width: 100%;
 	}
 }
-@media (min-width: 768px) {
+@media (min-width: 769px) {
 	.container>.navbar-header {
     	margin-left: -45px;
 	}
@@ -1952,7 +1951,7 @@ body, .container-fluid {
 	}
 }
 
-@media (max-width: 767px) and (max-width: 979px) {
+@media (max-width: 768px) and (max-width: 979px) {
 	.hero h2 {
    		font-size: 2.0rem !important;
 	}
