@@ -156,7 +156,6 @@ public class SSL4Tomcat {
 	}
 
 
-
 	public static class Configuration {
 	    public static ServletWebServerFactory tomcatServletWebServerFactory(
     		Environment environment,
