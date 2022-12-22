@@ -120,9 +120,31 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<mainClass>${main-class}</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>application</id>
+	        <activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>
+	        <properties>
+	        	<main-class>org.burningwave.services.Application</main-class>
+	        </properties>
+		</profile>
+		<profile>
+			<id>batch</id>
+	        <activation>
+	            <activeByDefault>false</activeByDefault>
+	        </activation>
+	        <properties>
+	        	<main-class>org.burningwave.services.Batch</main-class>
+	        </properties>
+		</profile>
+	</profiles>	
 
 </project>

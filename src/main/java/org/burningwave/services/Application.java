@@ -62,6 +62,7 @@ import org.burningwave.core.assembler.StaticComponentContainer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -82,7 +83,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpEntity;
@@ -107,320 +107,324 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 })
 @EnableScheduling
 @EnableAsync
+@ImportAutoConfiguration(Application.Environment.class)
 public class Application extends SpringBootServletInitializer {
-	private static final org.slf4j.Logger logger;
-	String schemeAndHostName;
-
-    static {
-    	logger = org.slf4j.LoggerFactory.getLogger(Application.class);
-    }
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
 
+	public static class Environment {
 
-	@Bean("badge")
-	public Badge badge(
-		@Qualifier("utility") Utility utility
-	) {
-		return new Badge(utility);
-	}
+		private static final org.slf4j.Logger logger;
+		String schemeAndHostName;
 
-
-	@Bean("utility")
-	public Utility utility() {
-		return new Utility();
-	}
-
-
-	@Bean("cacheConfig")
-	@ConfigurationProperties("cache")
-	public Map<String, String> cacheConfig(){
-		return new LinkedHashMap<>();
-	}
-
-
-	@Bean("burningwave.core.staticComponentContainer.config")
-	@ConfigurationProperties("burningwave.core.static-component-container")
-	public Map<String, String> staticComponentContainerConfig(){
-		return new LinkedHashMap<>();
-	}
-
-
-	@Bean
-	public Class<StaticComponentContainer> staticComponentContainer(@Qualifier("burningwave.core.staticComponentContainer.config") Map<String, String> configMap) {
-		StaticComponentContainer.Configuration.Default.add(configMap);
-		return StaticComponentContainer.class;
-	}
-
-
-	@Bean("cache")
-	@ConditionalOnExpression(value = "'${cache.type}'.trim().equalsIgnoreCase('File system based')")
-	public SimpleCache cache(
-		@Qualifier("cacheConfig") Map<String, String> configMap
-	) throws IllegalArgumentException, SecurityException{
-		Map<String, Object> configuration = new HashMap<>();
-		configuration.putAll(configMap);
-		return new FSBasedCache(configuration);
-	}
-
-
-	@Bean("nexusConnectorGroup.config")
-	@ConfigurationProperties("nexus-connector.group")
-	public Map<String, String> nexusConnectorConfig(){
-		return new LinkedHashMap<>();
-	}
-
-
-	@Bean("nexusConnectorGroup")
-	@ConditionalOnProperty(prefix = "nexus-connector.group", name = "enabled", havingValue = "true")
-	public NexusConnector.Group nexusConnector(
-		@Qualifier("cache") SimpleCache cache,
-		@Qualifier("restTemplate") RestTemplate restTemplate,
-		@Qualifier("utility") Utility utility,
-		@Qualifier("nexusConnectorGroup.config") Map<String, String> configMap
-	) throws JAXBException, ParseException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, IOException {
-		Map<String, Object> configuration = new HashMap<>();
-		configuration.putAll(configMap);
-		return new NexusConnector.Group(cache, restTemplate, utility, configuration);
-	}
-
-
-	@Bean("gitHubConnector.config")
-	@ConfigurationProperties("github-connector")
-	public Map<String, String> gitHubConnectorConfig(){
-		return new LinkedHashMap<>();
-	}
-
-
-	@Bean("gitHubConnector")
-	@ConditionalOnProperty(prefix = "github-connector", name = "enabled", havingValue = "true")
-	GitHubConnector gitHubConnector(
-		@Qualifier("gitHubConnector.config") Map<String, String> configMap,
-		SimpleCache cache
-	) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
-		Map<String, Object> configuration = new HashMap<>();
-		configuration.putAll(configMap);
-		return new GitHubConnector(configuration);
-	}
-
-
-	@Bean("herokuConnector.config")
-	@ConfigurationProperties("heroku-connector")
-	public Map<String, String> herokuConnectorConfig(){
-		return new LinkedHashMap<>();
-	}
-
-
-	@Bean("herokuConnector")
-	@ConditionalOnExpression(value = "'${heroku-connector.authorization.token}' != null && '${heroku-connector.remote.authorization.token}' != null")
-	public HerokuConnector herokuConnector(
-		@Qualifier("herokuConnector.config") Map<String, String> configMap
-	) {
-		return new HerokuConnector(configMap);
-	}
-
-
-	@Bean("applicationSelfConnector.config")
-	@ConfigurationProperties("application.self-connector")
-	public Map<String, String> applicationSelfConnectorConfig(){
-		return new LinkedHashMap<>();
-	}
-
-
-	@Bean("applicationSelfConnector")
-	public SelfConnector applicationSelfConnector(
-		Application application,
-		@Qualifier("applicationSelfConnector.config") Map<String, String> configMap
-	) {
-		Map<String, Object> configuration = new HashMap<>();
-		configuration.putAll(configMap);
-		return new SelfConnector(application, configuration);
-	}
-
-
-	@Bean("restTemplate")
-	public RestTemplate restTemplate() {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
-        restTemplate.setRequestFactory(requestFactory);
-        return restTemplate;
-	}
-
-
-	@Bean
-	public WebMvcConfigurer webMvcConfigurer(Application application) {
-		return new WebMvcConfigurer(application);
-	}
-
-    @Bean("shellExecutor")
-    @Conditional(ShellExecutor.ForLinux.InstantiateCondition.class)
-    public ShellExecutor shellExecutorForLinux() {
-    	return new ShellExecutor.ForLinux();
-    }
-
-    @Bean("sSLConfigHandler")
-    @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
-    @ConditionalOnBean(name = "shellExecutor")
-    public SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler(
-    	ApplicationContext appContext,
-		Environment environment,
-		Utility utility,
-		ShellExecutor shellExecutor
-	) {
-    	return new SSL4Tomcat.ConfigHandler(
-			appContext.getEnvironment(),
-			appContext::getResource,
-			utility,
-			shellExecutor
-		);
-    }
-
-    @Bean("servletContainer")
-    @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
-    @ConditionalOnClass(TomcatServletWebServerFactory.class)
-    public ServletWebServerFactory tomcatServletWebServerFactory(
-		Environment environment,
-		@Nullable SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler
-	) {
-        return SSL4Tomcat.Configuration.tomcatServletWebServerFactory(environment, sSL4TomcatConfigHandler);
-    }
-
-	@Bean("scheduledOperations.config")
-	@ConfigurationProperties("scheduled-operations")
-	public Map<String, Map<String, String>> scheduledOperationsConfig(){
-		return new LinkedHashMap<>();
-	}
-
-
-	@Bean("scheduledOperations")
-	public Collection<ScheduledFuture<?>> scheduledOperations(
-		ApplicationContext applicationContext,
-		TaskScheduler taskScheduler,
-		@Qualifier("scheduledOperations.config")Map<String, Map<String, String>> config
-	) {
-		Collection<ScheduledFuture<?>> scheduledOperations = new ArrayList<>();
-		for (Map<String, String> jobConfig : config.values()) {
-			if (!jobConfig.get("cron").trim().startsWith("-") && jobConfig.get("enabled") == null || Boolean.parseBoolean(jobConfig.get("enabled"))) {
-				try {
-					String[] targetAndMethod = jobConfig.get("executable").split("\\.");
-					Object target = applicationContext.getBean(targetAndMethod[0]);
-					scheduledOperations.add(
-						taskScheduler.schedule(
-							() ->
-								Methods.invokeDirect(target, targetAndMethod[1]),
-							new CronTrigger(jobConfig.get("cron"), TimeZone.getTimeZone(jobConfig.get("zone")))
-						)
-					);
-				} catch (Throwable exc) {
-					logger.warn("Could not schedule operation {}: {}", jobConfig.get("executable"), exc.getMessage());
-				}
-			} else {
-				logger.info("Scheduled operation {} is disabled", jobConfig.get("executable"));
-			}
-		}
-		return scheduledOperations;
-	}
-
-	public static class WebMvcConfigurer implements org.springframework.web.servlet.config.annotation.WebMvcConfigurer {
-		private Application application;
-
-		public WebMvcConfigurer(Application application) {
-			this.application = application;
-		}
-
-		@Override
-		public void addInterceptors(InterceptorRegistry registry) {
-			registry.addInterceptor(new HandlerInterceptor() {
-				@Override
-				public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-					String applicationSchemeAndHostName = ServletUriComponentsBuilder.fromCurrentContextPath().build().toString();
-					if (applicationSchemeAndHostName != application.schemeAndHostName) {
-						synchronized(application) {
-							if (applicationSchemeAndHostName != application.schemeAndHostName) {
-								application.schemeAndHostName = applicationSchemeAndHostName;
-								application.notifyAll();
-							}
-						}
-					}
-					return HandlerInterceptor.super.preHandle(request, response, handler);
-				}
-			});
-		}
-
-
-		@Bean("containerCustomizer")
-		public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
-			return container -> {
-				container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/"));
-				container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/"));
-			};
-		}
-
-	}
-
-	public static class SelfConnector {
-
-		final RestTemplate restTemplate;
-	    final HttpEntity<String> entity;
-	    final Supplier<String> getStatsTotalDownloadsUriComponentsBuilder;
-
-	    public SelfConnector(Application application, Map<String, Object> configMap) {
-	    	restTemplate = new RestTemplate();
-	        entity = new HttpEntity<>(new HttpHeaders());
-	        getStatsTotalDownloadsUriComponentsBuilder = () -> {
-	        	return application.getURL("/miscellaneous-services/stats/total-downloads?groupId=org.burningwave&artifactId=core");
-	        };
+	    static {
+	    	logger = org.slf4j.LoggerFactory.getLogger(Application.Environment.class);
 	    }
 
-	    public void ping() {
-			String url = getStatsTotalDownloadsUriComponentsBuilder.get();
-			if (url != null) {
-				restTemplate.exchange(
-					url,
-					HttpMethod.GET,
-					entity,
-					Long.class
-				);
-				org.slf4j.LoggerFactory.getLogger(SelfConnector.class).info("Ping to url '{}' done", url);
-			}
+		@Bean("badge")
+		public Badge badge(
+			@Qualifier("utility") Utility utility
+		) {
+			return new Badge(utility);
 		}
-	}
 
 
-	@Import({
-		DataSourceAutoConfiguration.class,
-		HibernateJpaAutoConfiguration.class
-	})
-	@EnableJpaRepositories(basePackages = {"org.burningwave"}, considerNestedRepositories = true)
-	@EntityScan(basePackages = {"org.burningwave"})
-	@Conditional(DBConfig.Condition.class)
-	public static class DBConfig {
+		@Bean("utility")
+		public Utility utility() {
+			return new Utility();
+		}
+
+
+		@Bean("cacheConfig")
+		@ConfigurationProperties("cache")
+		public Map<String, String> cacheConfig(){
+			return new LinkedHashMap<>();
+		}
+
+
+		@Bean("burningwave.core.staticComponentContainer.config")
+		@ConfigurationProperties("burningwave.core.static-component-container")
+		public Map<String, String> staticComponentContainerConfig(){
+			return new LinkedHashMap<>();
+		}
+
+
+		@Bean
+		public Class<StaticComponentContainer> staticComponentContainer(@Qualifier("burningwave.core.staticComponentContainer.config") Map<String, String> configMap) {
+			StaticComponentContainer.Configuration.Default.add(configMap);
+			return StaticComponentContainer.class;
+		}
+
 
 		@Bean("cache")
+		@ConditionalOnExpression(value = "'${cache.type}'.trim().equalsIgnoreCase('File system based')")
 		public SimpleCache cache(
 			@Qualifier("cacheConfig") Map<String, String> configMap
-		) throws IllegalArgumentException, SecurityException {
+		) throws IllegalArgumentException, SecurityException{
 			Map<String, Object> configuration = new HashMap<>();
 			configuration.putAll(configMap);
-			return new DBBasedCache(configuration);
+			return new FSBasedCache(configuration);
 		}
 
-		public static class Condition implements org.springframework.context.annotation.Condition {
+
+		@Bean("nexusConnectorGroup.config")
+		@ConfigurationProperties("nexus-connector.group")
+		public Map<String, String> nexusConnectorConfig(){
+			return new LinkedHashMap<>();
+		}
+
+
+		@Bean("nexusConnectorGroup")
+		@ConditionalOnProperty(prefix = "nexus-connector.group", name = "enabled", havingValue = "true")
+		public NexusConnector.Group nexusConnector(
+			@Qualifier("cache") SimpleCache cache,
+			@Qualifier("restTemplate") RestTemplate restTemplate,
+			@Qualifier("utility") Utility utility,
+			@Qualifier("nexusConnectorGroup.config") Map<String, String> configMap
+		) throws JAXBException, ParseException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, IOException {
+			Map<String, Object> configuration = new HashMap<>();
+			configuration.putAll(configMap);
+			return new NexusConnector.Group(cache, restTemplate, utility, configuration);
+		}
+
+
+		@Bean("gitHubConnector.config")
+		@ConfigurationProperties("github-connector")
+		public Map<String, String> gitHubConnectorConfig(){
+			return new LinkedHashMap<>();
+		}
+
+
+		@Bean("gitHubConnector")
+		@ConditionalOnProperty(prefix = "github-connector", name = "enabled", havingValue = "true")
+		GitHubConnector gitHubConnector(
+			@Qualifier("gitHubConnector.config") Map<String, String> configMap,
+			SimpleCache cache
+		) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
+			Map<String, Object> configuration = new HashMap<>();
+			configuration.putAll(configMap);
+			return new GitHubConnector(configuration);
+		}
+
+
+		@Bean("herokuConnector.config")
+		@ConfigurationProperties("heroku-connector")
+		public Map<String, String> herokuConnectorConfig(){
+			return new LinkedHashMap<>();
+		}
+
+
+		@Bean("herokuConnector")
+		@ConditionalOnExpression(value = "'${heroku-connector.authorization.token}' != null && '${heroku-connector.remote.authorization.token}' != null")
+		public HerokuConnector herokuConnector(
+			@Qualifier("herokuConnector.config") Map<String, String> configMap
+		) {
+			return new HerokuConnector(configMap);
+		}
+
+
+		@Bean("applicationSelfConnector.config")
+		@ConfigurationProperties("application.self-connector")
+		public Map<String, String> applicationSelfConnectorConfig(){
+			return new LinkedHashMap<>();
+		}
+
+
+		@Bean("applicationSelfConnector")
+		public SelfConnector applicationSelfConnector(
+			Application.Environment applicationEnvironment,
+			@Qualifier("applicationSelfConnector.config") Map<String, String> configMap
+		) {
+			Map<String, Object> configuration = new HashMap<>();
+			configuration.putAll(configMap);
+			return new SelfConnector(applicationEnvironment, configuration);
+		}
+
+
+		@Bean("restTemplate")
+		public RestTemplate restTemplate() {
+	        RestTemplate restTemplate = new RestTemplate();
+	        HttpClient httpClient = HttpClientBuilder.create().build();
+	        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+	        restTemplate.setRequestFactory(requestFactory);
+	        return restTemplate;
+		}
+
+
+		@Bean
+		public WebMvcConfigurer webMvcConfigurer(Application.Environment applicationEnvironment) {
+			return new WebMvcConfigurer(applicationEnvironment);
+		}
+
+	    @Bean("shellExecutor")
+	    @Conditional(ShellExecutor.ForLinux.InstantiateCondition.class)
+	    public ShellExecutor shellExecutorForLinux() {
+	    	return new ShellExecutor.ForLinux();
+	    }
+
+	    @Bean("sSLConfigHandler")
+	    @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
+	    @ConditionalOnBean(name = "shellExecutor")
+	    public SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler(
+	    	ApplicationContext appContext,
+	    	org.springframework.core.env.Environment environment,
+			Utility utility,
+			ShellExecutor shellExecutor
+		) {
+	    	return new SSL4Tomcat.ConfigHandler(
+				appContext.getEnvironment(),
+				appContext::getResource,
+				utility,
+				shellExecutor
+			);
+	    }
+
+	    @Bean("servletContainer")
+	    @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
+	    @ConditionalOnClass(TomcatServletWebServerFactory.class)
+	    public ServletWebServerFactory tomcatServletWebServerFactory(
+			org.springframework.core.env.Environment environment,
+			@Nullable SSL4Tomcat.ConfigHandler sSL4TomcatConfigHandler
+		) {
+	        return SSL4Tomcat.Configuration.tomcatServletWebServerFactory(environment, sSL4TomcatConfigHandler);
+	    }
+
+		@Bean("scheduledOperations.config")
+		@ConfigurationProperties("scheduler.operations")
+		public Map<String, Map<String, String>> scheduledOperationsConfig(){
+			return new LinkedHashMap<>();
+		}
+
+
+		@Bean("scheduledOperations")
+		@ConditionalOnProperty(value = {"scheduler.enabled"}, havingValue = "true")
+		public Collection<ScheduledFuture<?>> scheduledOperations(
+			ApplicationContext applicationContext,
+			TaskScheduler taskScheduler,
+			@Qualifier("scheduledOperations.config")Map<String, Map<String, String>> config
+		) {
+			Collection<ScheduledFuture<?>> scheduledOperations = new ArrayList<>();
+			for (Map<String, String> jobConfig : config.values()) {
+				if (!jobConfig.get("cron").trim().startsWith("-") && jobConfig.get("enabled") == null || Boolean.parseBoolean(jobConfig.get("enabled"))) {
+					try {
+						String[] targetAndMethod = jobConfig.get("executable").split("\\.");
+						Object target = applicationContext.getBean(targetAndMethod[0]);
+						scheduledOperations.add(
+							taskScheduler.schedule(
+								() ->
+									Methods.invokeDirect(target, targetAndMethod[1]),
+								new CronTrigger(jobConfig.get("cron"), TimeZone.getTimeZone(jobConfig.get("zone")))
+							)
+						);
+					} catch (Throwable exc) {
+						logger.warn("Could not schedule operation {}: {}", jobConfig.get("executable"), exc.getMessage());
+					}
+				} else {
+					logger.info("Scheduled operation {} is disabled", jobConfig.get("executable"));
+				}
+			}
+			return scheduledOperations;
+		}
+
+		public static class WebMvcConfigurer implements org.springframework.web.servlet.config.annotation.WebMvcConfigurer {
+			private Application.Environment applicationEnvironment;
+
+			public WebMvcConfigurer(Application.Environment applicationEnvironment) {
+				this.applicationEnvironment = applicationEnvironment;
+			}
 
 			@Override
-			public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-		        return "Database based".equalsIgnoreCase(context.getEnvironment().getProperty("cache.type").trim());
+			public void addInterceptors(InterceptorRegistry registry) {
+				registry.addInterceptor(new HandlerInterceptor() {
+					@Override
+					public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+						String applicationSchemeAndHostName = ServletUriComponentsBuilder.fromCurrentContextPath().build().toString();
+						if (applicationSchemeAndHostName != applicationEnvironment.schemeAndHostName) {
+							synchronized(applicationEnvironment) {
+								if (applicationSchemeAndHostName != applicationEnvironment.schemeAndHostName) {
+									applicationEnvironment.schemeAndHostName = applicationSchemeAndHostName;
+									applicationEnvironment.notifyAll();
+								}
+							}
+						}
+						return HandlerInterceptor.super.preHandle(request, response, handler);
+					}
+				});
+			}
+
+
+			@Bean("containerCustomizer")
+			public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
+				return container -> {
+					container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/"));
+					container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/"));
+				};
 			}
 
 		}
 
-	}
+		public static class SelfConnector {
 
-	public String getURL(String relativePath) {
-		return Optional.ofNullable(schemeAndHostName).map(url -> url + relativePath).orElseGet(() -> null);
-	}
+			final RestTemplate restTemplate;
+		    final HttpEntity<String> entity;
+		    final Supplier<String> getStatsTotalDownloadsUriComponentsBuilder;
 
+		    public SelfConnector(Application.Environment applicationEnvironment, Map<String, Object> configMap) {
+		    	restTemplate = new RestTemplate();
+		        entity = new HttpEntity<>(new HttpHeaders());
+		        getStatsTotalDownloadsUriComponentsBuilder = () -> {
+		        	return applicationEnvironment.getURL("/miscellaneous-services/stats/total-downloads?groupId=org.burningwave&artifactId=core");
+		        };
+		    }
+
+		    public void ping() {
+				String url = getStatsTotalDownloadsUriComponentsBuilder.get();
+				if (url != null) {
+					restTemplate.exchange(
+						url,
+						HttpMethod.GET,
+						entity,
+						Long.class
+					);
+					org.slf4j.LoggerFactory.getLogger(SelfConnector.class).info("Ping to url '{}' done", url);
+				}
+			}
+		}
+
+
+		@Import({
+			DataSourceAutoConfiguration.class,
+			HibernateJpaAutoConfiguration.class
+		})
+		@EnableJpaRepositories(basePackages = {"org.burningwave"}, considerNestedRepositories = true)
+		@EntityScan(basePackages = {"org.burningwave"})
+		@Conditional(DBConfig.Condition.class)
+		public static class DBConfig {
+
+			@Bean("cache")
+			public SimpleCache cache(
+				@Qualifier("cacheConfig") Map<String, String> configMap
+			) throws IllegalArgumentException, SecurityException {
+				Map<String, Object> configuration = new HashMap<>();
+				configuration.putAll(configMap);
+				return new DBBasedCache(configuration);
+			}
+
+			public static class Condition implements org.springframework.context.annotation.Condition {
+
+				@Override
+				public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+			        return "Database based".equalsIgnoreCase(context.getEnvironment().getProperty("cache.type").trim());
+				}
+
+			}
+
+		}
+
+		public String getURL(String relativePath) {
+			return Optional.ofNullable(schemeAndHostName).map(url -> url + relativePath).orElseGet(() -> null);
+		}
+	}
 }
