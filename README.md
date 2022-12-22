@@ -5,8 +5,6 @@
 
 [![HitCount](https://www.burningwave.org/generators/generate-visited-pages-badge.php?)](https://www.burningwave.org#bw-counters)
 
-[![Test](https://raw.githubusercontent.com/Roberto-Gentili/burningwave-site/main/artifact-downloads.svg)](https://www.burningwave.org#bw-counters)
-
 An application with which is possible:
 * to retrieve some statistical data showed at the url /miscellaneous-services/stats/artifact-download-chart of the application
 * to generate the artifact downloads badge
