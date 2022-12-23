@@ -367,8 +367,10 @@
 			var summaryItem = buildSummaryItem(artifactIds[j], getColorOrRandomColor(artifactIds[j]), getSite(artifactIds[j]));
 			jQuery("#downloadsSummary").append(summaryItem);
 		}
-		jQuery("#downloadsSummary").append(buildSummaryItem(null, 'rgb(0, 0, 0)', null));
-		jQuery("#downloadsSummary").append(buildSummaryItem('Total', totalRowTextColor, null));
+		if (artifactIds.length > 1) {
+			jQuery("#downloadsSummary").append(buildSummaryItem(null, 'rgb(0, 0, 0)', null));
+			jQuery("#downloadsSummary").append(buildSummaryItem('Total', totalRowTextColor, null));
+		}
 	}
 	
 	
@@ -428,10 +430,12 @@
             		break;
             	}	
             }
-            var overallDownloads = buildChartDataSets(monthlyTrendChartDatasets, overallTrendChartDatasets, 'Total', totalDownloads,
-                totalRowTextColor, totalRowTextColor
-            );
-            document.getElementById("TotalDownloads").appendChild(document.createTextNode(formatNumber(overallDownloads[overallDownloads.length - 1])));
+            if (artifactIds.length > 1) {
+	            var overallDownloads = buildChartDataSets(monthlyTrendChartDatasets, overallTrendChartDatasets, 'Total', totalDownloads,
+	                totalRowTextColor, totalRowTextColor
+	            );
+	            document.getElementById("TotalDownloads").appendChild(document.createTextNode(formatNumber(overallDownloads[overallDownloads.length - 1])));
+            }
         }
         if (attemptedLoadingArtifactIds.length == artifactIds.length) {
             overlayOff(); 
