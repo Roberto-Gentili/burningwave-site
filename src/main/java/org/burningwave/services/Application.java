@@ -253,16 +253,12 @@ public class Application extends SpringBootServletInitializer {
 		}
 
 
-		@Bean
-		public WebMvcConfigurer webMvcConfigurer(Application.Environment applicationEnvironment) {
-			return new WebMvcConfigurer(applicationEnvironment);
-		}
-
 	    @Bean("shellExecutor")
 	    @Conditional(ShellExecutor.ForLinux.InstantiateCondition.class)
 	    public ShellExecutor shellExecutorForLinux() {
 	    	return new ShellExecutor.ForLinux();
 	    }
+
 
 	    @Bean("sSLConfigHandler")
 	    @ConditionalOnProperty(value = {"server.ssl.enabled"}, havingValue = "true")
@@ -290,6 +286,7 @@ public class Application extends SpringBootServletInitializer {
 		) {
 	        return SSL4Tomcat.Configuration.tomcatServletWebServerFactory(environment, sSL4TomcatConfigHandler);
 	    }
+
 
 		@Bean("scheduledOperations.config")
 		@ConfigurationProperties("scheduler.operations")
@@ -328,6 +325,22 @@ public class Application extends SpringBootServletInitializer {
 			return scheduledOperations;
 		}
 
+
+		@Bean("containerCustomizer")
+		public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
+			return container -> {
+				container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/"));
+				container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/"));
+			};
+		}
+
+
+		@Bean
+		public WebMvcConfigurer webMvcConfigurer(Application.Environment applicationEnvironment) {
+			return new WebMvcConfigurer(applicationEnvironment);
+		}
+
+
 		public static class WebMvcConfigurer implements org.springframework.web.servlet.config.annotation.WebMvcConfigurer {
 			private Application.Environment applicationEnvironment;
 
@@ -352,15 +365,6 @@ public class Application extends SpringBootServletInitializer {
 						return HandlerInterceptor.super.preHandle(request, response, handler);
 					}
 				});
-			}
-
-
-			@Bean("containerCustomizer")
-			public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
-				return container -> {
-					container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/"));
-					container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/"));
-				};
 			}
 
 		}
